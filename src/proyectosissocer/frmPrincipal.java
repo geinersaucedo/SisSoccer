@@ -41,6 +41,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         mItemSalir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
 
@@ -74,6 +75,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         jMenu4.add(mItemNewEquipo);
 
         mItemNewCampeonato.setText("Campeonato");
+        mItemNewCampeonato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItemNewCampeonatoActionPerformed(evt);
+            }
+        });
         jMenu4.add(mItemNewCampeonato);
 
         jMenu1.add(jMenu4);
@@ -90,6 +96,10 @@ public class frmPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Editar");
+
+        jMenuItem1.setText("Equipo");
+        jMenu2.add(jMenuItem1);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -118,6 +128,17 @@ public class frmPrincipal extends javax.swing.JFrame {
             
         
     }//GEN-LAST:event_mItemNewEquipoActionPerformed
+
+    private void mItemNewCampeonatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemNewCampeonatoActionPerformed
+        // TODO add your handling code here:
+        if (frmNuevoCampeonato.getInstancia().isVisible()) {
+            frmNuevoCampeonato.getInstancia().toFront();
+            frmNuevoCampeonato.getInstancia().requestFocus();
+        }else{
+            desktop.add(frmNuevoCampeonato.getInstancia());
+            frmNuevoCampeonato.getInstancia().setVisible(true);
+        }
+    }//GEN-LAST:event_mItemNewCampeonatoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -160,6 +181,7 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenuItem mItemNewCampeonato;
