@@ -5,6 +5,7 @@
  */
 package proyectosissocer;
 
+import java.awt.Color;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
@@ -19,6 +20,7 @@ public class frmPrincipal extends javax.swing.JFrame {
      */
     public frmPrincipal() {
         initComponents();
+        desktop.setBackground(Color.gray);
         setIconImage(new ImageIcon(getClass().getResource("/images/icon_pelota.png")).getImage());        
     }
 
@@ -41,7 +43,9 @@ public class frmPrincipal extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         mItemSalir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        mItemFixtures = new javax.swing.JMenuItem();
+        mItemTablaPosiciones = new javax.swing.JMenuItem();
+        mItemLlaves = new javax.swing.JMenuItem();
 
         jMenuItem2.setText("jMenuItem2");
 
@@ -53,14 +57,14 @@ public class frmPrincipal extends javax.swing.JFrame {
         desktop.setLayout(desktopLayout);
         desktopLayout.setHorizontalGroup(
             desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 930, Short.MAX_VALUE)
+            .addGap(0, 1010, Short.MAX_VALUE)
         );
         desktopLayout.setVerticalGroup(
             desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 630, Short.MAX_VALUE)
+            .addGap(0, 650, Short.MAX_VALUE)
         );
 
-        getContentPane().add(desktop, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 630));
+        getContentPane().add(desktop, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1010, 650));
 
         jMenu1.setText("Archivo");
 
@@ -95,10 +99,26 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Editar");
+        jMenu2.setText("Ver");
 
-        jMenuItem1.setText("Equipo");
-        jMenu2.add(jMenuItem1);
+        mItemFixtures.setText("Fixtures");
+        mItemFixtures.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItemFixturesActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mItemFixtures);
+
+        mItemTablaPosiciones.setText("Tabla de posiciones");
+        mItemTablaPosiciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItemTablaPosicionesActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mItemTablaPosiciones);
+
+        mItemLlaves.setText("Llaves");
+        jMenu2.add(mItemLlaves);
 
         jMenuBar1.add(jMenu2);
 
@@ -139,6 +159,31 @@ public class frmPrincipal extends javax.swing.JFrame {
             frmNuevoCampeonato.getInstancia().setVisible(true);
         }
     }//GEN-LAST:event_mItemNewCampeonatoActionPerformed
+
+    private void mItemFixturesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemFixturesActionPerformed
+        // TODO add your handling code here:
+        frmEncuentro frm1 =new frmEncuentro();
+        desktop.add(frm1);
+        frm1.setVisible(true);
+        if (frmFixtures.getInstancia().isVisible()) {
+            frmFixtures.getInstancia().toFront();
+            frmFixtures.getInstancia().requestFocus();
+        }else{
+            desktop.add(frmFixtures.getInstancia());
+            frmFixtures.getInstancia().setVisible(true);
+        }
+    }//GEN-LAST:event_mItemFixturesActionPerformed
+
+    private void mItemTablaPosicionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemTablaPosicionesActionPerformed
+        // TODO add your handling code here:
+        if (frmTablaPosiciones.getInstancia().isVisible()) {
+            frmTablaPosiciones.getInstancia().toFront();
+            frmTablaPosiciones.getInstancia().requestFocus();
+        }else{
+            desktop.add(frmTablaPosiciones.getInstancia());
+            frmTablaPosiciones.getInstancia().setVisible(true);
+        }
+    }//GEN-LAST:event_mItemTablaPosicionesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -181,11 +226,13 @@ public class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JMenuItem mItemFixtures;
+    private javax.swing.JMenuItem mItemLlaves;
     private javax.swing.JMenuItem mItemNewCampeonato;
     private javax.swing.JMenuItem mItemNewEquipo;
     private javax.swing.JMenuItem mItemSalir;
+    private javax.swing.JMenuItem mItemTablaPosiciones;
     // End of variables declaration//GEN-END:variables
 }
