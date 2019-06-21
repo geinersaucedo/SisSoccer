@@ -118,6 +118,11 @@ public class frmPrincipal extends javax.swing.JFrame {
         jMenu2.add(mItemTablaPosiciones);
 
         mItemLlaves.setText("Llaves");
+        mItemLlaves.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItemLlavesActionPerformed(evt);
+            }
+        });
         jMenu2.add(mItemLlaves);
 
         jMenuBar1.add(jMenu2);
@@ -184,6 +189,17 @@ public class frmPrincipal extends javax.swing.JFrame {
             frmTablaPosiciones.getInstancia().setVisible(true);
         }
     }//GEN-LAST:event_mItemTablaPosicionesActionPerformed
+
+    private void mItemLlavesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemLlavesActionPerformed
+        // TODO add your handling code here:
+        if (frmLlaves.getInstancia().isVisible()) {
+            frmLlaves.getInstancia().toFront();
+            frmLlaves.getInstancia().requestFocus();
+        }else{
+            desktop.add(frmLlaves.getInstancia());
+            frmLlaves.getInstancia().setVisible(true);
+        }
+    }//GEN-LAST:event_mItemLlavesActionPerformed
 
     /**
      * @param args the command line arguments
