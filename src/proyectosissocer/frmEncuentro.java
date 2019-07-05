@@ -234,7 +234,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "idTarjeta", "Jugador", "Equipo", "Tipo Gol"
+                "idGol", "Jugador", "Equipo", "Tipo Gol"
             }
         ) {
             Class[] types = new Class [] {

@@ -5,9 +5,18 @@
  */
 package proyectosissocer;
 
+import clases.Campeonato;
+import clases.Delegado;
+import clases.Equipo;
+import clases.GestorCampeonatos;
+import clases.Jugador;
 import java.awt.Color;
-import java.awt.Image;
+import java.awt.TrayIcon;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,12 +27,19 @@ public class frmPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form frmPrincipal
      */
+    public static ArrayList<Campeonato> lista;
+    public static GestorCampeonatos gestor;
+    
     public frmPrincipal() {
         initComponents();
         desktop.setBackground(Color.gray);
-        setIconImage(new ImageIcon(getClass().getResource("/images/icon_pelota.png")).getImage());        
+        setIconImage(new ImageIcon(getClass().getResource("/images/icon_pelota.png")).getImage());
+        lista=new ArrayList<Campeonato>();
+        gestor=new GestorCampeonatos(lista);
+        llenadoDeDatosEjemplo();
+        
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,8 +54,8 @@ public class frmPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
-        mItemNewEquipo = new javax.swing.JMenuItem();
         mItemNewCampeonato = new javax.swing.JMenuItem();
+        mItemNewEquipo = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         mItemSalir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -61,22 +77,14 @@ public class frmPrincipal extends javax.swing.JFrame {
         );
         desktopLayout.setVerticalGroup(
             desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 760, Short.MAX_VALUE)
+            .addGap(0, 650, Short.MAX_VALUE)
         );
 
-        getContentPane().add(desktop, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, 760));
+        getContentPane().add(desktop, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, 650));
 
         jMenu1.setText("Archivo");
 
         jMenu4.setText("Nuevo");
-
-        mItemNewEquipo.setText("Equipo");
-        mItemNewEquipo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mItemNewEquipoActionPerformed(evt);
-            }
-        });
-        jMenu4.add(mItemNewEquipo);
 
         mItemNewCampeonato.setText("Campeonato");
         mItemNewCampeonato.addActionListener(new java.awt.event.ActionListener() {
@@ -85,6 +93,14 @@ public class frmPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu4.add(mItemNewCampeonato);
+
+        mItemNewEquipo.setText("Equipo");
+        mItemNewEquipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mItemNewEquipoActionPerformed(evt);
+            }
+        });
+        jMenu4.add(mItemNewEquipo);
 
         jMenu1.add(jMenu4);
         jMenu1.add(jSeparator1);
@@ -132,6 +148,147 @@ public class frmPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //METODO PARA LLENAR DATOS DE PRUEBA
+    private void llenadoDeDatosEjemplo(){
+//        ArrayList<Equipo> listaEquiposA=new ArrayList<Equipo>();
+//        Equipo a_1=new Equipo();
+//        a_1.setDelegado(delegado);
+        //**********CAMPEONATO A****************
+        ArrayList<Equipo> listaEquiposA=new ArrayList<Equipo>();
+        Campeonato a =new Campeonato(listaEquiposA);        
+        
+        a.setIdCampeonato(1);a.setNombreCampeonato("Descentralizado 2019");
+        a.setOrganizador("FPF");a.setMontoPremio("50mil dolares");
+        a.setTipoCampeonato(1);a.setCantidadEquipos(4);
+        
+        //++++++++++++++++Equipo1 Campeonato A
+        ArrayList<Jugador> listJugEquipo1_CampA=new ArrayList<Jugador>();
+        Equipo C1_EQ1=new Equipo(listJugEquipo1_CampA);
+        C1_EQ1.setIdEquipo(listaEquiposA.size()+1);C1_EQ1.setNomEquipoCorto("Universitario");C1_EQ1.setNomEquipoLargo("Club Universitario de Deportes");
+        //Delegado
+        Delegado C1_De1=new Delegado();
+        C1_De1.setIdDelegado(1);C1_De1.setDni("47789247");C1_De1.setNombre("Juan");C1_De1.setApellidos("Perez");C1_De1.setDireccion("av el sol 12");C1_De1.setTelefono("999955325");
+        C1_EQ1.setDelegado(C1_De1);
+        //Jugadores
+        Jugador C1_EQ1_J1=new Jugador();   C1_EQ1_J1.setApellidos("Saenz");C1_EQ1_J1.setDireccion("Av e 12");C1_EQ1_J1.setDni("02548569");C1_EQ1_J1.setIdJugador(1);C1_EQ1_J1.setNombre("Cristiano");C1_EQ1_J1.setNumCamiseta(9);C1_EQ1_J1.setPosicion("Delantero");C1_EQ1_J1.setTelefono("989565323");        
+        Jugador C1_EQ1_J2=new Jugador();   C1_EQ1_J2.setApellidos("Garcia");C1_EQ1_J2.setDireccion("Jr dg 44");C1_EQ1_J2.setDni("45632587");C1_EQ1_J2.setIdJugador(2);C1_EQ1_J2.setNombre("Lionel");C1_EQ1_J2.setNumCamiseta(19);C1_EQ1_J2.setPosicion("Arquero");C1_EQ1_J2.setTelefono("989558743");
+        Jugador C1_EQ1_J3=new Jugador();   C1_EQ1_J3.setApellidos("Martinez");C1_EQ1_J3.setDireccion("Jr aa 13");C1_EQ1_J3.setDni("56698742");C1_EQ1_J3.setIdJugador(3);C1_EQ1_J3.setNombre("Axel");C1_EQ1_J3.setNumCamiseta(5);C1_EQ1_J3.setPosicion("Volante");C1_EQ1_J3.setTelefono("966321485");
+        C1_EQ1.agregarJugador(C1_EQ1_J1);C1_EQ1.agregarJugador(C1_EQ1_J2);C1_EQ1.agregarJugador(C1_EQ1_J3);
+        
+        a.agregarEquipo(C1_EQ1);
+        //++++++++++++++++Equipo2 Campeonato A
+        ArrayList<Jugador> listJugEquipo2_CampA=new ArrayList<Jugador>();
+        Equipo C1_EQ2=new Equipo(listJugEquipo2_CampA);
+        C1_EQ2.setIdEquipo(listaEquiposA.size()+1);C1_EQ2.setNomEquipoCorto("Cienciano");C1_EQ2.setNomEquipoLargo("Club Deportivo Cienciano del Cusco");
+        //Delegado
+        Delegado C1_De2=new Delegado();
+        C1_De2.setIdDelegado(1);C1_De2.setDni("25585478");C1_De2.setNombre("Carlos");C1_De2.setApellidos("Castañeda");C1_De2.setDireccion("av villa 12");C1_De2.setTelefono("965258444");
+        C1_EQ2.setDelegado(C1_De2);
+        //Jugadores
+        Jugador C1_EQ2_J1=new Jugador();   C1_EQ2_J1.setApellidos("Yaruvi");C1_EQ2_J1.setDireccion("Av ee 44");C1_EQ2_J1.setDni("25563214");C1_EQ2_J1.setIdJugador(1);C1_EQ2_J1.setNombre("Lucas");C1_EQ2_J1.setNumCamiseta(4);C1_EQ2_J1.setPosicion("Volante");C1_EQ2_J1.setTelefono("999666333");        
+        Jugador C1_EQ2_J2=new Jugador();   C1_EQ2_J2.setApellidos("Mendoza");C1_EQ2_J2.setDireccion("Jr sdf 53");C1_EQ2_J2.setDni("89632145");C1_EQ2_J2.setIdJugador(2);C1_EQ2_J2.setNombre("Samuel");C1_EQ2_J2.setNumCamiseta(2);C1_EQ2_J2.setPosicion("Volante");C1_EQ2_J2.setTelefono("986544222");
+        Jugador C1_EQ2_J3=new Jugador();   C1_EQ2_J3.setApellidos("Castro");C1_EQ2_J3.setDireccion("Jr 123s 13");C1_EQ2_J3.setDni("14522223");C1_EQ2_J3.setIdJugador(3);C1_EQ2_J3.setNombre("Omar");C1_EQ2_J3.setNumCamiseta(1);C1_EQ2_J3.setPosicion("Arquero");C1_EQ2_J3.setTelefono("969363121");
+        C1_EQ1.agregarJugador(C1_EQ2_J1);C1_EQ1.agregarJugador(C1_EQ2_J2);C1_EQ1.agregarJugador(C1_EQ2_J3);
+        
+        a.agregarEquipo(C1_EQ2);
+        //++++++++++++++++Equipo3 Campeonato A
+        ArrayList<Jugador> listJugEquipo3_CampA=new ArrayList<Jugador>();
+        Equipo C1_EQ3=new Equipo(listJugEquipo3_CampA);
+        C1_EQ3.setIdEquipo(listaEquiposA.size()+1);C1_EQ3.setNomEquipoCorto("Cristal");C1_EQ3.setNomEquipoLargo("Club Deportivo Sporting Cristal");
+        //Delegado
+        Delegado C1_EQ3_De=new Delegado();
+        C1_EQ3_De.setIdDelegado(1);C1_EQ3_De.setDni("48852145");C1_EQ3_De.setNombre("Jose");C1_EQ3_De.setApellidos("Listorti");C1_EQ3_De.setDireccion("av estacion 12");C1_EQ3_De.setTelefono("999665236");
+        C1_EQ3.setDelegado(C1_EQ3_De);
+        //Jugadores
+        Jugador C1_EQ3_J1=new Jugador();   C1_EQ3_J1.setApellidos("Asuncion");C1_EQ3_J1.setDireccion("Av qqqq 44");C1_EQ3_J1.setDni("12365852");C1_EQ3_J1.setIdJugador(1);C1_EQ3_J1.setNombre("Paolo");C1_EQ3_J1.setNumCamiseta(14);C1_EQ3_J1.setPosicion("Volante");C1_EQ3_J1.setTelefono("999888555");        
+        Jugador C1_EQ3_J2=new Jugador();   C1_EQ3_J2.setApellidos("Roque");C1_EQ3_J2.setDireccion("Jr asd 53");C1_EQ3_J2.setDni("11142563");C1_EQ3_J2.setIdJugador(2);C1_EQ3_J2.setNombre("Yefri");C1_EQ3_J2.setNumCamiseta(12);C1_EQ3_J2.setPosicion("Volante");C1_EQ3_J2.setTelefono("966222111");
+        Jugador C1_EQ3_J3=new Jugador();   C1_EQ3_J3.setApellidos("Guerrero");C1_EQ3_J3.setDireccion("Jr rrr 13");C1_EQ3_J3.setDni("22232125");C1_EQ3_J3.setIdJugador(3);C1_EQ3_J3.setNombre("Pedro");C1_EQ3_J3.setNumCamiseta(11);C1_EQ3_J3.setPosicion("Arquero");C1_EQ3_J3.setTelefono("963258741");
+        C1_EQ1.agregarJugador(C1_EQ3_J1);C1_EQ1.agregarJugador(C1_EQ3_J2);C1_EQ1.agregarJugador(C1_EQ3_J3);
+        
+        a.agregarEquipo(C1_EQ3);
+        //++++++++++++++++Equipo4 Campeonato A
+        ArrayList<Jugador> listJugEquipo4_CampA=new ArrayList<Jugador>();
+        Equipo C1_EQ4=new Equipo(listJugEquipo4_CampA);
+        C1_EQ4.setIdEquipo(listaEquiposA.size()+1);C1_EQ4.setNomEquipoCorto("Alianza");C1_EQ4.setNomEquipoLargo("Club Alianza Lima");
+        //Delegado
+        Delegado C1_EQ4_De=new Delegado();
+        C1_EQ4_De.setIdDelegado(1);C1_EQ4_De.setDni("58452145");C1_EQ4_De.setNombre("Hector");C1_EQ4_De.setApellidos("Villar");C1_EQ4_De.setDireccion("Jr polo 12");C1_EQ4_De.setTelefono("911222555");
+        C1_EQ4.setDelegado(C1_EQ4_De);
+        //Jugadores
+        Jugador C1_EQ4_J1=new Jugador();   C1_EQ4_J1.setApellidos("Gallese");C1_EQ4_J1.setDireccion("Av qwer 4");C1_EQ4_J1.setDni("85547852");C1_EQ4_J1.setIdJugador(1);C1_EQ4_J1.setNombre("Pedro");C1_EQ4_J1.setNumCamiseta(14);C1_EQ4_J1.setPosicion("Arquero");C1_EQ4_J1.setTelefono("999666333");        
+        Jugador C1_EQ4_J2=new Jugador();   C1_EQ4_J2.setApellidos("Ramos");C1_EQ4_J2.setDireccion("Jr ass 253");C1_EQ4_J2.setDni("22244558");C1_EQ4_J2.setIdJugador(2);C1_EQ4_J2.setNombre("Cristian");C1_EQ4_J2.setNumCamiseta(12);C1_EQ4_J2.setPosicion("Volante");C1_EQ4_J2.setTelefono("987456321");
+        Jugador C1_EQ4_J3=new Jugador();   C1_EQ4_J3.setApellidos("Abhram");C1_EQ4_J3.setDireccion("Jr hyuh 2");C1_EQ4_J3.setDni("12356565");C1_EQ4_J3.setIdJugador(3);C1_EQ4_J3.setNombre("Luis");C1_EQ4_J3.setNumCamiseta(11);C1_EQ4_J3.setPosicion("Volante");C1_EQ4_J3.setTelefono("951753158");
+        C1_EQ1.agregarJugador(C1_EQ4_J1);C1_EQ1.agregarJugador(C1_EQ4_J2);C1_EQ1.agregarJugador(C1_EQ4_J3);
+        
+        a.agregarEquipo(C1_EQ4);
+        //++++++++++++++++Equipo5 Campeonato A
+        ArrayList<Jugador> listJugEquipo5_CampA=new ArrayList<Jugador>();
+        Equipo C1_EQ5=new Equipo(listJugEquipo5_CampA);
+        C1_EQ5.setIdEquipo(listaEquiposA.size()+1);C1_EQ5.setNomEquipoCorto("Binacional");C1_EQ5.setNomEquipoLargo("Club Binacional del Perú");
+        //Delegado
+        Delegado C1_EQ5_De=new Delegado();
+        C1_EQ5_De.setIdDelegado(1);C1_EQ5_De.setDni("58442145");C1_EQ5_De.setNombre("Jector");C1_EQ5_De.setApellidos("Villar");C1_EQ5_De.setDireccion("Jr polo 12");C1_EQ5_De.setTelefono("911222555");
+        C1_EQ5.setDelegado(C1_EQ5_De);
+        //Jugadores
+        Jugador C1_EQ5_J1=new Jugador();   C1_EQ5_J1.setApellidos("Castro");C1_EQ5_J1.setDireccion("Av qwer 4");C1_EQ5_J1.setDni("85512352");C1_EQ5_J1.setIdJugador(1);C1_EQ5_J1.setNombre("Pedro");C1_EQ5_J1.setNumCamiseta(11);C1_EQ5_J1.setPosicion("Arquero");C1_EQ5_J1.setTelefono("999666333");        
+        Jugador C1_EQ5_J2=new Jugador();   C1_EQ5_J2.setApellidos("Fernandez");C1_EQ5_J2.setDireccion("Jr ass 253");C1_EQ5_J2.setDni("22234558");C1_EQ5_J2.setIdJugador(2);C1_EQ5_J2.setNombre("Cristian");C1_EQ5_J2.setNumCamiseta(43);C1_EQ5_J2.setPosicion("Volante");C1_EQ5_J2.setTelefono("987456321");
+        Jugador C1_EQ5_J3=new Jugador();   C1_EQ5_J3.setApellidos("Yarabi");C1_EQ5_J3.setDireccion("Jr hyuh 2");C1_EQ5_J3.setDni("12312365");C1_EQ5_J3.setIdJugador(3);C1_EQ5_J3.setNombre("Luis");C1_EQ5_J3.setNumCamiseta(44);C1_EQ5_J3.setPosicion("Volante");C1_EQ5_J3.setTelefono("951753158");
+        C1_EQ1.agregarJugador(C1_EQ5_J1);C1_EQ1.agregarJugador(C1_EQ5_J2);C1_EQ1.agregarJugador(C1_EQ5_J3);
+        
+        a.agregarEquipo(C1_EQ5);
+        //++++++++++++++++Equipo6 Campeonato A
+        ArrayList<Jugador> listJugEquipo6_CampA=new ArrayList<Jugador>();
+        Equipo C1_EQ6=new Equipo(listJugEquipo6_CampA);
+        C1_EQ6.setIdEquipo(listaEquiposA.size()+1);C1_EQ6.setNomEquipoCorto("Ayacucho FC");C1_EQ6.setNomEquipoLargo("Ayacucho Futbol Club");
+        //Delegado
+        Delegado C1_EQ6_De=new Delegado();
+        C1_EQ6_De.setIdDelegado(1);C1_EQ6_De.setDni("51442145");C1_EQ6_De.setNombre("Jector");C1_EQ6_De.setApellidos("Villar");C1_EQ6_De.setDireccion("Jr polo 12");C1_EQ6_De.setTelefono("911222555");
+        C1_EQ6.setDelegado(C1_EQ6_De);
+        //Jugadores
+        Jugador C1_EQ6_J1=new Jugador();   C1_EQ6_J1.setApellidos("Rivasplata");C1_EQ6_J1.setDireccion("Av qwer 4");C1_EQ6_J1.setDni("58888774");C1_EQ6_J1.setIdJugador(1);C1_EQ6_J1.setNombre("Kelo");C1_EQ6_J1.setNumCamiseta(24);C1_EQ6_J1.setPosicion("Arquero");C1_EQ6_J1.setTelefono("999666333");        
+        Jugador C1_EQ6_J2=new Jugador();   C1_EQ6_J2.setApellidos("Listoti");C1_EQ6_J2.setDireccion("Jr ass 253");C1_EQ6_J2.setDni("22222228");C1_EQ6_J2.setIdJugador(2);C1_EQ6_J2.setNombre("Adrian");C1_EQ6_J2.setNumCamiseta(19);C1_EQ6_J2.setPosicion("Volante");C1_EQ6_J2.setTelefono("987456321");
+        Jugador C1_EQ6_J3=new Jugador();   C1_EQ6_J3.setApellidos("Silva");C1_EQ6_J3.setDireccion("Jr h4uh 2");C1_EQ6_J3.setDni("12333335");C1_EQ6_J3.setIdJugador(3);C1_EQ6_J3.setNombre("Jose Maria");C1_EQ6_J3.setNumCamiseta(18);C1_EQ6_J3.setPosicion("Volante");C1_EQ6_J3.setTelefono("951753158");
+        C1_EQ1.agregarJugador(C1_EQ6_J1);C1_EQ1.agregarJugador(C1_EQ6_J2);C1_EQ1.agregarJugador(C1_EQ6_J3);
+        
+        a.agregarEquipo(C1_EQ6);
+        //++++++++++++++++Equipo7 Campeonato A
+        ArrayList<Jugador> listJugEquipo7_CampA=new ArrayList<Jugador>();
+        Equipo C1_EQ7=new Equipo(listJugEquipo7_CampA);
+        C1_EQ7.setIdEquipo(listaEquiposA.size()+1);C1_EQ7.setNomEquipoCorto("San Martin");C1_EQ7.setNomEquipoLargo("Universidad San Martin de Porres");
+        //Delegado
+        Delegado C1_EQ7_De=new Delegado();
+        C1_EQ7_De.setIdDelegado(1);C1_EQ7_De.setDni("55521452");C1_EQ7_De.setNombre("Lucio");C1_EQ7_De.setApellidos("Villar");C1_EQ7_De.setDireccion("Jr polo 12");C1_EQ7_De.setTelefono("911222555");
+        C1_EQ7.setDelegado(C1_EQ7_De);
+        //Jugadores
+        Jugador C1_EQ7_J1=new Jugador();   C1_EQ7_J1.setApellidos("Saavedra");C1_EQ7_J1.setDireccion("Av sol 4");C1_EQ7_J1.setDni("53338774");C1_EQ7_J1.setIdJugador(1);C1_EQ7_J1.setNombre("Bruno");C1_EQ7_J1.setNumCamiseta(14);C1_EQ7_J1.setPosicion("Arquero");C1_EQ7_J1.setTelefono("999666333");        
+        Jugador C1_EQ7_J2=new Jugador();   C1_EQ7_J2.setApellidos("Cortez");C1_EQ7_J2.setDireccion("Jr luna 253");C1_EQ7_J2.setDni("28229128");C1_EQ7_J2.setIdJugador(2);C1_EQ7_J2.setNombre("Alberto");C1_EQ7_J2.setNumCamiseta(89);C1_EQ7_J2.setPosicion("Volante");C1_EQ7_J2.setTelefono("987456321");
+        Jugador C1_EQ7_J3=new Jugador();   C1_EQ7_J3.setApellidos("Aragonez");C1_EQ7_J3.setDireccion("Jr Althaus 2");C1_EQ7_J3.setDni("12433375");C1_EQ7_J3.setIdJugador(3);C1_EQ7_J3.setNombre("Elvis");C1_EQ7_J3.setNumCamiseta(28);C1_EQ7_J3.setPosicion("Volante");C1_EQ7_J3.setTelefono("951753158");
+        C1_EQ1.agregarJugador(C1_EQ7_J1);C1_EQ1.agregarJugador(C1_EQ7_J2);C1_EQ1.agregarJugador(C1_EQ7_J3);
+        
+        a.agregarEquipo(C1_EQ7);
+        //**********CAMPEONATO B****************
+        
+        
+        
+        
+        
+        
+        
+        ////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
+
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            a.setFechaInicio(sdf.parse("11/05/2019"));
+            //b.setFechaInicio(sdf.parse("14/10/2019"));
+            //c.setFechaInicio(sdf.parse("23/09/2019"));
+        }catch(ParseException e){}
+
+        gestor.agregarCampeonato(a);
+        //gestor.agregarCampeonato(b);
+        //gestor.agregarCampeonato(c);
+    }
     private void mItemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemSalirActionPerformed
         // TODO add your handling code here:
         System.exit(0);
@@ -139,18 +296,20 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     private void mItemNewEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemNewEquipoActionPerformed
         // TODO add your handling code here:
-//        frmNuevoEquipo frm= new frmNuevoEquipo();
-//        desktop.add(frm);
-//        frm.show();
-
-        if (frmNuevoEquipo.getInstancia().isVisible()) {
-            frmNuevoEquipo.getInstancia().toFront();
-            frmNuevoEquipo.getInstancia().requestFocus();
-        }else{
-            desktop.add(frmNuevoEquipo.getInstancia());
-            frmNuevoEquipo.getInstancia().setVisible(true);
+        if (lista.size()>0) {
+            if (frmNuevoEquipo.getInstancia().isVisible()) {
+                frmNuevoEquipo.getInstancia().toFront();
+                frmNuevoEquipo.getInstancia().requestFocus();
+                frmNuevoEquipo.getInstancia().actualizarDATA();
+            }else{
+                desktop.add(frmNuevoEquipo.getInstancia());
+                frmNuevoEquipo.getInstancia().setVisible(true);
+                frmNuevoEquipo.getInstancia().actualizarDATA();
+            }
         }
-            
+        else{
+            JOptionPane.showMessageDialog(null, "Favor agregar campeonatos.");
+        }
         
     }//GEN-LAST:event_mItemNewEquipoActionPerformed
 
