@@ -5,6 +5,17 @@
  */
 package proyectosissocer;
 
+import clases.Delegado;
+import clases.Equipo;
+import clases.Fixture;
+import clases.Jugador;
+import clases.ModoEliminacion;
+import clases.ModoLiga;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import static proyectosissocer.frmPrincipal.desktop;
+import static proyectosissocer.frmPrincipal.gestor;
+
 /**
  *
  * @author Geiner Saucedo
@@ -21,10 +32,15 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
         }
         return frm;
     }
+    private ArrayList<Jugador> listaJugadores;
+    private Equipo equipo;
     public frmNuevoEquipo() {
         initComponents();
-    }
-
+        cambiarVista(0);
+        actualizarDATA();
+        listaJugadores= new ArrayList<Jugador>();
+        equipo=new Equipo(listaJugadores);
+        }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,27 +52,27 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
 
         jScrollPane3 = new javax.swing.JScrollPane();
         jEditorPane1 = new javax.swing.JEditorPane();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tabPane = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
+        listadoEquipos = new javax.swing.JTable();
+        btnGenerarFixture = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtNomEquipo = new javax.swing.JTextField();
+        txtNomEquipoLargo = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        txtNomEquipo1 = new javax.swing.JTextField();
+        txtNomEquipoCorto = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        txtNomEquipo2 = new javax.swing.JTextField();
+        txtDniDelegado = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        txtNomEquipo3 = new javax.swing.JTextField();
-        txtNomEquipo4 = new javax.swing.JTextField();
+        txtNomDelegado = new javax.swing.JTextField();
+        txtApellidoDelegado = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        txtNomEquipo5 = new javax.swing.JTextField();
+        txtDireccionDelegado = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        txtNomEquipo6 = new javax.swing.JTextField();
+        txtTelefonoDelegado = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jPanel4 = new javax.swing.JPanel();
@@ -74,19 +90,19 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
         btnAgregarJugador = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        listadoJugadores = new javax.swing.JTable();
         jLabel17 = new javax.swing.JLabel();
-        txtDNI1 = new javax.swing.JTextField();
+        txtNumCamiseta = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbPosicion = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        cbCampeonatos = new javax.swing.JComboBox<>();
+        btnSeleccionCampeonato = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnNuevo = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
 
         jScrollPane3.setViewportView(jEditorPane1);
 
@@ -96,7 +112,7 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
         setTitle("Registro Equipo");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        listadoEquipos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null}
             },
@@ -112,14 +128,19 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setMaxWidth(60);
-            jTable2.getColumnModel().getColumn(1).setMaxWidth(200);
-            jTable2.getColumnModel().getColumn(2).setMaxWidth(500);
+        jScrollPane2.setViewportView(listadoEquipos);
+        if (listadoEquipos.getColumnModel().getColumnCount() > 0) {
+            listadoEquipos.getColumnModel().getColumn(0).setMaxWidth(60);
+            listadoEquipos.getColumnModel().getColumn(1).setMaxWidth(200);
+            listadoEquipos.getColumnModel().getColumn(2).setMaxWidth(500);
         }
 
-        jButton4.setText("Generar Fixture");
+        btnGenerarFixture.setText("Generar Fixture");
+        btnGenerarFixture.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarFixtureActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -129,35 +150,71 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 787, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnGenerarFixture, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
+                .addContainerGap(26, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnGenerarFixture, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6))
         );
 
-        jTabbedPane1.addTab("Listado", jPanel2);
+        tabPane.addTab("Listado", jPanel2);
 
         jLabel1.setText("Nombre Completo:");
 
+        txtNomEquipoLargo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNomEquipoLargoKeyTyped(evt);
+            }
+        });
+
         jLabel10.setText("Nombre Corto:");
+
+        txtNomEquipoCorto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNomEquipoCortoKeyTyped(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel11.setText("Datos del Delegado:");
 
         jLabel12.setText("Nro DNI:");
 
+        txtDniDelegado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDniDelegadoKeyTyped(evt);
+            }
+        });
+
         jLabel13.setText("Nombres:");
+
+        txtNomDelegado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNomDelegadoKeyTyped(evt);
+            }
+        });
+
+        txtApellidoDelegado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoDelegadoKeyTyped(evt);
+            }
+        });
 
         jLabel14.setText("Apellidos:");
 
         jLabel15.setText("Dirección:");
+
+        txtTelefonoDelegado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoDelegadoKeyTyped(evt);
+            }
+        });
 
         jLabel16.setText("Teléfono:");
 
@@ -172,36 +229,36 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNomEquipo))
+                        .addComponent(txtNomEquipoLargo))
                     .addComponent(jSeparator2)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNomEquipo5))
+                        .addComponent(txtDireccionDelegado))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNomEquipo1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtNomEquipoCorto, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(jPanel3Layout.createSequentialGroup()
                                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtNomEquipo4))
+                                    .addComponent(txtApellidoDelegado))
                                 .addComponent(jLabel11)
                                 .addGroup(jPanel3Layout.createSequentialGroup()
                                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtNomEquipo2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtDniDelegado, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel3Layout.createSequentialGroup()
                                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtNomEquipo3, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtNomDelegado, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNomEquipo6, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtTelefonoDelegado, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 260, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -211,11 +268,11 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
                 .addGap(23, 23, 23)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtNomEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNomEquipoLargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(txtNomEquipo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNomEquipoCorto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -223,29 +280,29 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
-                    .addComponent(txtNomEquipo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDniDelegado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13)
-                    .addComponent(txtNomEquipo3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNomDelegado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel14)
-                    .addComponent(txtNomEquipo4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtApellidoDelegado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel15)
-                    .addComponent(txtNomEquipo5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDireccionDelegado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel16)
-                    .addComponent(txtNomEquipo6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTelefonoDelegado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Equipo", jPanel3);
+        tabPane.addTab("Equipo", jPanel3);
 
         jLabel6.setText("# Camiseta:");
 
@@ -257,11 +314,40 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Teléfono:");
 
-        btnAgregarJugador.setText("Agregar Jugador");
+        txtDNI.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDNIKeyTyped(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        txtNombres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombresKeyTyped(evt);
+            }
+        });
+
+        txtApellidos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidosKeyTyped(evt);
+            }
+        });
+
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
+
+        btnAgregarJugador.setText("Agregar Jugador");
+        btnAgregarJugador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarJugadorActionPerformed(evt);
+            }
+        });
+
+        listadoJugadores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "DNI", "NOMBRES", "APELLIDOS", "DIRECCION", "TELEFONO"
@@ -275,18 +361,24 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(60);
-            jTable1.getColumnModel().getColumn(1).setMaxWidth(200);
-            jTable1.getColumnModel().getColumn(2).setMaxWidth(500);
+        jScrollPane1.setViewportView(listadoJugadores);
+        if (listadoJugadores.getColumnModel().getColumnCount() > 0) {
+            listadoJugadores.getColumnModel().getColumn(0).setMaxWidth(60);
+            listadoJugadores.getColumnModel().getColumn(1).setMaxWidth(200);
+            listadoJugadores.getColumnModel().getColumn(2).setMaxWidth(500);
         }
 
         jLabel17.setText("DNI:");
 
+        txtNumCamiseta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumCamisetaKeyTyped(evt);
+            }
+        });
+
         jLabel18.setText("Posición:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbPosicion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Arquero", "Defensa", "Volante", "Delantero" }));
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -318,7 +410,7 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
                             .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtDNI1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtNumCamiseta, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel13Layout.createSequentialGroup()
@@ -328,7 +420,7 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(txtTelefono)
-                                    .addComponent(jComboBox2, 0, 204, Short.MAX_VALUE)))
+                                    .addComponent(cbPosicion, 0, 204, Short.MAX_VALUE)))
                             .addGroup(jPanel13Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
@@ -360,12 +452,12 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(txtDNI1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNumCamiseta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel18)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbPosicion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAgregarJugador, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -377,7 +469,7 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 791, Short.MAX_VALUE)
+                .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -388,9 +480,9 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Jugadores", jPanel4);
+        tabPane.addTab("Jugadores", jPanel4);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 820, 460));
+        getContentPane().add(tabPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 820, 460));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("REGISTRO DE EQUIPOS");
@@ -399,38 +491,306 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
         jLabel9.setText("Campeonato:");
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, 570, -1));
+        getContentPane().add(cbCampeonatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, 570, -1));
 
-        jButton1.setText("Seleccionar");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 40, 120, -1));
+        btnSeleccionCampeonato.setText("Seleccionar");
+        btnSeleccionCampeonato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionCampeonatoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnSeleccionCampeonato, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 40, 120, -1));
 
-        jButton2.setText("Cancelar");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 570, 90, 50));
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 570, 90, 40));
 
-        jButton3.setText("Guardar");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 570, 120, 50));
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 570, 120, 40));
 
-        jButton5.setText("Salir");
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 570, 90, 50));
+        btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 90, 40));
 
-        jButton6.setText("Nuevo");
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 90, 50));
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 570, 90, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    /**
+     * Actualiza equipos segun campeonato
+     */
+    public void actualizarDATA(){
+        //Actualiza lista de Campeonatos
+        cbCampeonatos.removeAllItems();
+        for(int i=0;i<frmPrincipal.lista.size();i++){
+            cbCampeonatos.addItem(frmPrincipal.lista.get(i).getNombreCampeonato());
+        }
+        listadoEquipos.setModel(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()));
+        listadoEquipos.updateUI();
+    }
+    /**
+     * Habilita y deshabilita paneles segun vista
+     * @param tipo Indicador de vista
+     */
+    private void cambiarVista(int tipo){
+        if (tipo==0) {//Vista Listado de Equipos
+            tabPane.setEnabledAt(0, true);
+            tabPane.setEnabledAt(1, false);
+            tabPane.setEnabledAt(2, false);
+            tabPane.setSelectedIndex(0);
+            btnNuevo.setEnabled(true);
+            btnGuardar.setEnabled(false);
+            btnCancelar.setEnabled(false);
+            cbCampeonatos.setEnabled(true);
+            btnSeleccionCampeonato.setEnabled(true);
+        }else{//Vista Ingreso de equipos
+            tabPane.setEnabledAt(0, false);
+            tabPane.setEnabledAt(1, true);
+            tabPane.setEnabledAt(2, true);
+            tabPane.setSelectedIndex(1);
+            btnNuevo.setEnabled(false);
+            btnGuardar.setEnabled(true);
+            btnCancelar.setEnabled(true);
+            cbCampeonatos.setEnabled(false);
+            btnSeleccionCampeonato.setEnabled(false);
+            //limpiar campos de NUEVO EQUIPO
+            txtNomEquipoCorto.setText("");
+            txtNomEquipoLargo.setText("");
+            txtDniDelegado.setText("");
+            txtNomDelegado.setText("");
+            txtApellidoDelegado.setText("");
+            txtDireccionDelegado.setText("");
+            txtTelefonoDelegado.setText("");
+            txtDNI.setText("");
+            txtNombres.setText("");
+            txtApellidos.setText("");
+            txtDireccion.setText("");
+            txtTelefono.setText("");
+            txtNumCamiseta.setText("");
+            cbPosicion.setSelectedIndex(0);
 
+            
+        }
+    }
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        cambiarVista(1);
+        
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        Delegado delegado=new Delegado();
+        delegado.setDni(txtDniDelegado.getText());
+        delegado.setNombre(txtNomDelegado.getText());
+        delegado.setApellidos(txtApellidoDelegado.getText());
+        delegado.setDireccion(txtDireccionDelegado.getText());
+        delegado.setTelefono(txtTelefonoDelegado.getText());
+        //Debería ser como mínimo 7 jugadores, para fines de prueba lo validaremos en 1
+        if (listaJugadores.size()>0|| delegado.validarDelegado()) {
+            equipo=new Equipo();
+            equipo.setIdEquipo(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).getListaEquipos().size()+1);
+            equipo.setNomEquipoCorto(txtNomEquipoCorto.getText());
+            equipo.setNomEquipoLargo(txtNomEquipoLargo.getText());
+            equipo.setDelegado(delegado);
+            frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).agregarEquipo(equipo);
+            //equipo.setListaJugadores(listaJugadores);
+            JOptionPane.showMessageDialog(null, "Se agregó equipo correctamente");
+            cambiarVista(0);
+            actualizarDATA();
+            //borramos tabla de jugadores
+            for (int i = 0; i < listaJugadores.size(); i++) listaJugadores.remove(i);
+            
+        }else JOptionPane.showMessageDialog(null, "No existen jugadores registrados");
+        
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        cambiarVista(0);
+        //borramos tabla de jugadores
+        for (int i = 0; i < listaJugadores.size(); i++)listaJugadores.remove(i);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        //dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnSeleccionCampeonatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionCampeonatoActionPerformed
+        // TODO add your handling code here:
+        listadoEquipos.setModel(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()));
+        
+    }//GEN-LAST:event_btnSeleccionCampeonatoActionPerformed
+
+    private void btnAgregarJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarJugadorActionPerformed
+        // TODO add your handling code here:
+        Jugador jugador=new Jugador();
+        jugador.setIdJugador(listaJugadores.size()+1);
+        jugador.setDni(txtDNI.getText());
+        jugador.setNombre(txtNombres.getText());
+        jugador.setApellidos(txtApellidos.getText());
+        jugador.setDireccion(txtDireccion.getText());
+        jugador.setTelefono(txtTelefono.getText());
+        if(!txtNumCamiseta.getText().isEmpty())jugador.setNumCamiseta(Integer.parseInt(txtNumCamiseta.getText()));
+        jugador.setPosicion(cbPosicion.getSelectedItem().toString());
+        
+        if (jugador.validarJugador()) {
+            listaJugadores.add(jugador);
+            equipo.setListaJugadores(listaJugadores);
+            listadoJugadores.setModel(equipo);
+            listadoJugadores.updateUI();
+                JOptionPane.showMessageDialog(null, "Jugador agregado correctamente");
+        }
+    }//GEN-LAST:event_btnAgregarJugadorActionPerformed
+    /**
+     * Restricción en ingreso de datos de Jugador y Delegado
+     */
+    private void txtNumCamisetaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumCamisetaKeyTyped
+        // TODO add your handling code here:
+        char validar=evt.getKeyChar();
+        if (Character.isLetter(validar)|| txtNumCamiseta.getText().length()>1) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Ingrese sólo números (1-99)","Camiseta errada",JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_txtNumCamisetaKeyTyped
+    private void txtDNIKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDNIKeyTyped
+        // TODO add your handling code here:
+        char validar=evt.getKeyChar();
+        if (Character.isLetter(validar) || txtDNI.getText().length()>7) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Ingrese sólo números(Max 8 dígitos)","DNI errado",JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_txtDNIKeyTyped
+    private void txtNombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombresKeyTyped
+        // TODO add your handling code here:
+        char validar=evt.getKeyChar();
+        if (Character.isDigit(validar)){
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Ingrese sólo letras","Nombre errado",JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_txtNombresKeyTyped
+    private void txtApellidosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidosKeyTyped
+        // TODO add your handling code here:
+        char validar=evt.getKeyChar();
+        if (Character.isDigit(validar)){
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Ingrese sólo letras","Apellido errado",JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_txtApellidosKeyTyped
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+        // TODO add your handling code here:
+        char validar=evt.getKeyChar();
+        if (Character.isLetter(validar) || txtTelefono.getText().length()>12) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Ingrese sólo números(Max 12 dígitos)","Teléfono errado",JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
+    private void txtNomEquipoLargoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomEquipoLargoKeyTyped
+        // TODO add your handling code here:
+        char validar=evt.getKeyChar();
+        if (txtNomEquipoCorto.getText().length()>49){
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Máximo 50 caracteres","Nombre de Equipo Errado",JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_txtNomEquipoLargoKeyTyped
+    private void txtNomEquipoCortoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomEquipoCortoKeyTyped
+        // TODO add your handling code here:
+        if (txtNomEquipoCorto.getText().length()>11){
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Máximo 12 caracteres","Nombre de Equipo Errado",JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_txtNomEquipoCortoKeyTyped
+    private void txtDniDelegadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniDelegadoKeyTyped
+        // TODO add your handling code here:
+        char validar=evt.getKeyChar();
+        if (Character.isLetter(validar) || txtDniDelegado.getText().length()>7) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Ingrese sólo números(Max 8 dígitos)","DNI errado",JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_txtDniDelegadoKeyTyped
+    private void txtNomDelegadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomDelegadoKeyTyped
+        // TODO add your handling code here:
+        char validar=evt.getKeyChar();
+        if (Character.isDigit(validar)){
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Ingrese sólo letras","Nombre errado",JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_txtNomDelegadoKeyTyped
+    private void txtApellidoDelegadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoDelegadoKeyTyped
+        // TODO add your handling code here:
+        char validar=evt.getKeyChar();
+        if (Character.isDigit(validar)){
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Ingrese sólo letras","Apellido errado",JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_txtApellidoDelegadoKeyTyped
+    private void txtTelefonoDelegadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoDelegadoKeyTyped
+        // TODO add your handling code here:
+        char validar=evt.getKeyChar();
+        if (Character.isLetter(validar) || txtTelefonoDelegado.getText().length()>12) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Ingrese sólo números(Max 12 dígitos)","Teléfono errado",JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_txtTelefonoDelegadoKeyTyped
+
+    private void btnGenerarFixtureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarFixtureActionPerformed
+            // TODO add your handling code here:
+        Fixture ObjFixtureA = new ModoLiga();
+        ObjFixtureA.setIdCampeonato(1);
+
+        ObjFixtureA.generarFixture();
+
+        gestor.buscarCampeonatoById(1).setObjFixture(ObjFixtureA);
+        
+        desktop.add(frmFixtures.getInstancia());
+        frmFixtures.getInstancia().setVisible(true);
+   
+    }//GEN-LAST:event_btnGenerarFixtureActionPerformed
+    /**
+     * Fin de restricciones
+     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarJugador;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGenerarFixture;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnSalir;
+    private javax.swing.JButton btnSeleccionCampeonato;
+    private javax.swing.JComboBox<String> cbCampeonatos;
+    private javax.swing.JComboBox<String> cbPosicion;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -459,21 +819,21 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable listadoEquipos;
+    private javax.swing.JTable listadoJugadores;
+    private javax.swing.JTabbedPane tabPane;
+    private javax.swing.JTextField txtApellidoDelegado;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtDNI;
-    private javax.swing.JTextField txtDNI1;
     private javax.swing.JTextField txtDireccion;
-    private javax.swing.JTextField txtNomEquipo;
-    private javax.swing.JTextField txtNomEquipo1;
-    private javax.swing.JTextField txtNomEquipo2;
-    private javax.swing.JTextField txtNomEquipo3;
-    private javax.swing.JTextField txtNomEquipo4;
-    private javax.swing.JTextField txtNomEquipo5;
-    private javax.swing.JTextField txtNomEquipo6;
+    private javax.swing.JTextField txtDireccionDelegado;
+    private javax.swing.JTextField txtDniDelegado;
+    private javax.swing.JTextField txtNomDelegado;
+    private javax.swing.JTextField txtNomEquipoCorto;
+    private javax.swing.JTextField txtNomEquipoLargo;
     private javax.swing.JTextField txtNombres;
+    private javax.swing.JTextField txtNumCamiseta;
     private javax.swing.JTextField txtTelefono;
+    private javax.swing.JTextField txtTelefonoDelegado;
     // End of variables declaration//GEN-END:variables
 }
