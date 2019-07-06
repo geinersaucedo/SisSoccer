@@ -45,6 +45,7 @@ public class GestorCampeonatos implements TableModel{
         }
         return null;
     }
+<<<<<<< HEAD
     
     public Campeonato buscarCampeonatoById(int idCampeonato){
         for(Campeonato c:listaCampeonatos){
@@ -55,6 +56,8 @@ public class GestorCampeonatos implements TableModel{
         return null;
     }
     
+=======
+>>>>>>> fc81c9af36c4937fcdd63473e51bf1bdf3cbb1d8
     @Override
     public int getRowCount() {
         return listaCampeonatos.size();

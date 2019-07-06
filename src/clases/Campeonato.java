@@ -20,6 +20,7 @@ public class Campeonato implements TableModel{
     private String montoPremio;
     private ArrayList<Equipo> listaEquipos;
     private Date fechaInicio;
+<<<<<<< HEAD
     private int golesWalkover;
     private Fixture objFixture;
 
@@ -49,6 +50,9 @@ public class Campeonato implements TableModel{
         return null;
     }
             
+=======
+
+>>>>>>> fc81c9af36c4937fcdd63473e51bf1bdf3cbb1d8
     public Campeonato(ArrayList<Equipo> listaEquipos) {
         this.listaEquipos = listaEquipos;
     }
