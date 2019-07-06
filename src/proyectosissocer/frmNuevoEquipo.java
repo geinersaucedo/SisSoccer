@@ -7,7 +7,7 @@ package proyectosissocer;
 
 import clases.Delegado;
 import clases.Equipo;
-<<<<<<< HEAD
+
 import clases.Fixture;
 import clases.Jugador;
 import clases.ModoEliminacion;
@@ -16,11 +16,11 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import static proyectosissocer.frmPrincipal.desktop;
 import static proyectosissocer.frmPrincipal.gestor;
-=======
+
 import clases.Jugador;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
->>>>>>> fc81c9af36c4937fcdd63473e51bf1bdf3cbb1d8
+
 
 /**
  *
@@ -142,14 +142,12 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
         }
 
         btnGenerarFixture.setText("Generar Fixture");
-<<<<<<< HEAD
+
         btnGenerarFixture.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGenerarFixtureActionPerformed(evt);
             }
         });
-=======
->>>>>>> fc81c9af36c4937fcdd63473e51bf1bdf3cbb1d8
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -668,11 +666,8 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
             equipo.setListaJugadores(listaJugadores);
             listadoJugadores.setModel(equipo);
             listadoJugadores.updateUI();
-<<<<<<< HEAD
-                JOptionPane.showMessageDialog(null, "Jugador agregado correctamente");
-=======
+
             JOptionPane.showMessageDialog(null, "Jugador agregado correctamente");
->>>>>>> fc81c9af36c4937fcdd63473e51bf1bdf3cbb1d8
         }
     }//GEN-LAST:event_btnAgregarJugadorActionPerformed
     /**
@@ -776,7 +771,6 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Ingrese sólo números(Max 12 dígitos)","Teléfono errado",JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_txtTelefonoDelegadoKeyTyped
-<<<<<<< HEAD
 
     private void btnGenerarFixtureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarFixtureActionPerformed
             // TODO add your handling code here:
@@ -791,8 +785,7 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
         frmFixtures.getInstancia().setVisible(true);
    
     }//GEN-LAST:event_btnGenerarFixtureActionPerformed
-=======
->>>>>>> fc81c9af36c4937fcdd63473e51bf1bdf3cbb1d8
+
     /**
      * Fin de restricciones
      */
