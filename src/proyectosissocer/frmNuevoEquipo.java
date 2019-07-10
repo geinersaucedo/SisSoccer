@@ -773,10 +773,9 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtTelefonoDelegadoKeyTyped
 
     private void btnGenerarFixtureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarFixtureActionPerformed
-            // TODO add your handling code here:
+            
         Fixture ObjFixtureA = new ModoLiga();
-        ObjFixtureA.setIdCampeonato(1);
-        
+        ObjFixtureA.setIdCampeonato(1);        
         ObjFixtureA.generarFixture();
 
         gestor.buscarCampeonatoById(1).setObjFixture(ObjFixtureA);

@@ -5,13 +5,8 @@
  */
 package clases;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import static proyectosissocer.frmPrincipal.gestor;
 
 /**

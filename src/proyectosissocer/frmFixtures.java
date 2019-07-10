@@ -8,6 +8,7 @@ package proyectosissocer;
 import clases.Jornada;
 import java.util.ArrayList;
 import static proyectosissocer.frmPrincipal.gestor;
+import vistas.clsVistaJornadaModoLiga;
 
 /**
  *
@@ -48,7 +49,7 @@ public class frmFixtures extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
         cbNumFecha = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnSeleccionarCampeonato = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -133,11 +134,14 @@ public class frmFixtures extends javax.swing.JInternalFrame {
                 .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
         );
 
-        cbNumFecha.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7" }));
-
         jLabel10.setText("Fecha");
 
-        jButton2.setText("Seleccionar");
+        btnSeleccionarCampeonato.setText("Seleccionar");
+        btnSeleccionarCampeonato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionarCampeonatoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -159,7 +163,7 @@ public class frmFixtures extends javax.swing.JInternalFrame {
                                 .addComponent(cbCampeonato, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                            .addComponent(btnSeleccionarCampeonato, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                             .addComponent(btnFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(14, Short.MAX_VALUE))
@@ -173,7 +177,7 @@ public class frmFixtures extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(cbCampeonato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(btnSeleccionarCampeonato))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
@@ -194,21 +198,35 @@ public class frmFixtures extends javax.swing.JInternalFrame {
     private void btnFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFechaActionPerformed
         // TODO add your handling code here:
         ArrayList<Jornada> ObjLista = gestor.buscarCampeonato(cbCampeonato.getSelectedItem().toString()).getObjFixture().getListaJornadas();
+        
+        
         for (Jornada j : ObjLista) {
             if(j.getNumFecha()== Integer.parseInt(cbNumFecha.getSelectedItem().toString())){
-                tblEcuentros.setModel(j);
+                clsVistaJornadaModoLiga ObjVista = new clsVistaJornadaModoLiga();
+                ObjVista.setObjListaEncuentro(j.getListaEncuentro());
+                tblEcuentros.setModel(ObjVista);
                 tblEcuentros.updateUI();
             }
         }
         //tblEcuentros.setModel(gestor.buscarCampeonato(cbCampeonato.getSelectedItem().toString()).getObjFixture().getListaJornadas());
     }//GEN-LAST:event_btnFechaActionPerformed
 
+    private void btnSeleccionarCampeonatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarCampeonatoActionPerformed
+        // TODO add your handling code here:
+        cbNumFecha.removeAllItems();
+        ArrayList<Jornada> ListaJornada = gestor.buscarCampeonato(cbCampeonato.getSelectedItem().toString()).getObjFixture().getListaJornadas();
+        for(int i=0;i<ListaJornada.size();i++){
+            cbNumFecha.addItem(String.valueOf(ListaJornada.get(i).getNumFecha()));
+        }
+            
+    }//GEN-LAST:event_btnSeleccionarCampeonatoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFecha;
+    private javax.swing.JButton btnSeleccionarCampeonato;
     private javax.swing.JComboBox<String> cbCampeonato;
     private javax.swing.JComboBox<String> cbNumFecha;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
