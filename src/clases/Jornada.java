@@ -73,7 +73,7 @@ public class Jornada implements TableModel{
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
 
     @Override
@@ -81,15 +81,18 @@ public class Jornada implements TableModel{
         String name=null;
         switch(columnIndex){
             case 0:
-                name="Fecha";
+                name="ID";
                 break;
             case 1:
-                name="VS";
+                name="Fecha";
                 break;
             case 2:
-                name="Visita";
+                name="vs";
                 break;
             case 3:
+                name="Local";
+                break;                
+            case 4:
                 name="Visita";
                 break;                
         }
@@ -98,7 +101,12 @@ public class Jornada implements TableModel{
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        return String.class;
+        switch(columnIndex){
+            case 1:
+                return Date.class;
+            default:
+                return String.class;
+        }
     }
 
     @Override
@@ -112,14 +120,16 @@ public class Jornada implements TableModel{
         
         switch(columnIndex){
             case 0:
-                return j.getFechaEncuentro();
+                return j.getIdEncuentro();
             case 1:
+                return j.getFechaEncuentro();                
+            case 2:
                 return j.getNombreEquipoLocal() ;
                 //return j.getIdEquipoLocal();
-            case 2:
+            case 3:
                 return "vs";
                 //return j.getIdEquipoVisita();
-            case 3:
+            case 4:
                 return j.getNombreEquipoVisita() ;
                 //return j.getIdEquipoVisita();
             default:

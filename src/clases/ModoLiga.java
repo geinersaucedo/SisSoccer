@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import static proyectosissocer.frmPrincipal.gestor;
 
@@ -29,21 +30,24 @@ public class ModoLiga extends Fixture {
             ArrayList<Equipo> objListaEquipos = gestor.buscarCampeonatoById(getIdCampeonato()).getListaEquipos();
             Partido[][] FixtureAleatorio = calcularLiga(objListaEquipos.size());                
             setIdFixture(1);
-             Date date = new Date();       
-
+            setCantidadJornadas(FixtureAleatorio.length);
+            Calendar c = Calendar.getInstance();    
             for (int i = 0; i < FixtureAleatorio.length; i ++)
             {            
                 Jornada ObjJornada = new Jornada();
                 ObjJornada.setIdJornada(i+1);
                 ObjJornada.setNumFecha(i+1);
-
+                ObjJornada.setCantEncuentros_x_Jornada(FixtureAleatorio[i].length);
+                ObjJornada.setIdCampeonato(getIdCampeonato());
+                c.add(Calendar.DATE, 7);
                 for (int j = 0; j < FixtureAleatorio[i].length; j ++)
-                {   Encuentro ObjEncuentro = new Encuentro();  
+                {
+                    Encuentro ObjEncuentro = new Encuentro();  
                     ObjEncuentro.setIdEncuentro(j+1);
-                    ObjEncuentro.setFechaEncuentro(date);
+                    ObjEncuentro.setFechaEncuentro(c.getTime());
                     ObjEncuentro.setIdEquipoLocal(FixtureAleatorio[i][j].local + 1);
                     ObjEncuentro.setNombreEquipoLocal(gestor.buscarCampeonatoById(getIdCampeonato()).buscarEquipo(ObjEncuentro.getIdEquipoLocal()).getNomEquipoCorto());
-
+                    
                     ObjEncuentro.setIdEquipoVisita(FixtureAleatorio[i][j].visitante + 1);
                     ObjEncuentro.setNombreEquipoVisita(gestor.buscarCampeonatoById(getIdCampeonato()).buscarEquipo(ObjEncuentro.getIdEquipoVisita()).getNomEquipoCorto());
 

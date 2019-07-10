@@ -552,7 +552,7 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
             cbCampeonatos.addItem(frmPrincipal.lista.get(i).getNombreCampeonato());
         }
         listadoEquipos.setModel(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()));
-        listadoEquipos.updateUI();
+        listadoEquipos.updateUI();                
     }
     /**
      * Habilita y deshabilita paneles segun vista
@@ -776,7 +776,7 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
             // TODO add your handling code here:
         Fixture ObjFixtureA = new ModoLiga();
         ObjFixtureA.setIdCampeonato(1);
-
+        
         ObjFixtureA.generarFixture();
 
         gestor.buscarCampeonatoById(1).setObjFixture(ObjFixtureA);
