@@ -26,6 +26,12 @@ public class Encuentro {
    private String equipoWalkover;
    private String estado;
 
+    public Encuentro() {
+        this.listaGoles = new ArrayList<Gol>();
+        this.listatarjeta = new ArrayList<Tarjeta>();
+    }
+
+   
     public String getNombreEquipoLocal() {
         return NombreEquipoLocal;
     }
@@ -122,5 +128,12 @@ public class Encuentro {
         this.estado = estado;
     }
    
+   public void setAgregarGol(Gol objGol){
+       listaGoles.add(objGol);
+   }
+
+   public void setAgregartarjeta(Tarjeta objtarjeta){
+       listatarjeta.add(objtarjeta);
+   }
    
 }

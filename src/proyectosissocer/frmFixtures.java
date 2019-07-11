@@ -9,7 +9,7 @@ import clases.Jornada;
 import java.util.ArrayList;
 import static proyectosissocer.frmPrincipal.desktop;
 import static proyectosissocer.frmPrincipal.gestor;
-import vistas.clsVistaJornadaModoLiga;
+import vistas.vistaEncuentrosModoLiga;
 
 /**
  *
@@ -215,7 +215,7 @@ public class frmFixtures extends javax.swing.JInternalFrame {
         
         for (Jornada j : ObjLista) {
             if(j.getNumFecha()== Integer.parseInt(cbNumFecha.getSelectedItem().toString())){
-                clsVistaJornadaModoLiga ObjVista = new clsVistaJornadaModoLiga();
+                vistaEncuentrosModoLiga ObjVista = new vistaEncuentrosModoLiga();
                 ObjVista.setObjListaEncuentro(j.getListaEncuentro());
                 tblEcuentros.setModel(ObjVista);
                 tblEcuentros.updateUI();

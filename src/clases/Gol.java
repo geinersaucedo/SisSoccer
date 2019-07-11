@@ -10,5 +10,15 @@ package clases;
  * @author lsandoval
  */
 public class Gol extends Evento{
+    private String tipoGol;
+
+    public String getTipoGol() {
+        return tipoGol;
+    }
+
+    public void setTipoGol(String tipoGol) {
+        this.tipoGol = tipoGol;
+    }
+   
     
 }

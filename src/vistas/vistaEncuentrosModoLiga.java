@@ -6,7 +6,6 @@
 package vistas;
 
 import clases.Encuentro;
-import clases.Jornada;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.event.TableModelListener;
@@ -16,20 +15,20 @@ import javax.swing.table.TableModel;
  *
  * @author lsandoval
  */
-public class clsVistaJornadaModoLiga implements TableModel{
+public class vistaEncuentrosModoLiga implements TableModel{
 
     ArrayList<Encuentro> ObjListaEncuentro ;
 
+    public vistaEncuentrosModoLiga() {
+        ObjListaEncuentro = new ArrayList<Encuentro>();
+    }
+    
     public ArrayList<Encuentro> getObjListaEncuentro() {
         return ObjListaEncuentro;
     }
 
     public void setObjListaEncuentro(ArrayList<Encuentro> ObjListaEncuentro) {
         this.ObjListaEncuentro = ObjListaEncuentro;
-    }
-
-    public clsVistaJornadaModoLiga() {
-        ObjListaEncuentro = new ArrayList<Encuentro>();
     }
 
     @Override

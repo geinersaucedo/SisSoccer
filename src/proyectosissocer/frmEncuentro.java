@@ -7,6 +7,13 @@ package proyectosissocer;
 
 import clases.Campeonato;
 import clases.Encuentro;
+import clases.Equipo;
+import clases.Jugador;
+import clases.Gol;
+import clases.Tarjeta;
+import vistas.vistaGoles;
+import vistas.vistaTarjetas;
+import java.awt.event.ItemEvent;
 import javax.swing.JSpinner;
 import static proyectosissocer.frmFixtures.pNomCampeonato;
 import static proyectosissocer.frmFixtures.pIdEncuentro;
@@ -18,7 +25,8 @@ import static proyectosissocer.frmPrincipal.gestor;
  * @author Geiner Saucedo
  */
 public class frmEncuentro extends javax.swing.JInternalFrame {
-
+    
+    public Encuentro ObjEncuentro;
     private static frmEncuentro frm;
     public static frmEncuentro getInstancia(){
         if (frm==null) {
@@ -31,17 +39,31 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         initComponents();
         //spinerLocal.setEnabled(false);
         
-        inhabilitaSpinner(spinerLocal);
-        inhabilitaSpinner(spinerVisita);
-        
+        inhabilitaSpinner(spinerGolLocal);
+        inhabilitaSpinner(spinerGolVisita);
+        CargaDatosIniciales();
+    }
+    
+    public void CargaDatosIniciales(){
         Campeonato ObjCamp = gestor.buscarCampeonato(pNomCampeonato);
         lblTituloEncuentro.setText(pNomCampeonato +  " - Fecha " + pNumFecha );
         Encuentro objEncuentro = ObjCamp.getObjFixture().getJornadas_ByNumFecha(pNumFecha).getEncuentro_ById(pIdEncuentro);
         lblEquipoLocal.setText(ObjCamp.getNomEquipoCorto_ById(objEncuentro.getIdEquipoLocal()));
         lblEquipoVisita.setText(ObjCamp.getNomEquipoCorto_ById(objEncuentro.getIdEquipoVisita()));
+        rbLocal.setText(lblEquipoLocal.getText());
+        rbVisita.setText(lblEquipoVisita.getText());
         
+        cbEquipoGoles.removeAllItems();
+        cbEquipoGoles.addItem("Seleccionar");
+        cbEquipoGoles.addItem(lblEquipoLocal.getText());
+        cbEquipoGoles.addItem(lblEquipoVisita.getText());
         
+        cbEquipoTarjetas.removeAllItems();
+        cbEquipoTarjetas.addItem("Seleccionar");
+        cbEquipoTarjetas.addItem(lblEquipoLocal.getText());
+        cbEquipoTarjetas.addItem(lblEquipoVisita.getText());
     }
+    
     public void inhabilitaSpinner(JSpinner spiner){
         if ( spiner.getEditor() instanceof JSpinner.DefaultEditor ) {
             JSpinner.DefaultEditor editor = ( JSpinner.DefaultEditor ) spiner.getEditor();
@@ -62,41 +84,41 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         lblEquipoLocal = new javax.swing.JLabel();
-        spinerLocal = new javax.swing.JSpinner();
+        spinerGolLocal = new javax.swing.JSpinner();
         jPanel2 = new javax.swing.JPanel();
         lblEquipoVisita = new javax.swing.JLabel();
-        spinerVisita = new javax.swing.JSpinner();
+        spinerGolVisita = new javax.swing.JSpinner();
         jLabel5 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        spinerLocal3 = new javax.swing.JSpinner();
-        spinerLocal4 = new javax.swing.JSpinner();
-        spinerLocal5 = new javax.swing.JSpinner();
-        spinerLocal6 = new javax.swing.JSpinner();
+        spinerTALocal = new javax.swing.JSpinner();
+        spinerTAVisita = new javax.swing.JSpinner();
+        spinerTRVisita = new javax.swing.JSpinner();
+        spinerTRLocal = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
         admDatos = new javax.swing.JTabbedPane();
         panelGoles = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        jComboBox13 = new javax.swing.JComboBox<>();
-        jComboBox14 = new javax.swing.JComboBox<>();
+        cbJugadoresGol = new javax.swing.JComboBox<>();
+        cbTipoGol = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jComboBox15 = new javax.swing.JComboBox<>();
+        cbEquipoGoles = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        tblGoles = new javax.swing.JTable();
+        btnAgregarGol = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         panelTarjetas = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jComboBox11 = new javax.swing.JComboBox<>();
-        jComboBox12 = new javax.swing.JComboBox<>();
+        cbJugadoresTarjeta = new javax.swing.JComboBox<>();
+        cbColorTarjeta = new javax.swing.JComboBox<>();
+        cbEquipoTarjetas = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton6 = new javax.swing.JButton();
+        tblTarjetas = new javax.swing.JTable();
+        btnAgregartarjeta = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -121,9 +143,9 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         lblEquipoLocal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEquipoLocal.setText("EQUIPO A");
 
-        spinerLocal.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        spinerLocal.setModel(new javax.swing.SpinnerNumberModel(0, 0, 15, 1));
-        spinerLocal.setEnabled(false);
+        spinerGolLocal.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        spinerGolLocal.setModel(new javax.swing.SpinnerNumberModel(0, 0, 15, 1));
+        spinerGolLocal.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -132,7 +154,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
             .addComponent(lblEquipoLocal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(53, 53, 53)
-                .addComponent(spinerLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(spinerGolLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(69, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -141,16 +163,16 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblEquipoLocal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spinerLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(spinerGolLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         lblEquipoVisita.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblEquipoVisita.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEquipoVisita.setText("EQUIPO B");
 
-        spinerVisita.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        spinerVisita.setModel(new javax.swing.SpinnerNumberModel(0, 0, 15, 1));
-        spinerVisita.setEnabled(false);
+        spinerGolVisita.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        spinerGolVisita.setModel(new javax.swing.SpinnerNumberModel(0, 0, 15, 1));
+        spinerGolVisita.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -158,7 +180,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(73, 73, 73)
-                .addComponent(spinerVisita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(spinerGolVisita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(79, Short.MAX_VALUE))
             .addComponent(lblEquipoVisita, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -168,7 +190,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblEquipoVisita)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spinerVisita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(spinerGolVisita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -177,21 +199,21 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Tarjetas Amarillas:");
 
-        spinerLocal3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        spinerLocal3.setModel(new javax.swing.SpinnerNumberModel(0, 0, 15, 1));
-        spinerLocal3.setEnabled(false);
+        spinerTALocal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        spinerTALocal.setModel(new javax.swing.SpinnerNumberModel(0, 0, 15, 1));
+        spinerTALocal.setEnabled(false);
 
-        spinerLocal4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        spinerLocal4.setModel(new javax.swing.SpinnerNumberModel(0, 0, 15, 1));
-        spinerLocal4.setEnabled(false);
+        spinerTAVisita.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        spinerTAVisita.setModel(new javax.swing.SpinnerNumberModel(0, 0, 15, 1));
+        spinerTAVisita.setEnabled(false);
 
-        spinerLocal5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        spinerLocal5.setModel(new javax.swing.SpinnerNumberModel(0, 0, 15, 1));
-        spinerLocal5.setEnabled(false);
+        spinerTRVisita.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        spinerTRVisita.setModel(new javax.swing.SpinnerNumberModel(0, 0, 15, 1));
+        spinerTRVisita.setEnabled(false);
 
-        spinerLocal6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        spinerLocal6.setModel(new javax.swing.SpinnerNumberModel(0, 0, 15, 1));
-        spinerLocal6.setEnabled(false);
+        spinerTRLocal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        spinerTRLocal.setModel(new javax.swing.SpinnerNumberModel(0, 0, 15, 1));
+        spinerTRLocal.setEnabled(false);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Tarjetas Rojas:");
@@ -207,12 +229,12 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
                     .addComponent(jLabel8))
                 .addGap(45, 45, 45)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(spinerLocal6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(spinerLocal3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spinerTRLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spinerTALocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(spinerLocal4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(spinerLocal5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spinerTAVisita, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spinerTRVisita, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(136, 136, 136))
         );
         jPanel5Layout.setVerticalGroup(
@@ -221,28 +243,33 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
                 .addContainerGap(15, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(spinerLocal3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(spinerLocal4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spinerTALocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spinerTAVisita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(spinerLocal6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(spinerLocal5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(spinerTRLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spinerTRVisita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jLabel13.setText("Jugador:");
 
-        jComboBox13.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Jugador 1", "Jugador 2" }));
+        cbJugadoresGol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Jugador 1", "Jugador 2" }));
 
-        jComboBox14.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Disparo", "Tiro Libre", "Olimpico", "Cabeza" }));
+        cbTipoGol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Disparo", "Tiro Libre", "Olimpico", "Cabeza", "Penal", "Chalaca", "Rabona", "Palomita", "Tijera", "Tiro del Tigre", "A lo Checho", " " }));
 
         jLabel14.setText("Tipo:");
 
         jLabel15.setText("Equipo:");
 
-        jComboBox15.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Equipo A", "Equipo B" }));
+        cbEquipoGoles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Equipo A", "Equipo B" }));
+        cbEquipoGoles.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbEquipoGolesItemStateChanged(evt);
+            }
+        });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblGoles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -268,9 +295,14 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tblGoles);
 
-        jButton1.setText("Agregar");
+        btnAgregarGol.setText("Agregar");
+        btnAgregarGol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarGolActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Eliminar");
 
@@ -280,7 +312,13 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         panelGoles.setLayout(panelGolesLayout);
         panelGolesLayout.setHorizontalGroup(
             panelGolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelGolesLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGolesLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jLabel15)
+                .addGap(18, 18, 18)
+                .addComponent(cbEquipoGoles, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGolesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelGolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
@@ -291,18 +329,13 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addGroup(panelGolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelGolesLayout.createSequentialGroup()
-                                .addComponent(jComboBox14, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbTipoGol, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jComboBox13, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGolesLayout.createSequentialGroup()
-                        .addComponent(jLabel15)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBox15, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(135, 135, 135)))
+                            .addComponent(cbJugadoresGol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGolesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnAgregarGol)
                 .addGap(18, 18, 18)
                 .addComponent(jButton3)
                 .addGap(18, 18, 18)
@@ -315,20 +348,20 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
                 .addGap(19, 19, 19)
                 .addGroup(panelGolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(jComboBox15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbEquipoGoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelGolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(jComboBox13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbJugadoresGol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelGolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(jComboBox14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbTipoGol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelGolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnAgregarGol)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
                 .addContainerGap())
@@ -342,13 +375,18 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
 
         jLabel12.setText("Jugador:");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Jugador 1", "Jugador 2" }));
+        cbJugadoresTarjeta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Jugador 1", "Jugador 2" }));
 
-        jComboBox11.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Amarilla", "Roja" }));
+        cbColorTarjeta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Amarilla", "Roja" }));
 
-        jComboBox12.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Equipo A", "Equipo B" }));
+        cbEquipoTarjetas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Equipo A", "Equipo B" }));
+        cbEquipoTarjetas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbEquipoTarjetasItemStateChanged(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblTarjetas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -374,9 +412,14 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblTarjetas);
 
-        jButton6.setText("Agregar");
+        btnAgregartarjeta.setText("Agregar");
+        btnAgregartarjeta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregartarjetaActionPerformed(evt);
+            }
+        });
 
         jButton7.setText("Modificar");
 
@@ -388,7 +431,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
             panelTarjetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTarjetasLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton6)
+                .addComponent(btnAgregartarjeta)
                 .addGap(18, 18, 18)
                 .addComponent(jButton7)
                 .addGap(18, 18, 18)
@@ -397,22 +440,20 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
             .addGroup(panelTarjetasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelTarjetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelTarjetasLayout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                        .addComponent(jComboBox12, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(141, 141, 141))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
                     .addGroup(panelTarjetasLayout.createSequentialGroup()
                         .addGroup(panelTarjetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12)
-                            .addComponent(jLabel10))
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(18, 18, 18)
                         .addGroup(panelTarjetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbJugadoresTarjeta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(panelTarjetasLayout.createSequentialGroup()
-                                .addComponent(jComboBox11, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGroup(panelTarjetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbEquipoTarjetas, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbColorTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         panelTarjetasLayout.setVerticalGroup(
@@ -421,20 +462,20 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(panelTarjetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jComboBox12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbEquipoTarjetas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelTarjetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbJugadoresTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelTarjetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jComboBox11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbColorTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(panelTarjetasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6)
+                    .addComponent(btnAgregartarjeta)
                     .addComponent(jButton8)
                     .addComponent(jButton7))
                 .addContainerGap())
@@ -447,7 +488,6 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         jScrollPane3.setViewportView(jTextArea1);
 
         grupoWalkover.add(rbLocal);
-        rbLocal.setSelected(true);
         rbLocal.setText("EQUIPO A");
         rbLocal.setEnabled(false);
 
@@ -522,6 +562,11 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         jButton4.setText("Cerrar");
 
         jButton5.setText("Grabar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         lblTituloEncuentro.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblTituloEncuentro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -601,30 +646,111 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
             rbLocal.setEnabled(false);
             rbVisita.setEnabled(false);
             admDatos.setEnabledAt(0, true);
-            admDatos.setEnabledAt(1, true);
-            
+            admDatos.setEnabledAt(1, true);            
         }
     }//GEN-LAST:event_checkWalkoverActionPerformed
 
+    private void cbEquipoGolesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbEquipoGolesItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+                 Equipo ObjEquipo = gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(evt.getItem().toString());
+                 cbJugadoresGol.removeAllItems();
+                 for (Jugador j:ObjEquipo.getListaJugadores() ) {
+                    cbJugadoresGol.addItem(j.getNombre()+" " + j.getApellidos());
+                 }
+        }
+    }//GEN-LAST:event_cbEquipoGolesItemStateChanged
+
+    private void cbEquipoTarjetasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbEquipoTarjetasItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+                 Equipo ObjEquipo = gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(evt.getItem().toString());
+                 cbJugadoresTarjeta.removeAllItems();
+                 for (Jugador j:ObjEquipo.getListaJugadores() ) {
+                    cbJugadoresTarjeta.addItem(j.getNombre()+" " + j.getApellidos());
+                 }
+        }        
+    }//GEN-LAST:event_cbEquipoTarjetasItemStateChanged
+
+    private void btnAgregarGolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarGolActionPerformed
+        // TODO add your handling code here:
+        ObjEncuentro = gestor.buscarCampeonato(pNomCampeonato).getObjFixture().getJornadas_ByNumFecha(pNumFecha).getEncuentro_ById(pIdEncuentro);
+        Gol ObjGol= new Gol();
+        ObjGol.setIdEvento(ObjEncuentro.getListaGoles().size()+1);
+        ObjGol.setIdEquipo(gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoGoles.getSelectedItem().toString()).getIdEquipo());
+        ObjGol.setNomEquipo(cbEquipoGoles.getSelectedItem().toString());
+        ObjGol.setIdJugador(gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoGoles.getSelectedItem().toString()).getIdJugador_ByNombresCompletos(cbJugadoresGol.getSelectedItem().toString()).getIdJugador());
+        ObjGol.setNomJugador(cbJugadoresGol.getSelectedItem().toString());
+        ObjGol.setTipoGol(cbTipoGol.getSelectedItem().toString());
+        ObjEncuentro.setAgregarGol(ObjGol);        
+        vistaGoles objVistaGol = new vistaGoles();
+        objVistaGol.setListaGoles(ObjEncuentro.getListaGoles());
+        
+        if(lblEquipoLocal.getText().equals(ObjGol.getNomEquipo())){
+            spinerGolLocal.setValue((int)spinerGolLocal.getValue()+1);
+        }else if(lblEquipoVisita.getText().equals(ObjGol.getNomEquipo())){
+            spinerGolVisita.setValue((int)spinerGolVisita.getValue()+1);
+        }
+
+        
+        tblGoles.setModel(objVistaGol);
+        tblGoles.updateUI();               
+    }//GEN-LAST:event_btnAgregarGolActionPerformed
+
+    private void btnAgregartarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregartarjetaActionPerformed
+        ObjEncuentro = gestor.buscarCampeonato(pNomCampeonato).getObjFixture().getJornadas_ByNumFecha(pNumFecha).getEncuentro_ById(pIdEncuentro);
+        Tarjeta ObjTarjeta= new Tarjeta();
+        ObjTarjeta.setIdEvento(ObjEncuentro.getListatarjeta().size()+1);
+        ObjTarjeta.setIdEquipo(gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoTarjetas.getSelectedItem().toString()).getIdEquipo());
+        ObjTarjeta.setNomEquipo(cbEquipoTarjetas.getSelectedItem().toString());
+        ObjTarjeta.setIdJugador(gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoTarjetas.getSelectedItem().toString()).getIdJugador_ByNombresCompletos(cbJugadoresTarjeta.getSelectedItem().toString()).getIdJugador());
+        ObjTarjeta.setNomJugador(cbJugadoresTarjeta.getSelectedItem().toString());
+        ObjTarjeta.setColorTarjeta(cbColorTarjeta.getSelectedItem().toString());
+        ObjEncuentro.setAgregartarjeta(ObjTarjeta);        
+        vistaTarjetas objVistaTarjeta = new vistaTarjetas();
+        objVistaTarjeta.setListaTarjetas(ObjEncuentro.getListatarjeta());
+        
+        if(lblEquipoLocal.getText().equals(ObjTarjeta.getNomEquipo())){
+            if(cbColorTarjeta.getSelectedItem().toString().equals("Amarilla"))
+               spinerTALocal.setValue((int)spinerTALocal.getValue()+1);
+            else if (cbColorTarjeta.getSelectedItem().toString().equals("Roja"))
+               spinerTRLocal.setValue((int)spinerTRLocal.getValue()+1);
+        }else if(lblEquipoVisita.getText().equals(ObjTarjeta.getNomEquipo())){            
+            if(cbColorTarjeta.getSelectedItem().toString().equals("Amarilla"))
+               spinerTAVisita.setValue((int)spinerTAVisita.getValue()+1);
+            else if (cbColorTarjeta.getSelectedItem().toString().equals("Roja"))
+               spinerTRVisita.setValue((int)spinerTRVisita.getValue()+1);            
+        }
+       
+        tblTarjetas.setModel(objVistaTarjeta);
+        tblTarjetas.updateUI();         
+    }//GEN-LAST:event_btnAgregartarjetaActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        //gestor.buscarCampeonato(pNomCampeonato).getObjFixture().getJornadas_ByNumFecha(pNumFecha).se
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane admDatos;
+    private javax.swing.JButton btnAgregarGol;
+    private javax.swing.JButton btnAgregartarjeta;
+    private javax.swing.JComboBox<String> cbColorTarjeta;
+    private javax.swing.JComboBox<String> cbEquipoGoles;
+    private javax.swing.JComboBox<String> cbEquipoTarjetas;
+    private javax.swing.JComboBox<String> cbJugadoresGol;
+    private javax.swing.JComboBox<String> cbJugadoresTarjeta;
+    private javax.swing.JComboBox<String> cbTipoGol;
     private javax.swing.JCheckBox checkWalkover;
     private javax.swing.ButtonGroup grupoWalkover;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JComboBox<String> jComboBox11;
-    private javax.swing.JComboBox<String> jComboBox12;
-    private javax.swing.JComboBox<String> jComboBox13;
-    private javax.swing.JComboBox<String> jComboBox14;
-    private javax.swing.JComboBox<String> jComboBox15;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -644,8 +770,6 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblEquipoLocal;
     private javax.swing.JLabel lblEquipoVisita;
@@ -654,11 +778,13 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
     private javax.swing.JPanel panelTarjetas;
     private javax.swing.JRadioButton rbLocal;
     private javax.swing.JRadioButton rbVisita;
-    private javax.swing.JSpinner spinerLocal;
-    private javax.swing.JSpinner spinerLocal3;
-    private javax.swing.JSpinner spinerLocal4;
-    private javax.swing.JSpinner spinerLocal5;
-    private javax.swing.JSpinner spinerLocal6;
-    private javax.swing.JSpinner spinerVisita;
+    private javax.swing.JSpinner spinerGolLocal;
+    private javax.swing.JSpinner spinerGolVisita;
+    private javax.swing.JSpinner spinerTALocal;
+    private javax.swing.JSpinner spinerTAVisita;
+    private javax.swing.JSpinner spinerTRLocal;
+    private javax.swing.JSpinner spinerTRVisita;
+    private javax.swing.JTable tblGoles;
+    private javax.swing.JTable tblTarjetas;
     // End of variables declaration//GEN-END:variables
 }

@@ -11,7 +11,7 @@ import javax.swing.table.TableModel;
  *
  * @author Geiner Saucedo
  */
-public class Campeonato implements TableModel{
+public class Campeonato{
     private int idCampeonato;
     private String nombreCampeonato;
     private String organizador;
@@ -131,6 +131,7 @@ public class Campeonato implements TableModel{
             return true;
         }else return false;
     }
+    
     public void agregarEquipo(Equipo equipo){
         //Agregar validación, para agregar equipo el size de lista jugadores debe ser max de 12, min de 8
         listaEquipos.add(equipo);
@@ -143,85 +144,10 @@ public class Campeonato implements TableModel{
         return "-";
     }
         
-    @Override
-    public int getRowCount() {
-        return listaEquipos.size();
-    }
-
-    @Override
-    public int getColumnCount() {
-        return 3;
-    }
-
-    @Override
-    public String getColumnName(int columnIndex) {
-        String name=null;
-        switch(columnIndex){
-            case 0:
-                name="Id";
-                break;
-            case 1:
-                name="Nombre Corto";
-                break;
-            case 2:
-                name="Nombre Largo";
-                break;
+    public Equipo getEquipo_ByNomEquipoCorto(String nomEquipoCorto) {
+        for (Equipo e:listaEquipos) {
+            if(e.getNomEquipoCorto()==nomEquipoCorto) return e;
         }
-        return name;
-    }
-
-    @Override
-    public Class<?> getColumnClass(int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-                return int.class;
-            default:
-                return String.class;
-        }
-    }
-
-    @Override
-    public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return false;
-    }
-
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        Equipo c=listaEquipos.get(rowIndex);
-        
-        switch(columnIndex){
-            case 0:
-                return c.getIdEquipo();
-            case 1:
-                return c.getNomEquipoCorto();
-            case 2:
-                return c.getNomEquipoLargo();
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        Equipo c=listaEquipos.get(rowIndex);
-        
-        switch(columnIndex){
-            case 0:
-                c.setIdEquipo((int)aValue);
-            case 1:
-                c.setNomEquipoCorto((String)aValue);
-            case 2:
-                c.setNomEquipoLargo((String)aValue);
-        }
-    }
-
-    @Override
-    public void addTableModelListener(TableModelListener l) {
-
-    }
-
-    @Override
-    public void removeTableModelListener(TableModelListener l) {
-
-    }
+        return new Equipo();
+    }   
 }

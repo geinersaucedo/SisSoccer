@@ -3,6 +3,7 @@ package proyectosissocer;
 
 import clases.Campeonato;
 import javax.swing.JOptionPane;
+import vistas.vistaCampeonatos;
 
 /**
  *
@@ -24,7 +25,9 @@ public class frmNuevoCampeonato extends javax.swing.JInternalFrame {
     public frmNuevoCampeonato() {
         initComponents();
         tabPanel.setEnabledAt(1, false);
-        listadoCampeonatos.setModel(frmPrincipal.gestor);
+        vistaCampeonatos objVistaGestor = new vistaCampeonatos();
+        objVistaGestor.setListaCampeonatos(frmPrincipal.gestor.getListaCampeonatos());
+        listadoCampeonatos.setModel(objVistaGestor);
     }
 
     /**
@@ -339,7 +342,9 @@ public class frmNuevoCampeonato extends javax.swing.JInternalFrame {
         if(c.validaCampeonato()){
             frmPrincipal.gestor.agregarCampeonato(c);
             cambiarVista(0);
-            listadoCampeonatos.setModel(frmPrincipal.gestor);
+            vistaCampeonatos objVistaGestor = new vistaCampeonatos();
+            objVistaGestor.setListaCampeonatos(frmPrincipal.gestor.getListaCampeonatos());
+            listadoCampeonatos.setModel(objVistaGestor);            
             listadoCampeonatos.updateUI();
             frmNuevoEquipo.getInstancia().actualizarDATA();
             JOptionPane.showMessageDialog(null, "Se guardó el campeonato "+txtNombreCampeonato.getText()+" correctamente!");

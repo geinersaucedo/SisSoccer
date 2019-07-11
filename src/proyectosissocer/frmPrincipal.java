@@ -188,7 +188,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         Jugador C1_EQ2_J1=new Jugador();   C1_EQ2_J1.setApellidos("Yaruvi");C1_EQ2_J1.setDireccion("Av ee 44");C1_EQ2_J1.setDni("25563214");C1_EQ2_J1.setIdJugador(1);C1_EQ2_J1.setNombre("Lucas");C1_EQ2_J1.setNumCamiseta(4);C1_EQ2_J1.setPosicion("Volante");C1_EQ2_J1.setTelefono("999666333");        
         Jugador C1_EQ2_J2=new Jugador();   C1_EQ2_J2.setApellidos("Mendoza");C1_EQ2_J2.setDireccion("Jr sdf 53");C1_EQ2_J2.setDni("89632145");C1_EQ2_J2.setIdJugador(2);C1_EQ2_J2.setNombre("Samuel");C1_EQ2_J2.setNumCamiseta(2);C1_EQ2_J2.setPosicion("Volante");C1_EQ2_J2.setTelefono("986544222");
         Jugador C1_EQ2_J3=new Jugador();   C1_EQ2_J3.setApellidos("Castro");C1_EQ2_J3.setDireccion("Jr 123s 13");C1_EQ2_J3.setDni("14522223");C1_EQ2_J3.setIdJugador(3);C1_EQ2_J3.setNombre("Omar");C1_EQ2_J3.setNumCamiseta(1);C1_EQ2_J3.setPosicion("Arquero");C1_EQ2_J3.setTelefono("969363121");
-        C1_EQ1.agregarJugador(C1_EQ2_J1);C1_EQ1.agregarJugador(C1_EQ2_J2);C1_EQ1.agregarJugador(C1_EQ2_J3);
+        C1_EQ2.agregarJugador(C1_EQ2_J1);C1_EQ2.agregarJugador(C1_EQ2_J2);C1_EQ2.agregarJugador(C1_EQ2_J3);
         
         a.agregarEquipo(C1_EQ2);
         //++++++++++++++++Equipo3 Campeonato A
@@ -203,7 +203,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         Jugador C1_EQ3_J1=new Jugador();   C1_EQ3_J1.setApellidos("Asuncion");C1_EQ3_J1.setDireccion("Av qqqq 44");C1_EQ3_J1.setDni("12365852");C1_EQ3_J1.setIdJugador(1);C1_EQ3_J1.setNombre("Paolo");C1_EQ3_J1.setNumCamiseta(14);C1_EQ3_J1.setPosicion("Volante");C1_EQ3_J1.setTelefono("999888555");        
         Jugador C1_EQ3_J2=new Jugador();   C1_EQ3_J2.setApellidos("Roque");C1_EQ3_J2.setDireccion("Jr asd 53");C1_EQ3_J2.setDni("11142563");C1_EQ3_J2.setIdJugador(2);C1_EQ3_J2.setNombre("Yefri");C1_EQ3_J2.setNumCamiseta(12);C1_EQ3_J2.setPosicion("Volante");C1_EQ3_J2.setTelefono("966222111");
         Jugador C1_EQ3_J3=new Jugador();   C1_EQ3_J3.setApellidos("Guerrero");C1_EQ3_J3.setDireccion("Jr rrr 13");C1_EQ3_J3.setDni("22232125");C1_EQ3_J3.setIdJugador(3);C1_EQ3_J3.setNombre("Pedro");C1_EQ3_J3.setNumCamiseta(11);C1_EQ3_J3.setPosicion("Arquero");C1_EQ3_J3.setTelefono("963258741");
-        C1_EQ1.agregarJugador(C1_EQ3_J1);C1_EQ1.agregarJugador(C1_EQ3_J2);C1_EQ1.agregarJugador(C1_EQ3_J3);
+        C1_EQ3.agregarJugador(C1_EQ3_J1);C1_EQ3.agregarJugador(C1_EQ3_J2);C1_EQ3.agregarJugador(C1_EQ3_J3);
         
         a.agregarEquipo(C1_EQ3);
         //++++++++++++++++Equipo4 Campeonato A
@@ -218,7 +218,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         Jugador C1_EQ4_J1=new Jugador();   C1_EQ4_J1.setApellidos("Gallese");C1_EQ4_J1.setDireccion("Av qwer 4");C1_EQ4_J1.setDni("85547852");C1_EQ4_J1.setIdJugador(1);C1_EQ4_J1.setNombre("Pedro");C1_EQ4_J1.setNumCamiseta(14);C1_EQ4_J1.setPosicion("Arquero");C1_EQ4_J1.setTelefono("999666333");        
         Jugador C1_EQ4_J2=new Jugador();   C1_EQ4_J2.setApellidos("Ramos");C1_EQ4_J2.setDireccion("Jr ass 253");C1_EQ4_J2.setDni("22244558");C1_EQ4_J2.setIdJugador(2);C1_EQ4_J2.setNombre("Cristian");C1_EQ4_J2.setNumCamiseta(12);C1_EQ4_J2.setPosicion("Volante");C1_EQ4_J2.setTelefono("987456321");
         Jugador C1_EQ4_J3=new Jugador();   C1_EQ4_J3.setApellidos("Abhram");C1_EQ4_J3.setDireccion("Jr hyuh 2");C1_EQ4_J3.setDni("12356565");C1_EQ4_J3.setIdJugador(3);C1_EQ4_J3.setNombre("Luis");C1_EQ4_J3.setNumCamiseta(11);C1_EQ4_J3.setPosicion("Volante");C1_EQ4_J3.setTelefono("951753158");
-        C1_EQ1.agregarJugador(C1_EQ4_J1);C1_EQ1.agregarJugador(C1_EQ4_J2);C1_EQ1.agregarJugador(C1_EQ4_J3);
+        C1_EQ4.agregarJugador(C1_EQ4_J1);C1_EQ4.agregarJugador(C1_EQ4_J2);C1_EQ4.agregarJugador(C1_EQ4_J3);
         
         a.agregarEquipo(C1_EQ4);
         //++++++++++++++++Equipo5 Campeonato A
@@ -233,7 +233,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         Jugador C1_EQ5_J1=new Jugador();   C1_EQ5_J1.setApellidos("Castro");C1_EQ5_J1.setDireccion("Av qwer 4");C1_EQ5_J1.setDni("85512352");C1_EQ5_J1.setIdJugador(1);C1_EQ5_J1.setNombre("Pedro");C1_EQ5_J1.setNumCamiseta(11);C1_EQ5_J1.setPosicion("Arquero");C1_EQ5_J1.setTelefono("999666333");        
         Jugador C1_EQ5_J2=new Jugador();   C1_EQ5_J2.setApellidos("Fernandez");C1_EQ5_J2.setDireccion("Jr ass 253");C1_EQ5_J2.setDni("22234558");C1_EQ5_J2.setIdJugador(2);C1_EQ5_J2.setNombre("Cristian");C1_EQ5_J2.setNumCamiseta(43);C1_EQ5_J2.setPosicion("Volante");C1_EQ5_J2.setTelefono("987456321");
         Jugador C1_EQ5_J3=new Jugador();   C1_EQ5_J3.setApellidos("Yarabi");C1_EQ5_J3.setDireccion("Jr hyuh 2");C1_EQ5_J3.setDni("12312365");C1_EQ5_J3.setIdJugador(3);C1_EQ5_J3.setNombre("Luis");C1_EQ5_J3.setNumCamiseta(44);C1_EQ5_J3.setPosicion("Volante");C1_EQ5_J3.setTelefono("951753158");
-        C1_EQ1.agregarJugador(C1_EQ5_J1);C1_EQ1.agregarJugador(C1_EQ5_J2);C1_EQ1.agregarJugador(C1_EQ5_J3);
+        C1_EQ5.agregarJugador(C1_EQ5_J1);C1_EQ5.agregarJugador(C1_EQ5_J2);C1_EQ5.agregarJugador(C1_EQ5_J3);
         
         a.agregarEquipo(C1_EQ5);
         //++++++++++++++++Equipo6 Campeonato A
@@ -248,7 +248,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         Jugador C1_EQ6_J1=new Jugador();   C1_EQ6_J1.setApellidos("Rivasplata");C1_EQ6_J1.setDireccion("Av qwer 4");C1_EQ6_J1.setDni("58888774");C1_EQ6_J1.setIdJugador(1);C1_EQ6_J1.setNombre("Kelo");C1_EQ6_J1.setNumCamiseta(24);C1_EQ6_J1.setPosicion("Arquero");C1_EQ6_J1.setTelefono("999666333");        
         Jugador C1_EQ6_J2=new Jugador();   C1_EQ6_J2.setApellidos("Listoti");C1_EQ6_J2.setDireccion("Jr ass 253");C1_EQ6_J2.setDni("22222228");C1_EQ6_J2.setIdJugador(2);C1_EQ6_J2.setNombre("Adrian");C1_EQ6_J2.setNumCamiseta(19);C1_EQ6_J2.setPosicion("Volante");C1_EQ6_J2.setTelefono("987456321");
         Jugador C1_EQ6_J3=new Jugador();   C1_EQ6_J3.setApellidos("Silva");C1_EQ6_J3.setDireccion("Jr h4uh 2");C1_EQ6_J3.setDni("12333335");C1_EQ6_J3.setIdJugador(3);C1_EQ6_J3.setNombre("Jose Maria");C1_EQ6_J3.setNumCamiseta(18);C1_EQ6_J3.setPosicion("Volante");C1_EQ6_J3.setTelefono("951753158");
-        C1_EQ1.agregarJugador(C1_EQ6_J1);C1_EQ1.agregarJugador(C1_EQ6_J2);C1_EQ1.agregarJugador(C1_EQ6_J3);
+        C1_EQ6.agregarJugador(C1_EQ6_J1);C1_EQ6.agregarJugador(C1_EQ6_J2);C1_EQ6.agregarJugador(C1_EQ6_J3);
         
         a.agregarEquipo(C1_EQ6);
         //++++++++++++++++Equipo7 Campeonato A
@@ -263,7 +263,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         Jugador C1_EQ7_J1=new Jugador();   C1_EQ7_J1.setApellidos("Saavedra");C1_EQ7_J1.setDireccion("Av sol 4");C1_EQ7_J1.setDni("53338774");C1_EQ7_J1.setIdJugador(1);C1_EQ7_J1.setNombre("Bruno");C1_EQ7_J1.setNumCamiseta(14);C1_EQ7_J1.setPosicion("Arquero");C1_EQ7_J1.setTelefono("999666333");        
         Jugador C1_EQ7_J2=new Jugador();   C1_EQ7_J2.setApellidos("Cortez");C1_EQ7_J2.setDireccion("Jr luna 253");C1_EQ7_J2.setDni("28229128");C1_EQ7_J2.setIdJugador(2);C1_EQ7_J2.setNombre("Alberto");C1_EQ7_J2.setNumCamiseta(89);C1_EQ7_J2.setPosicion("Volante");C1_EQ7_J2.setTelefono("987456321");
         Jugador C1_EQ7_J3=new Jugador();   C1_EQ7_J3.setApellidos("Aragonez");C1_EQ7_J3.setDireccion("Jr Althaus 2");C1_EQ7_J3.setDni("12433375");C1_EQ7_J3.setIdJugador(3);C1_EQ7_J3.setNombre("Elvis");C1_EQ7_J3.setNumCamiseta(28);C1_EQ7_J3.setPosicion("Volante");C1_EQ7_J3.setTelefono("951753158");
-        C1_EQ1.agregarJugador(C1_EQ7_J1);C1_EQ1.agregarJugador(C1_EQ7_J2);C1_EQ1.agregarJugador(C1_EQ7_J3);
+        C1_EQ7.agregarJugador(C1_EQ7_J1);C1_EQ7.agregarJugador(C1_EQ7_J2);C1_EQ7.agregarJugador(C1_EQ7_J3);
         
         a.agregarEquipo(C1_EQ7);
         //**********CAMPEONATO B****************

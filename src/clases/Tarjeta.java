@@ -10,5 +10,15 @@ package clases;
  * @author lsandoval
  */
 public class Tarjeta extends Evento{
+    private String colorTarjeta;
+
+    public String getColorTarjeta() {
+        return colorTarjeta;
+    }
+
+    public void setColorTarjeta(String colorTarjeta) {
+        this.colorTarjeta = colorTarjeta;
+    }
+    
     
 }

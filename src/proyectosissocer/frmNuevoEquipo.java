@@ -9,17 +9,15 @@ import clases.Delegado;
 import clases.Equipo;
 
 import clases.Fixture;
-import clases.Jugador;
-import clases.ModoEliminacion;
 import clases.ModoLiga;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import static proyectosissocer.frmPrincipal.desktop;
 import static proyectosissocer.frmPrincipal.gestor;
 
 import clases.Jugador;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import vistas.vistaEquipos;
+import vistas.vistaJugadores;
 
 
 /**
@@ -551,7 +549,10 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
         for(int i=0;i<frmPrincipal.lista.size();i++){
             cbCampeonatos.addItem(frmPrincipal.lista.get(i).getNombreCampeonato());
         }
-        listadoEquipos.setModel(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()));
+        vistaEquipos ObjVistaCamp = new vistaEquipos();
+        
+        ObjVistaCamp.setListaEquipos(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).getListaEquipos());
+        listadoEquipos.setModel(ObjVistaCamp);
         listadoEquipos.updateUI();                
     }
     /**
@@ -645,8 +646,10 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
 
     private void btnSeleccionCampeonatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionCampeonatoActionPerformed
         // TODO add your handling code here:
-        listadoEquipos.setModel(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()));
-        
+        vistaEquipos ObjVistaCamp = new vistaEquipos();
+        ObjVistaCamp.setListaEquipos(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).getListaEquipos());
+        listadoEquipos.setModel(ObjVistaCamp);
+        listadoEquipos.updateUI();         
     }//GEN-LAST:event_btnSeleccionCampeonatoActionPerformed
 
     private void btnAgregarJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarJugadorActionPerformed
@@ -664,7 +667,9 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
         if (jugador.validarJugador()) {
             listaJugadores.add(jugador);
             equipo.setListaJugadores(listaJugadores);
-            listadoJugadores.setModel(equipo);
+            vistaJugadores ObjVista = new vistaJugadores();
+            ObjVista.setListaJugadores(listaJugadores);
+            listadoJugadores.setModel(ObjVista);
             listadoJugadores.updateUI();
 
             JOptionPane.showMessageDialog(null, "Jugador agregado correctamente");
