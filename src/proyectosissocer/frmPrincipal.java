@@ -77,10 +77,10 @@ public class frmPrincipal extends javax.swing.JFrame {
         );
         desktopLayout.setVerticalGroup(
             desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 650, Short.MAX_VALUE)
+            .addGap(0, 750, Short.MAX_VALUE)
         );
 
-        getContentPane().add(desktop, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, 650));
+        getContentPane().add(desktop, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, 750));
 
         jMenu1.setText("Archivo");
 
@@ -326,9 +326,9 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     private void mItemFixturesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemFixturesActionPerformed
         // TODO add your handling code here:
-        frmEncuentro frm1 =new frmEncuentro();
-        desktop.add(frm1);
-        frm1.setVisible(true);
+        //frmEncuentro frm1 =new frmEncuentro();
+        //desktop.add(frm1);
+        //frm1.setVisible(true);
         if (frmFixtures.getInstancia().isVisible()) {
             frmFixtures.getInstancia().toFront();
             frmFixtures.getInstancia().requestFocus();

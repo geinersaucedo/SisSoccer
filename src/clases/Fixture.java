@@ -62,4 +62,13 @@ public abstract class Fixture {
         listaJornadas.add(objJornada);
     }
     
+    public Jornada getJornadas_ByNumFecha(int pNumFecha) {
+        for (Jornada e: listaJornadas) {
+            if(e.getNumFecha()==pNumFecha){
+                return e;
+            }
+        }
+       return new Jornada();
+    }    
+    
 }

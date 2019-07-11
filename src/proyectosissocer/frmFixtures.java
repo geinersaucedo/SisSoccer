@@ -7,6 +7,7 @@ package proyectosissocer;
 
 import clases.Jornada;
 import java.util.ArrayList;
+import static proyectosissocer.frmPrincipal.desktop;
 import static proyectosissocer.frmPrincipal.gestor;
 import vistas.clsVistaJornadaModoLiga;
 
@@ -19,6 +20,10 @@ public class frmFixtures extends javax.swing.JInternalFrame {
     /**
      * Creates new form frmAdmCampeonatos
      */
+    public static int pNumFecha;
+    public static int pIdEncuentro;
+    public static String pNomCampeonato;
+    
     private static frmFixtures frm;
     public static frmFixtures getInstancia(){
         if (frm==null) {
@@ -46,7 +51,7 @@ public class frmFixtures extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEcuentros = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
+        btnRegistrarResultado = new javax.swing.JButton();
         cbNumFecha = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         btnSeleccionarCampeonato = new javax.swing.JButton();
@@ -103,15 +108,16 @@ public class frmFixtures extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblEcuentros.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tblEcuentros);
         if (tblEcuentros.getColumnModel().getColumnCount() > 0) {
             tblEcuentros.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        jButton3.setText("Registrar Resultado");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrarResultado.setText("Registrar Resultado");
+        btnRegistrarResultado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnRegistrarResultadoActionPerformed(evt);
             }
         });
 
@@ -123,7 +129,7 @@ public class frmFixtures extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnRegistrarResultado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,7 +137,7 @@ public class frmFixtures extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
+                .addComponent(btnRegistrarResultado, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
         );
 
         jLabel10.setText("Fecha");
@@ -191,9 +197,16 @@ public class frmFixtures extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btnRegistrarResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarResultadoActionPerformed
+        int column = 0;
+        int row = tblEcuentros.getSelectedRow();
+        pIdEncuentro = Integer.parseInt(tblEcuentros.getModel().getValueAt(row, column).toString());        
+        pNumFecha = Integer.parseInt(cbNumFecha.getSelectedItem().toString());
+        pNomCampeonato = cbCampeonato.getSelectedItem().toString();
+        
+        desktop.add(frmEncuentro.getInstancia());
+        frmEncuentro.getInstancia().setVisible(true);
+    }//GEN-LAST:event_btnRegistrarResultadoActionPerformed
 
     private void btnFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFechaActionPerformed
         // TODO add your handling code here:
@@ -224,10 +237,10 @@ public class frmFixtures extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFecha;
+    private javax.swing.JButton btnRegistrarResultado;
     private javax.swing.JButton btnSeleccionarCampeonato;
     private javax.swing.JComboBox<String> cbCampeonato;
     private javax.swing.JComboBox<String> cbNumFecha;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel9;

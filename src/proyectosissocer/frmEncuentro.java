@@ -5,7 +5,13 @@
  */
 package proyectosissocer;
 
+import clases.Campeonato;
+import clases.Encuentro;
 import javax.swing.JSpinner;
+import static proyectosissocer.frmFixtures.pNomCampeonato;
+import static proyectosissocer.frmFixtures.pIdEncuentro;
+import static proyectosissocer.frmFixtures.pNumFecha;
+import static proyectosissocer.frmPrincipal.gestor;
 
 /**
  *
@@ -13,16 +19,28 @@ import javax.swing.JSpinner;
  */
 public class frmEncuentro extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form frmEncuentro
-     */
+    private static frmEncuentro frm;
+    public static frmEncuentro getInstancia(){
+        if (frm==null) {
+            frm= new frmEncuentro();
+        }
+        return frm;
+    }
+    
     public frmEncuentro() {
         initComponents();
         //spinerLocal.setEnabled(false);
         
         inhabilitaSpinner(spinerLocal);
         inhabilitaSpinner(spinerVisita);
-
+        
+        Campeonato ObjCamp = gestor.buscarCampeonato(pNomCampeonato);
+        lblTituloEncuentro.setText(pNomCampeonato +  " - Fecha " + pNumFecha );
+        Encuentro objEncuentro = ObjCamp.getObjFixture().getJornadas_ByNumFecha(pNumFecha).getEncuentro_ById(pIdEncuentro);
+        lblEquipoLocal.setText(ObjCamp.getNomEquipoCorto_ById(objEncuentro.getIdEquipoLocal()));
+        lblEquipoVisita.setText(ObjCamp.getNomEquipoCorto_ById(objEncuentro.getIdEquipoVisita()));
+        
+        
     }
     public void inhabilitaSpinner(JSpinner spiner){
         if ( spiner.getEditor() instanceof JSpinner.DefaultEditor ) {
@@ -43,10 +61,10 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         grupoWalkover = new javax.swing.ButtonGroup();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblEquipoLocal = new javax.swing.JLabel();
         spinerLocal = new javax.swing.JSpinner();
         jPanel2 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        lblEquipoVisita = new javax.swing.JLabel();
         spinerVisita = new javax.swing.JSpinner();
         jLabel5 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -91,7 +109,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        lblTituloEncuentro = new javax.swing.JLabel();
 
         setClosable(true);
         setTitle("Registro Encuentro");
@@ -99,8 +117,9 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel2.setText("VS");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("EQUIPO A");
+        lblEquipoLocal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblEquipoLocal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEquipoLocal.setText("EQUIPO A");
 
         spinerLocal.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         spinerLocal.setModel(new javax.swing.SpinnerNumberModel(0, 0, 15, 1));
@@ -110,26 +129,24 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblEquipoLocal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(53, 53, 53)
                 .addComponent(spinerLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(lblEquipoLocal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(spinerLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel4.setText("EQUIPO B");
+        lblEquipoVisita.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblEquipoVisita.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEquipoVisita.setText("EQUIPO B");
 
         spinerVisita.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         spinerVisita.setModel(new javax.swing.SpinnerNumberModel(0, 0, 15, 1));
@@ -140,17 +157,16 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(spinerVisita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(73, 73, 73)
+                .addComponent(spinerVisita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(79, Short.MAX_VALUE))
+            .addComponent(lblEquipoVisita, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
+                .addComponent(lblEquipoVisita)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(spinerVisita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -195,9 +211,9 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
                     .addComponent(spinerLocal3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(spinerLocal5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(spinerLocal4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(152, 152, 152))
+                    .addComponent(spinerLocal4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spinerLocal5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(136, 136, 136))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -507,9 +523,9 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
 
         jButton5.setText("Grabar");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Campeonato Los Peloteros - Fecha 1");
+        lblTituloEncuentro.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblTituloEncuentro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTituloEncuentro.setText("Campeonato Los Peloteros - Fecha 1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -518,11 +534,11 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(68, 68, 68)
                 .addComponent(jLabel5)
-                .addGap(60, 60, 60)
+                .addGap(26, 26, 26)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
-                .addGap(40, 40, 40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -536,7 +552,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30))))
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblTituloEncuentro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -546,7 +562,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6)
+                .addComponent(lblTituloEncuentro)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(78, 78, 78)
@@ -563,7 +579,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(admDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -609,7 +625,6 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> jComboBox14;
     private javax.swing.JComboBox<String> jComboBox15;
     private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -618,9 +633,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
@@ -634,6 +647,9 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLabel lblEquipoLocal;
+    private javax.swing.JLabel lblEquipoVisita;
+    private javax.swing.JLabel lblTituloEncuentro;
     private javax.swing.JPanel panelGoles;
     private javax.swing.JPanel panelTarjetas;
     private javax.swing.JRadioButton rbLocal;

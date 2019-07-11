@@ -66,4 +66,14 @@ public class Jornada {
     public void agregarEncuentro(Encuentro ObjEncuentro){
         listaEncuentro.add(ObjEncuentro);
     }
+    
+
+    public Encuentro getEncuentro_ById(int pIdEncuentro) {
+        for (Encuentro e:listaEncuentro) {
+            if(e.getIdEncuentro()==pIdEncuentro){
+                return e;
+            }
+        }
+        return new Encuentro();
+    }    
 }

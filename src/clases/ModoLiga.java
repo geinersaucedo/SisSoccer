@@ -45,13 +45,13 @@ public class ModoLiga extends Fixture {
                     
                     ObjEncuentro.setIdEquipoVisita(FixtureAleatorio[i][j].visitante + 1);
                     ObjEncuentro.setNombreEquipoVisita(gestor.buscarCampeonatoById(getIdCampeonato()).buscarEquipo(ObjEncuentro.getIdEquipoVisita()).getNomEquipoCorto());
-
+                    ObjEncuentro.setEstado("P");
                     ObjJornada.agregarEncuentro(ObjEncuentro);
                 }            
                 agregarJornada(ObjJornada);
             }        
         }catch(Exception ex ){
-        
+             
         }
         
     }    

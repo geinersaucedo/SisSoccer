@@ -135,6 +135,14 @@ public class Campeonato implements TableModel{
         //Agregar validación, para agregar equipo el size de lista jugadores debe ser max de 12, min de 8
         listaEquipos.add(equipo);
     }
+    
+    public String getNomEquipoCorto_ById(int pIdEquipo) {
+        for (Equipo e:listaEquipos) {
+            if(e.getIdEquipo()==pIdEquipo) return e.getNomEquipoCorto();
+        }
+        return "-";
+    }
+        
     @Override
     public int getRowCount() {
         return listaEquipos.size();

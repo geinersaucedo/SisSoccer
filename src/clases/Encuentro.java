@@ -18,11 +18,13 @@ public class Encuentro {
    private String NombreEquipoLocal;
    private int idEquipoVisita;
    private String NombreEquipoVisita;
-//   private ArrayList<Gol> listaGoles;
-//   private ArrayList<Tarjeta> listatarjeta;
+   private ArrayList<Gol> listaGoles;
+   private ArrayList<Tarjeta> listatarjeta;
    private Date FechaEncuentro;
    private String Observaciones;
    private int walkover;
+   private String equipoWalkover;
+   private String estado;
 
     public String getNombreEquipoLocal() {
         return NombreEquipoLocal;
@@ -63,22 +65,22 @@ public class Encuentro {
     public void setIdEquipoVisita(int idEquipoVisita) {
         this.idEquipoVisita = idEquipoVisita;
     }
-//
-//    public ArrayList<Gol> getListaGoles() {
-//        return listaGoles;
-//    }
-//
-//    public void setListaGoles(ArrayList<Gol> listaGoles) {
-//        this.listaGoles = listaGoles;
-//    }
-//
-//    public ArrayList<Tarjeta> getListatarjeta() {
-//        return listatarjeta;
-//    }
-//
-//    public void setListatarjeta(ArrayList<Tarjeta> listatarjeta) {
-//        this.listatarjeta = listatarjeta;
-//    }
+
+    public ArrayList<Gol> getListaGoles() {
+        return listaGoles;
+    }
+
+    public void setListaGoles(ArrayList<Gol> listaGoles) {
+        this.listaGoles = listaGoles;
+    }
+
+    public ArrayList<Tarjeta> getListatarjeta() {
+        return listatarjeta;
+    }
+
+    public void setListatarjeta(ArrayList<Tarjeta> listatarjeta) {
+        this.listatarjeta = listatarjeta;
+    }
 
     public Date getFechaEncuentro() {
         return FechaEncuentro;
@@ -111,6 +113,14 @@ public class Encuentro {
     public void setEquipoWalkover(String equipoWalkover) {
         this.equipoWalkover = equipoWalkover;
     }
-   private String equipoWalkover;
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+   
    
 }
