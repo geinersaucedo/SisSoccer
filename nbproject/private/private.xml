@@ -3,8 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/github/SisSoccer-developer/src/clases/GestorCampeonatos.java</file>
-            <file>file:/E:/github/SisSoccer-developer/src/proyectosissocer/frmPrincipal.java</file>
+            <file>file:/G:/github/SisSoccer-developer/src/clases/GestorCampeonatos.java</file>
+            <file>file:/G:/github/SisSoccer-developer/src/clases/Jornada.java</file>
+            <file>file:/G:/github/SisSoccer-developer/src/proyectosissocer/frmNuevoEquipo.java</file>
+            <file>file:/G:/github/SisSoccer-developer/src/proyectosissocer/frmNuevoCampeonato.java</file>
+            <file>file:/G:/github/SisSoccer-developer/src/clases/ModoLiga.java</file>
+            <file>file:/G:/github/SisSoccer-developer/src/proyectosissocer/frmFixtures.java</file>
         </group>
     </open-files>
 </project-private>
