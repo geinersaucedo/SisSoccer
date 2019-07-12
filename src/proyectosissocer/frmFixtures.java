@@ -7,8 +7,10 @@ package proyectosissocer;
 
 import clases.Jornada;
 import java.util.ArrayList;
+import static proyectosissocer.frmNuevoEquipo.pNomCampeonatoFixture;
 import static proyectosissocer.frmPrincipal.desktop;
 import static proyectosissocer.frmPrincipal.gestor;
+
 import vistas.vistaEncuentrosModoLiga;
 
 /**
@@ -33,6 +35,12 @@ public class frmFixtures extends javax.swing.JInternalFrame {
     }
     public frmFixtures() {
         initComponents();
+        cbCampeonato.removeAllItems();
+        cbCampeonato.addItem("Seleccionar");
+        for(int i=0;i<frmPrincipal.lista.size();i++){
+            cbCampeonato.addItem(frmPrincipal.lista.get(i).getNombreCampeonato());
+        }   
+        if(pNomCampeonatoFixture != null) cbCampeonato.setSelectedItem(pNomCampeonatoFixture);
     }
 
     /**
@@ -70,7 +78,7 @@ public class frmFixtures extends javax.swing.JInternalFrame {
             }
         });
 
-        cbCampeonato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Descentralizado 2019", "Descentralizado 2020", "Descentralizado 2021" }));
+        cbCampeonato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
 
         jLabel9.setText("Campeonato:");
 

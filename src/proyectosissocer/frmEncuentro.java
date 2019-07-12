@@ -14,6 +14,8 @@ import clases.Tarjeta;
 import vistas.vistaGoles;
 import vistas.vistaTarjetas;
 import java.awt.event.ItemEvent;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import static proyectosissocer.frmFixtures.pNomCampeonato;
 import static proyectosissocer.frmFixtures.pIdEncuentro;
@@ -27,6 +29,10 @@ import static proyectosissocer.frmPrincipal.gestor;
 public class frmEncuentro extends javax.swing.JInternalFrame {
     
     public Encuentro ObjEncuentro;
+    public ArrayList<Tarjeta> ObjListaTarjetaEncuentro;
+    public ArrayList<Gol> ObjListaGolEncuentro;
+    
+    public int GolesPorWalkover;
     private static frmEncuentro frm;
     public static frmEncuentro getInstancia(){
         if (frm==null) {
@@ -37,8 +43,9 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
     
     public frmEncuentro() {
         initComponents();
-        //spinerLocal.setEnabled(false);
-        
+        ObjListaTarjetaEncuentro = new ArrayList<Tarjeta>();
+        ObjListaGolEncuentro = new ArrayList<Gol>();
+                
         inhabilitaSpinner(spinerGolLocal);
         inhabilitaSpinner(spinerGolVisita);
         CargaDatosIniciales();
@@ -46,12 +53,14 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
     
     public void CargaDatosIniciales(){
         Campeonato ObjCamp = gestor.buscarCampeonato(pNomCampeonato);
+        GolesPorWalkover = ObjCamp.getGolesWalkover();
         lblTituloEncuentro.setText(pNomCampeonato +  " - Fecha " + pNumFecha );
-        Encuentro objEncuentro = ObjCamp.getObjFixture().getJornadas_ByNumFecha(pNumFecha).getEncuentro_ById(pIdEncuentro);
-        lblEquipoLocal.setText(ObjCamp.getNomEquipoCorto_ById(objEncuentro.getIdEquipoLocal()));
-        lblEquipoVisita.setText(ObjCamp.getNomEquipoCorto_ById(objEncuentro.getIdEquipoVisita()));
+        ObjEncuentro = ObjCamp.getObjFixture().getJornadas_ByNumFecha(pNumFecha).getEncuentro_ById(pIdEncuentro);                              
+        lblEquipoLocal.setText(ObjCamp.getNomEquipoCorto_ById(ObjEncuentro.getIdEquipoLocal()));
+        lblEquipoVisita.setText(ObjCamp.getNomEquipoCorto_ById(ObjEncuentro.getIdEquipoVisita()));
         rbLocal.setText(lblEquipoLocal.getText());
         rbVisita.setText(lblEquipoVisita.getText());
+        rbNinguno.setVisible(false);
         
         cbEquipoGoles.removeAllItems();
         cbEquipoGoles.addItem("Seleccionar");
@@ -123,11 +132,12 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         jButton8 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtObservaciones = new javax.swing.JTextArea();
         jPanel4 = new javax.swing.JPanel();
         rbLocal = new javax.swing.JRadioButton();
         rbVisita = new javax.swing.JRadioButton();
-        checkWalkover = new javax.swing.JCheckBox();
+        chkWalkover = new javax.swing.JCheckBox();
+        rbNinguno = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -254,15 +264,14 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
 
         jLabel13.setText("Jugador:");
 
-        cbJugadoresGol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Jugador 1", "Jugador 2" }));
+        cbJugadoresGol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
 
-        cbTipoGol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Disparo", "Tiro Libre", "Olimpico", "Cabeza", "Penal", "Chalaca", "Rabona", "Palomita", "Tijera", "Tiro del Tigre", "A lo Checho", " " }));
+        cbTipoGol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Disparo", "Tiro Libre", "Olimpico", "Cabeza", "Penal", "Chalaca", "Rabona", "Palomita", "Tijera", "Tiro del Tigre", "A lo Checho", " " }));
 
         jLabel14.setText("Tipo:");
 
         jLabel15.setText("Equipo:");
 
-        cbEquipoGoles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Equipo A", "Equipo B" }));
         cbEquipoGoles.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbEquipoGolesItemStateChanged(evt);
@@ -375,11 +384,10 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
 
         jLabel12.setText("Jugador:");
 
-        cbJugadoresTarjeta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Jugador 1", "Jugador 2" }));
+        cbJugadoresTarjeta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
 
-        cbColorTarjeta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Amarilla", "Roja" }));
+        cbColorTarjeta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Amarilla", "Roja" }));
 
-        cbEquipoTarjetas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Equipo A", "Equipo B" }));
         cbEquipoTarjetas.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbEquipoTarjetasItemStateChanged(evt);
@@ -483,22 +491,41 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
 
         admDatos.addTab("Tarjetas", panelTarjetas);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane3.setViewportView(jTextArea1);
+        txtObservaciones.setColumns(20);
+        txtObservaciones.setRows(5);
+        jScrollPane3.setViewportView(txtObservaciones);
 
         grupoWalkover.add(rbLocal);
         rbLocal.setText("EQUIPO A");
         rbLocal.setEnabled(false);
+        rbLocal.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rbLocalItemStateChanged(evt);
+            }
+        });
 
         grupoWalkover.add(rbVisita);
         rbVisita.setText("EQUIPO B");
         rbVisita.setEnabled(false);
+        rbVisita.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rbVisitaItemStateChanged(evt);
+            }
+        });
 
-        checkWalkover.setText("Walkover");
-        checkWalkover.addActionListener(new java.awt.event.ActionListener() {
+        chkWalkover.setText("Walkover");
+        chkWalkover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkWalkoverActionPerformed(evt);
+                chkWalkoverActionPerformed(evt);
+            }
+        });
+
+        grupoWalkover.add(rbNinguno);
+        rbNinguno.setSelected(true);
+        rbNinguno.setEnabled(false);
+        rbNinguno.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rbNingunoItemStateChanged(evt);
             }
         });
 
@@ -508,22 +535,26 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(checkWalkover)
-                .addGap(66, 66, 66)
-                .addComponent(rbLocal)
+                .addComponent(chkWalkover)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(rbVisita)
-                .addGap(133, 133, 133))
+                .addComponent(rbLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(rbVisita, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(rbNinguno)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbLocal)
-                    .addComponent(rbVisita)
-                    .addComponent(checkWalkover))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(rbLocal)
+                        .addComponent(chkWalkover)
+                        .addComponent(rbVisita))
+                    .addComponent(rbNinguno))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         jLabel3.setText("Observaciones:");
@@ -536,14 +567,11 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(20, 20, 20))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -553,7 +581,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -634,9 +662,11 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void checkWalkoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkWalkoverActionPerformed
+    private void chkWalkoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkWalkoverActionPerformed
         // TODO add your handling code here:
-        if(checkWalkover.isSelected()){
+        rbNinguno.setSelected(true);
+        
+        if(chkWalkover.isSelected()){
             rbLocal.setEnabled(true);
             rbVisita.setEnabled(true);
             admDatos.setEnabledAt(0, false);
@@ -646,15 +676,19 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
             rbLocal.setEnabled(false);
             rbVisita.setEnabled(false);
             admDatos.setEnabledAt(0, true);
-            admDatos.setEnabledAt(1, true);            
+            admDatos.setEnabledAt(1, true);   
+            spinerGolLocal.setValue(0);
+            spinerGolVisita.setValue(0);            
         }
-    }//GEN-LAST:event_checkWalkoverActionPerformed
+        
+    }//GEN-LAST:event_chkWalkoverActionPerformed
 
     private void cbEquipoGolesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbEquipoGolesItemStateChanged
         // TODO add your handling code here:
         if (evt.getStateChange() == ItemEvent.SELECTED) {
                  Equipo ObjEquipo = gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(evt.getItem().toString());
                  cbJugadoresGol.removeAllItems();
+                 cbJugadoresGol.addItem("Seleccionar");
                  for (Jugador j:ObjEquipo.getListaJugadores() ) {
                     cbJugadoresGol.addItem(j.getNombre()+" " + j.getApellidos());
                  }
@@ -666,6 +700,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         if (evt.getStateChange() == ItemEvent.SELECTED) {
                  Equipo ObjEquipo = gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(evt.getItem().toString());
                  cbJugadoresTarjeta.removeAllItems();
+                 cbJugadoresTarjeta.addItem("Seleccionar");
                  for (Jugador j:ObjEquipo.getListaJugadores() ) {
                     cbJugadoresTarjeta.addItem(j.getNombre()+" " + j.getApellidos());
                  }
@@ -673,8 +708,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbEquipoTarjetasItemStateChanged
 
     private void btnAgregarGolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarGolActionPerformed
-        // TODO add your handling code here:
-        ObjEncuentro = gestor.buscarCampeonato(pNomCampeonato).getObjFixture().getJornadas_ByNumFecha(pNumFecha).getEncuentro_ById(pIdEncuentro);
+        // TODO add your handling code here:        
         Gol ObjGol= new Gol();
         ObjGol.setIdEvento(ObjEncuentro.getListaGoles().size()+1);
         ObjGol.setIdEquipo(gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoGoles.getSelectedItem().toString()).getIdEquipo());
@@ -682,23 +716,28 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         ObjGol.setIdJugador(gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoGoles.getSelectedItem().toString()).getIdJugador_ByNombresCompletos(cbJugadoresGol.getSelectedItem().toString()).getIdJugador());
         ObjGol.setNomJugador(cbJugadoresGol.getSelectedItem().toString());
         ObjGol.setTipoGol(cbTipoGol.getSelectedItem().toString());
-        ObjEncuentro.setAgregarGol(ObjGol);        
-        vistaGoles objVistaGol = new vistaGoles();
-        objVistaGol.setListaGoles(ObjEncuentro.getListaGoles());
-        
-        if(lblEquipoLocal.getText().equals(ObjGol.getNomEquipo())){
-            spinerGolLocal.setValue((int)spinerGolLocal.getValue()+1);
-        }else if(lblEquipoVisita.getText().equals(ObjGol.getNomEquipo())){
-            spinerGolVisita.setValue((int)spinerGolVisita.getValue()+1);
-        }
 
-        
-        tblGoles.setModel(objVistaGol);
-        tblGoles.updateUI();               
+        if(ObjGol.validaGol()){
+            ObjListaGolEncuentro.add(ObjGol);
+            //ObjEncuentro.setAgregarGol(ObjGol);        
+            vistaGoles objVistaGol = new vistaGoles();
+            objVistaGol.setListaGoles(ObjListaGolEncuentro);
+
+            if(lblEquipoLocal.getText().equals(ObjGol.getNomEquipo())){
+                spinerGolLocal.setValue((int)spinerGolLocal.getValue()+1);
+            }else if(lblEquipoVisita.getText().equals(ObjGol.getNomEquipo())){
+                spinerGolVisita.setValue((int)spinerGolVisita.getValue()+1);
+            }            
+            chkWalkover.setEnabled(false);
+            tblGoles.setModel(objVistaGol);
+            tblGoles.updateUI();   
+        }else{
+            JOptionPane.showMessageDialog(null, "Datos incorrectos al agregar un gol");
+        }
     }//GEN-LAST:event_btnAgregarGolActionPerformed
 
     private void btnAgregartarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregartarjetaActionPerformed
-        ObjEncuentro = gestor.buscarCampeonato(pNomCampeonato).getObjFixture().getJornadas_ByNumFecha(pNumFecha).getEncuentro_ById(pIdEncuentro);
+        //ObjEncuentro = gestor.buscarCampeonato(pNomCampeonato).getObjFixture().getJornadas_ByNumFecha(pNumFecha).getEncuentro_ById(pIdEncuentro);
         Tarjeta ObjTarjeta= new Tarjeta();
         ObjTarjeta.setIdEvento(ObjEncuentro.getListatarjeta().size()+1);
         ObjTarjeta.setIdEquipo(gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoTarjetas.getSelectedItem().toString()).getIdEquipo());
@@ -706,30 +745,77 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         ObjTarjeta.setIdJugador(gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoTarjetas.getSelectedItem().toString()).getIdJugador_ByNombresCompletos(cbJugadoresTarjeta.getSelectedItem().toString()).getIdJugador());
         ObjTarjeta.setNomJugador(cbJugadoresTarjeta.getSelectedItem().toString());
         ObjTarjeta.setColorTarjeta(cbColorTarjeta.getSelectedItem().toString());
-        ObjEncuentro.setAgregartarjeta(ObjTarjeta);        
-        vistaTarjetas objVistaTarjeta = new vistaTarjetas();
-        objVistaTarjeta.setListaTarjetas(ObjEncuentro.getListatarjeta());
-        
-        if(lblEquipoLocal.getText().equals(ObjTarjeta.getNomEquipo())){
-            if(cbColorTarjeta.getSelectedItem().toString().equals("Amarilla"))
-               spinerTALocal.setValue((int)spinerTALocal.getValue()+1);
-            else if (cbColorTarjeta.getSelectedItem().toString().equals("Roja"))
-               spinerTRLocal.setValue((int)spinerTRLocal.getValue()+1);
-        }else if(lblEquipoVisita.getText().equals(ObjTarjeta.getNomEquipo())){            
-            if(cbColorTarjeta.getSelectedItem().toString().equals("Amarilla"))
-               spinerTAVisita.setValue((int)spinerTAVisita.getValue()+1);
-            else if (cbColorTarjeta.getSelectedItem().toString().equals("Roja"))
-               spinerTRVisita.setValue((int)spinerTRVisita.getValue()+1);            
+        if(ObjTarjeta.validaTarjeta()){
+            ObjListaTarjetaEncuentro.add(ObjTarjeta);
+            //ObjEncuentro.setAgregartarjeta(ObjTarjeta);        
+            vistaTarjetas objVistaTarjeta = new vistaTarjetas();
+            objVistaTarjeta.setListaTarjetas(ObjListaTarjetaEncuentro);
+
+            if(lblEquipoLocal.getText().equals(ObjTarjeta.getNomEquipo())){
+                if(cbColorTarjeta.getSelectedItem().toString().equals("Amarilla"))
+                   spinerTALocal.setValue((int)spinerTALocal.getValue()+1);
+                else if (cbColorTarjeta.getSelectedItem().toString().equals("Roja"))
+                   spinerTRLocal.setValue((int)spinerTRLocal.getValue()+1);
+            }else if(lblEquipoVisita.getText().equals(ObjTarjeta.getNomEquipo())){            
+                if(cbColorTarjeta.getSelectedItem().toString().equals("Amarilla"))
+                   spinerTAVisita.setValue((int)spinerTAVisita.getValue()+1);
+                else if (cbColorTarjeta.getSelectedItem().toString().equals("Roja"))
+                   spinerTRVisita.setValue((int)spinerTRVisita.getValue()+1);            
+            }
+            chkWalkover.setEnabled(false);
+            tblTarjetas.setModel(objVistaTarjeta);
+            tblTarjetas.updateUI();   
+        }else{
+            JOptionPane.showMessageDialog(null, "Datos incorrectos al agregar una tarjeta");
         }
-       
-        tblTarjetas.setModel(objVistaTarjeta);
-        tblTarjetas.updateUI();         
     }//GEN-LAST:event_btnAgregartarjetaActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        //gestor.buscarCampeonato(pNomCampeonato).getObjFixture().getJornadas_ByNumFecha(pNumFecha).se
+        ObjEncuentro = gestor.buscarCampeonato(pNomCampeonato).getObjFixture().getJornadas_ByNumFecha(pNumFecha).getEncuentro_ById(pIdEncuentro);
+        ObjEncuentro.setListaGoles(ObjListaGolEncuentro);
+        ObjEncuentro.setListatarjeta(ObjListaTarjetaEncuentro);
+        if(chkWalkover.getSelectedObjects()!=null){
+            if(rbLocal.getSelectedObjects()== null && rbVisita.getSelectedObjects() ==  null){
+                JOptionPane.showMessageDialog(null, "Debe indicar el equipo que hizo el walkover");
+                return;
+            }
+            ObjEncuentro.setWalkover(1);
+            if(rbLocal.getSelectedObjects()!=null) ObjEncuentro.setEquipoWalkover(lblEquipoLocal.getText());
+            if(rbVisita.getSelectedObjects()!=null) ObjEncuentro.setEquipoWalkover(lblEquipoVisita.getText());
+        }
+        ObjEncuentro.setObservaciones(txtObservaciones.getText());
+        ObjEncuentro.setEstado("R");
+        gestor.buscarCampeonato(pNomCampeonato).getObjFixture().getJornadas_ByNumFecha(pNumFecha).getEncuentro_ById(pIdEncuentro).RegistrarResultado(ObjEncuentro);
+        ObjEncuentro = gestor.buscarCampeonato(pNomCampeonato).getObjFixture().getJornadas_ByNumFecha(pNumFecha).getEncuentro_ById(pIdEncuentro);
+        
+        JOptionPane.showMessageDialog(null, "Resultados registrados exitosamente");
+        frmEncuentro.getInstancia().setVisible(false);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void rbLocalItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbLocalItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == ItemEvent.SELECTED) {            
+            spinerGolVisita.setValue(GolesPorWalkover);
+        }
+        else if (evt.getStateChange() == ItemEvent.DESELECTED) {
+            spinerGolVisita.setValue(0);
+        }        
+    }//GEN-LAST:event_rbLocalItemStateChanged
+
+    private void rbVisitaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbVisitaItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            spinerGolLocal.setValue(GolesPorWalkover);
+        }
+        else if (evt.getStateChange() == ItemEvent.DESELECTED) {
+            spinerGolLocal.setValue(0);
+        }         
+    }//GEN-LAST:event_rbVisitaItemStateChanged
+
+    private void rbNingunoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbNingunoItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbNingunoItemStateChanged
 
     
 
@@ -743,7 +829,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cbJugadoresGol;
     private javax.swing.JComboBox<String> cbJugadoresTarjeta;
     private javax.swing.JComboBox<String> cbTipoGol;
-    private javax.swing.JCheckBox checkWalkover;
+    private javax.swing.JCheckBox chkWalkover;
     private javax.swing.ButtonGroup grupoWalkover;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -770,13 +856,13 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblEquipoLocal;
     private javax.swing.JLabel lblEquipoVisita;
     private javax.swing.JLabel lblTituloEncuentro;
     private javax.swing.JPanel panelGoles;
     private javax.swing.JPanel panelTarjetas;
     private javax.swing.JRadioButton rbLocal;
+    private javax.swing.JRadioButton rbNinguno;
     private javax.swing.JRadioButton rbVisita;
     private javax.swing.JSpinner spinerGolLocal;
     private javax.swing.JSpinner spinerGolVisita;
@@ -786,5 +872,6 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
     private javax.swing.JSpinner spinerTRVisita;
     private javax.swing.JTable tblGoles;
     private javax.swing.JTable tblTarjetas;
+    private javax.swing.JTextArea txtObservaciones;
     // End of variables declaration//GEN-END:variables
 }

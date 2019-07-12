@@ -11,11 +11,14 @@ import clases.Equipo;
 import clases.GestorCampeonatos;
 import clases.Jugador;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 
 /**
@@ -38,6 +41,18 @@ public class frmPrincipal extends javax.swing.JFrame {
         gestor=new GestorCampeonatos(lista);
         llenadoDeDatosEjemplo();
         
+        int inset = 50;
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds(inset, inset,
+                  screenSize.width  - inset*2,
+                  screenSize.height - inset*2);
+        
+        desktop = new JDesktopPane(); 
+        setContentPane(desktop);
+        
+        desktop.setDragMode(JDesktopPane.OUTLINE_DRAG_MODE);
+        
+        this.setExtendedState(MAXIMIZED_BOTH);
     }
     
     /**
@@ -73,14 +88,14 @@ public class frmPrincipal extends javax.swing.JFrame {
         desktop.setLayout(desktopLayout);
         desktopLayout.setHorizontalGroup(
             desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1150, Short.MAX_VALUE)
+            .addGap(0, 640, Short.MAX_VALUE)
         );
         desktopLayout.setVerticalGroup(
             desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 750, Short.MAX_VALUE)
+            .addGap(0, 390, Short.MAX_VALUE)
         );
 
-        getContentPane().add(desktop, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, 750));
+        getContentPane().add(desktop, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 390));
 
         jMenu1.setText("Archivo");
 
@@ -159,8 +174,8 @@ public class frmPrincipal extends javax.swing.JFrame {
         
         a.setIdCampeonato(1);a.setNombreCampeonato("Descentralizado 2019");
         a.setOrganizador("FPF");a.setMontoPremio("50mil dolares");
-        a.setTipoCampeonato(1);a.setCantidadEquipos(4);
-        
+        a.setTipoCampeonato(1);a.setCantidadEquipos(7);
+        a.setGolesWalkover(10);
         //++++++++++++++++Equipo1 Campeonato A
         ArrayList<Jugador> listJugEquipo1_CampA=new ArrayList<Jugador>();
         Equipo C1_EQ1=new Equipo(listJugEquipo1_CampA);

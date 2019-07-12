@@ -20,5 +20,10 @@ public class Gol extends Evento{
         this.tipoGol = tipoGol;
     }
    
-    
+    public boolean validaGol(){
+        if(getNomEquipo().equals("Seleccionar") || getNomJugador().equals("Seleccionar") || getTipoGol().equals("Seleccionar") )
+            return false;
+        else 
+            return true;
+    }
 }

@@ -20,5 +20,10 @@ public class Tarjeta extends Evento{
         this.colorTarjeta = colorTarjeta;
     }
     
-    
+    public boolean validaTarjeta(){
+        if(getNomEquipo().equals("Seleccionar") || getNomJugador().equals("Seleccionar") || getColorTarjeta().equals("Seleccionar") )
+            return false;
+        else 
+            return true;
+    }    
 }

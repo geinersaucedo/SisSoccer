@@ -136,4 +136,13 @@ public class Encuentro {
        listatarjeta.add(objtarjeta);
    }
    
+   public void RegistrarResultado( Encuentro ObjEncuentro ){
+       setWalkover(ObjEncuentro.getWalkover());
+       setEquipoWalkover(ObjEncuentro.getEquipoWalkover());
+       setListaGoles(ObjEncuentro.getListaGoles());
+       setListatarjeta(ObjEncuentro.getListatarjeta());
+       setObservaciones(ObjEncuentro.getObservaciones());
+       setEstado(ObjEncuentro.getEstado());
+   }
+   
 }

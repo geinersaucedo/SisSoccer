@@ -5,6 +5,7 @@
  */
 package proyectosissocer;
 
+import clases.Campeonato;
 import clases.Delegado;
 import clases.Equipo;
 
@@ -26,10 +27,9 @@ import vistas.vistaJugadores;
  */
 public class frmNuevoEquipo extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form frmNuevoEquipo
-     */
     private static frmNuevoEquipo frm;
+    public static String pNomCampeonatoFixture;
+
     public static frmNuevoEquipo getInstancia(){
         if (frm==null) {
             frm= new frmNuevoEquipo();
@@ -545,15 +545,18 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
      */
     public void actualizarDATA(){
         //Actualiza lista de Campeonatos
+        
         cbCampeonatos.removeAllItems();
+        cbCampeonatos.addItem("Seleccionar");
         for(int i=0;i<frmPrincipal.lista.size();i++){
             cbCampeonatos.addItem(frmPrincipal.lista.get(i).getNombreCampeonato());
-        }
-        vistaEquipos ObjVistaCamp = new vistaEquipos();
+            
+        }        
         
-        ObjVistaCamp.setListaEquipos(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).getListaEquipos());
-        listadoEquipos.setModel(ObjVistaCamp);
-        listadoEquipos.updateUI();                
+//        vistaEquipos ObjVistaCamp = new vistaEquipos();        
+//        ObjVistaCamp.setListaEquipos(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).getListaEquipos());
+//        listadoEquipos.setModel(ObjVistaCamp);
+//        listadoEquipos.updateUI();                
     }
     /**
      * Habilita y deshabilita paneles segun vista
@@ -624,10 +627,9 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
             //equipo.setListaJugadores(listaJugadores);
             JOptionPane.showMessageDialog(null, "Se agregó equipo correctamente");
             cambiarVista(0);
-            actualizarDATA();
             //borramos tabla de jugadores
             for (int i = 0; i < listaJugadores.size(); i++) listaJugadores.remove(i);
-            
+            MostrarEquipos();
         }else JOptionPane.showMessageDialog(null, "No existen jugadores registrados");
         
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -645,13 +647,16 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnSeleccionCampeonatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionCampeonatoActionPerformed
-        // TODO add your handling code here:
+        MostrarEquipos();        
+    }//GEN-LAST:event_btnSeleccionCampeonatoActionPerformed
+
+    private void MostrarEquipos(){
         vistaEquipos ObjVistaCamp = new vistaEquipos();
         ObjVistaCamp.setListaEquipos(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).getListaEquipos());
         listadoEquipos.setModel(ObjVistaCamp);
-        listadoEquipos.updateUI();         
-    }//GEN-LAST:event_btnSeleccionCampeonatoActionPerformed
-
+        listadoEquipos.updateUI();     
+    }
+    
     private void btnAgregarJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarJugadorActionPerformed
         // TODO add your handling code here:
         Jugador jugador=new Jugador();
@@ -780,13 +785,20 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
     private void btnGenerarFixtureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarFixtureActionPerformed
             
         Fixture ObjFixtureA = new ModoLiga();
-        ObjFixtureA.setIdCampeonato(1);        
-        ObjFixtureA.generarFixture();
-
-        gestor.buscarCampeonatoById(1).setObjFixture(ObjFixtureA);
+        Campeonato ObjCampeonato = gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString());
         
-        desktop.add(frmFixtures.getInstancia());
-        frmFixtures.getInstancia().setVisible(true);
+        if(ObjCampeonato.getCantidadEquipos()==ObjCampeonato.getListaEquipos().size()){
+            ObjFixtureA.setIdCampeonato(1);        
+            ObjFixtureA.generarFixture();
+            pNomCampeonatoFixture = cbCampeonatos.getSelectedItem().toString();
+            gestor.buscarCampeonatoById(1).setObjFixture(ObjFixtureA);
+
+            desktop.add(frmFixtures.getInstancia());
+            frmNuevoEquipo.getInstancia().setVisible(false);
+            frmFixtures.getInstancia().setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "La cantidad de equipos debe ser " + String.valueOf(ObjCampeonato.getCantidadEquipos()) ,"Registro de Equipos",JOptionPane.WARNING_MESSAGE);
+        }
    
     }//GEN-LAST:event_btnGenerarFixtureActionPerformed
 
