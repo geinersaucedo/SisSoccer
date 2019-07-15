@@ -145,4 +145,11 @@ public class Encuentro {
        setEstado(ObjEncuentro.getEstado());
    }
    
+   public int getGoles_x_Equipo(int pIdEquipo){
+       int TotalGoles=0;
+       for (Gol g: listaGoles) {
+           if(g.getIdEquipo()==pIdEquipo) TotalGoles++;
+       }       
+       return TotalGoles;
+   }
 }

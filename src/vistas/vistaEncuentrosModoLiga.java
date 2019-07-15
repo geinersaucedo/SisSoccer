@@ -38,7 +38,7 @@ public class vistaEncuentrosModoLiga implements TableModel{
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 8;
     }
 
     @Override
@@ -55,11 +55,20 @@ public class vistaEncuentrosModoLiga implements TableModel{
                 name="Local";
                 break;
             case 3:
-                name="vs";
+                name="Goles";
                 break;                
             case 4:
-                name="Visita";
+                name="vs";
                 break;                
+            case 5:
+                name="Visita";
+                break;  
+            case 6:
+                name="Goles";
+                break;  
+            case 7:
+                name="Estado";
+                break;                  
         }
         return name;
     }
@@ -92,11 +101,18 @@ public class vistaEncuentrosModoLiga implements TableModel{
                 return j.getNombreEquipoLocal() ;
                 //return j.getIdEquipoLocal();
             case 3:
+                return j.getGoles_x_Equipo(j.getIdEquipoLocal()) ;
+                //return j.getIdEquipoVisita();                
+            case 4:
                 return "vs";
                 //return j.getIdEquipoVisita();
-            case 4:
+            case 5:
                 return j.getNombreEquipoVisita() ;
                 //return j.getIdEquipoVisita();
+            case 6:
+                return j.getGoles_x_Equipo(j.getIdEquipoVisita()) ;
+            case 7:
+                return j.getEstado() ;                
             default:
                 return null;
         }

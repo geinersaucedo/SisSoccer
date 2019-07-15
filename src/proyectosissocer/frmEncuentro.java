@@ -710,7 +710,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
     private void btnAgregarGolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarGolActionPerformed
         // TODO add your handling code here:        
         Gol ObjGol= new Gol();
-        ObjGol.setIdEvento(ObjEncuentro.getListaGoles().size()+1);
+        ObjGol.setIdEvento(ObjListaGolEncuentro.size()+1);
         ObjGol.setIdEquipo(gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoGoles.getSelectedItem().toString()).getIdEquipo());
         ObjGol.setNomEquipo(cbEquipoGoles.getSelectedItem().toString());
         ObjGol.setIdJugador(gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoGoles.getSelectedItem().toString()).getIdJugador_ByNombresCompletos(cbJugadoresGol.getSelectedItem().toString()).getIdJugador());
@@ -739,7 +739,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
     private void btnAgregartarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregartarjetaActionPerformed
         //ObjEncuentro = gestor.buscarCampeonato(pNomCampeonato).getObjFixture().getJornadas_ByNumFecha(pNumFecha).getEncuentro_ById(pIdEncuentro);
         Tarjeta ObjTarjeta= new Tarjeta();
-        ObjTarjeta.setIdEvento(ObjEncuentro.getListatarjeta().size()+1);
+        ObjTarjeta.setIdEvento(ObjListaTarjetaEncuentro.size()+1);
         ObjTarjeta.setIdEquipo(gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoTarjetas.getSelectedItem().toString()).getIdEquipo());
         ObjTarjeta.setNomEquipo(cbEquipoTarjetas.getSelectedItem().toString());
         ObjTarjeta.setIdJugador(gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoTarjetas.getSelectedItem().toString()).getIdJugador_ByNombresCompletos(cbJugadoresTarjeta.getSelectedItem().toString()).getIdJugador());

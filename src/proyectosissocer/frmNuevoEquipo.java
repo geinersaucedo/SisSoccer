@@ -604,7 +604,13 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
     }
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        cambiarVista(1);
+        Campeonato Objcamp =frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString());
+        
+        if(Objcamp.getListaEquipos().size() >= Objcamp.getCantidadEquipos()){
+            JOptionPane.showMessageDialog(null, "Ya se Registraron todos los equipos");
+        }else{
+            cambiarVista(1);
+        }
         
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -783,16 +789,20 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtTelefonoDelegadoKeyTyped
 
     private void btnGenerarFixtureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarFixtureActionPerformed
-            
+        if(cbCampeonatos.getSelectedItem().toString().equals("Seleccionar")){
+            JOptionPane.showMessageDialog(null, "Seleccione un Campeonato","Generar Fixture",JOptionPane.INFORMATION_MESSAGE);
+            return ;
+        }
+        
         Fixture ObjFixtureA = new ModoLiga();
         Campeonato ObjCampeonato = gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString());
         
         if(ObjCampeonato.getCantidadEquipos()==ObjCampeonato.getListaEquipos().size()){
-            ObjFixtureA.setIdCampeonato(1);        
+            ObjFixtureA.setIdCampeonato(ObjCampeonato.getIdCampeonato());        
             ObjFixtureA.generarFixture();
             pNomCampeonatoFixture = cbCampeonatos.getSelectedItem().toString();
-            gestor.buscarCampeonatoById(1).setObjFixture(ObjFixtureA);
-
+            gestor.buscarCampeonatoById(ObjCampeonato.getIdCampeonato()).setObjFixture(ObjFixtureA);
+            JOptionPane.showMessageDialog(null, "Fixture Generado Exitosamente","Generar Fixture",JOptionPane.INFORMATION_MESSAGE);
             desktop.add(frmFixtures.getInstancia());
             frmNuevoEquipo.getInstancia().setVisible(false);
             frmFixtures.getInstancia().setVisible(true);

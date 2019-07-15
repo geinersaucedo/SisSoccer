@@ -86,18 +86,18 @@ public class vistaGoles implements TableModel{
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        Gol j=listaGoles.get(rowIndex);
-        
-        switch(columnIndex){
-            case 0:
-                j.setIdEvento((int)aValue);
-            case 1:
-                j.setNomEquipo((String)aValue);
-            case 2:
-                j.setNomJugador((String)aValue);    
-            case 3:
-                j.setTipoGol((String)aValue);    
-        }       
+//        Gol j=listaGoles.get(rowIndex);
+//        
+//        switch(columnIndex){
+//            case 0:
+//                j.setIdEvento((int)aValue);
+//            case 1:
+//                j.setNomEquipo((String)aValue);
+//            case 2:
+//                j.setNomJugador((String)aValue);    
+//            case 3:
+//                j.setTipoGol((String)aValue);    
+//        }       
     }
 
     @Override

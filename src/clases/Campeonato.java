@@ -146,7 +146,7 @@ public class Campeonato{
         
     public Equipo getEquipo_ByNomEquipoCorto(String nomEquipoCorto) {
         for (Equipo e:listaEquipos) {
-            if(e.getNomEquipoCorto()==nomEquipoCorto) return e;
+            if(e.getNomEquipoCorto().equals(nomEquipoCorto)) return e;
         }
         return new Equipo();
     }   

@@ -7,6 +7,7 @@ package proyectosissocer;
 
 import clases.Jornada;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import static proyectosissocer.frmNuevoEquipo.pNomCampeonatoFixture;
 import static proyectosissocer.frmPrincipal.desktop;
 import static proyectosissocer.frmPrincipal.gestor;
@@ -148,6 +149,8 @@ public class frmFixtures extends javax.swing.JInternalFrame {
                 .addComponent(btnRegistrarResultado, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
         );
 
+        cbNumFecha.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
+
         jLabel10.setText("Fecha");
 
         btnSeleccionarCampeonato.setText("Seleccionar");
@@ -208,6 +211,12 @@ public class frmFixtures extends javax.swing.JInternalFrame {
     private void btnRegistrarResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarResultadoActionPerformed
         int column = 0;
         int row = tblEcuentros.getSelectedRow();
+               
+        if(cbCampeonato.getSelectedItem().toString().equals("Seleccionar") || cbNumFecha.getSelectedItem().toString().equals("Seleccionar") || row == -1){
+            JOptionPane.showMessageDialog(null, "Seleccione un encuentro");
+            return;
+        }
+
         pIdEncuentro = Integer.parseInt(tblEcuentros.getModel().getValueAt(row, column).toString());        
         pNumFecha = Integer.parseInt(cbNumFecha.getSelectedItem().toString());
         pNomCampeonato = cbCampeonato.getSelectedItem().toString();
