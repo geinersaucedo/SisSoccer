@@ -33,13 +33,13 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
     public ArrayList<Gol> ObjListaGolEncuentro;
     
     public int GolesPorWalkover;
-    private static frmEncuentro frm;
-    public static frmEncuentro getInstancia(){
-        if (frm==null) {
-            frm= new frmEncuentro();
-        }
-        return frm;
-    }
+//    private static frmEncuentro frm;
+//    public static frmEncuentro getInstancia(){
+//        if (frm==null) {
+//            frm= new frmEncuentro();
+//        }
+//        return frm;
+//    }
     
     public frmEncuentro() {
         initComponents();
@@ -280,10 +280,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
 
         tblGoles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "idGol", "Jugador", "Equipo", "Tipo Gol"
@@ -396,10 +393,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
 
         tblTarjetas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "idTarjeta", "Jugador", "Equipo", "ColorTarjeta"
@@ -745,6 +739,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         ObjTarjeta.setIdJugador(gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoTarjetas.getSelectedItem().toString()).getIdJugador_ByNombresCompletos(cbJugadoresTarjeta.getSelectedItem().toString()).getIdJugador());
         ObjTarjeta.setNomJugador(cbJugadoresTarjeta.getSelectedItem().toString());
         ObjTarjeta.setColorTarjeta(cbColorTarjeta.getSelectedItem().toString());
+        ObjTarjeta.setNumFecha(pNumFecha);
         if(ObjTarjeta.validaTarjeta()){
             ObjListaTarjetaEncuentro.add(ObjTarjeta);
             //ObjEncuentro.setAgregartarjeta(ObjTarjeta);        
@@ -790,7 +785,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         ObjEncuentro = gestor.buscarCampeonato(pNomCampeonato).getObjFixture().getJornadas_ByNumFecha(pNumFecha).getEncuentro_ById(pIdEncuentro);
         
         JOptionPane.showMessageDialog(null, "Resultados registrados exitosamente");
-        frmEncuentro.getInstancia().setVisible(false);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void rbLocalItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbLocalItemStateChanged

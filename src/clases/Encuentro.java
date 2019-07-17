@@ -152,4 +152,7 @@ public class Encuentro {
        }       
        return TotalGoles;
    }
+   public int getGolesEnContra_x_Equipo(int pIdEquipo){
+       return listaGoles.size()-getGoles_x_Equipo(pIdEquipo);
+   }
 }

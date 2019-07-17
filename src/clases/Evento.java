@@ -15,6 +15,15 @@ public abstract class Evento {
     private String nomJugador;
     private int idEquipo;
     private String nomEquipo;
+    private int numFecha;
+
+    public int getNumFecha() {
+        return numFecha;
+    }
+
+    public void setNumFecha(int numFecha) {
+        this.numFecha = numFecha;
+    }
     
     public int getIdEvento() {
         return idEvento;

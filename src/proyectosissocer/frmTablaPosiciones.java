@@ -5,6 +5,14 @@
  */
 package proyectosissocer;
 
+import clases.Equipo;
+import clases.Jornada;
+import java.util.ArrayList;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import vistas.vistaTablaPosiciones;
+import vistas.vistaTarjetasRojas;
+
 /**
  *
  * @author Geiner Saucedo
@@ -14,15 +22,12 @@ public class frmTablaPosiciones extends javax.swing.JInternalFrame {
     /**
      * Creates new form frmTablaPosiciones
      */
-    private static frmTablaPosiciones frm;
-    public static frmTablaPosiciones getInstancia(){
-        if (frm==null) {
-            frm= new frmTablaPosiciones();
-        }
-        return frm;
-    }
     public frmTablaPosiciones() {
         initComponents();
+        cbCampeonatos.addItem("Seleccionar");
+        cbCampeonatos.removeAllItems();
+        for(int i=0;i<frmPrincipal.gestor.getListaCampeonatos().size();i++)
+            cbCampeonatos.addItem(frmPrincipal.gestor.buscarCampeonatoById(i+1).getNombreCampeonato());
     }
 
     /**
@@ -35,21 +40,21 @@ public class frmTablaPosiciones extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel9 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        cbCampeonatos = new javax.swing.JComboBox<>();
+        btnSeleccionar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbTablaPosiciones = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        txtJugadorGoleador = new javax.swing.JTextField();
+        txtEquipoGoleador = new javax.swing.JTextField();
+        txtCantidadGoles = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tbTarjetasRojas = new javax.swing.JTable();
 
         setClosable(true);
         setMaximizable(true);
@@ -57,11 +62,16 @@ public class frmTablaPosiciones extends javax.swing.JInternalFrame {
 
         jLabel9.setText("Campeonato:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCampeonatos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton2.setText("Seleccionar");
+        btnSeleccionar.setText("Seleccionar");
+        btnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionarActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbTablaPosiciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -87,7 +97,7 @@ public class frmTablaPosiciones extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbTablaPosiciones);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Goleador del campeonato");
@@ -98,27 +108,32 @@ public class frmTablaPosiciones extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Goles:");
 
-        jTextField1.setEnabled(false);
+        txtJugadorGoleador.setEnabled(false);
 
-        jTextField2.setEnabled(false);
+        txtEquipoGoleador.setEnabled(false);
 
-        jTextField3.setEnabled(false);
+        txtCantidadGoles.setEnabled(false);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setText("Resumen de Tarjetas Rojas");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tbTarjetasRojas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Equipo", "Jugador", "Fecha", "Cantidad"
+                "Equipo", "Jugador", "NumFecha"
             }
-        ));
-        jScrollPane2.setViewportView(jTable2);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tbTarjetasRojas);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -134,11 +149,11 @@ public class frmTablaPosiciones extends javax.swing.JInternalFrame {
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1)
+                            .addComponent(txtJugadorGoleador)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCantidadGoles, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jTextField2))
+                            .addComponent(txtEquipoGoleador))
                         .addGap(322, 322, 322))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(7, 7, 7)
@@ -159,15 +174,15 @@ public class frmTablaPosiciones extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtJugadorGoleador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEquipoGoleador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCantidadGoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -189,9 +204,9 @@ public class frmTablaPosiciones extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cbCampeonatos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnSeleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -200,8 +215,8 @@ public class frmTablaPosiciones extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(cbCampeonatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSeleccionar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -212,10 +227,44 @@ public class frmTablaPosiciones extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
+        // TODO add your handling code here:
+        ArrayList<Equipo> objListaEquipo=frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).getListaEquipos();
+        ArrayList<Jornada> objListaJornadas=frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).getObjFixture().getListaJornadas();
+        //Mostramos la tabla de posiciones
+        vistaTablaPosiciones objVista=new vistaTablaPosiciones();
+        objVista.setListaEquipos(objListaEquipo);
+        objVista.setListaJornadas(objListaJornadas);
+        //Ordenamos segun DG y Puntos
+        TableRowSorter ordenaTablaPosiciones = new TableRowSorter(objVista);
+        tbTablaPosiciones.setModel(objVista);
+        tbTablaPosiciones.setRowSorter(ordenaTablaPosiciones);
+        tbTablaPosiciones.getRowSorter().toggleSortOrder(3);
+        tbTablaPosiciones.getRowSorter().toggleSortOrder(3);
+        tbTablaPosiciones.getRowSorter().toggleSortOrder(5);
+        tbTablaPosiciones.getRowSorter().toggleSortOrder(5);
+        tbTablaPosiciones.updateUI();
+        //Llenamos datos del Goleador
+        txtJugadorGoleador.setText(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).getGoleadorDelCampeonato());
+        txtEquipoGoleador.setText(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).getEquipoDelGoleador());
+        txtCantidadGoles.setText(Integer.toString(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).getGolesDelGoleador()));
+        
+        //LLenamos las tarjetas rojas
+        vistaTarjetasRojas objVistaTR=new vistaTarjetasRojas();
+        objVistaTR.setListaTarjetasRojas(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).getListaTarjetasRojas());
+        tbTarjetasRojas.setModel(objVistaTR);
+        //Ordenamos las Tarjetas Rojas
+        TableRowSorter ordenaTarjetas = new TableRowSorter(objVistaTR);
+        tbTarjetasRojas.setRowSorter(ordenaTarjetas);
+        tbTarjetasRojas.getRowSorter().toggleSortOrder(2);
+        tbTarjetasRojas.getRowSorter().toggleSortOrder(2);
+        tbTarjetasRojas.updateUI();
+    }//GEN-LAST:event_btnSeleccionarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnSeleccionar;
+    private javax.swing.JComboBox<String> cbCampeonatos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -225,10 +274,10 @@ public class frmTablaPosiciones extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTable tbTablaPosiciones;
+    private javax.swing.JTable tbTarjetasRojas;
+    private javax.swing.JTextField txtCantidadGoles;
+    private javax.swing.JTextField txtEquipoGoleador;
+    private javax.swing.JTextField txtJugadorGoleador;
     // End of variables declaration//GEN-END:variables
 }

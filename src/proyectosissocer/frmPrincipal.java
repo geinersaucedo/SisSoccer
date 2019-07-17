@@ -344,24 +344,18 @@ public class frmPrincipal extends javax.swing.JFrame {
         //frmEncuentro frm1 =new frmEncuentro();
         //desktop.add(frm1);
         //frm1.setVisible(true);
-        if (frmFixtures.getInstancia().isVisible()) {
-            frmFixtures.getInstancia().toFront();
-            frmFixtures.getInstancia().requestFocus();
-        }else{
-            desktop.add(frmFixtures.getInstancia());
-            frmFixtures.getInstancia().setVisible(true);
-        }
+        frmFixtures frm=new frmFixtures();
+        desktop.add(frm);
+        frm.setVisible(true);
+        frm.toFront();
+        frm.requestFocus();
     }//GEN-LAST:event_mItemFixturesActionPerformed
 
     private void mItemTablaPosicionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemTablaPosicionesActionPerformed
         // TODO add your handling code here:
-        if (frmTablaPosiciones.getInstancia().isVisible()) {
-            frmTablaPosiciones.getInstancia().toFront();
-            frmTablaPosiciones.getInstancia().requestFocus();
-        }else{
-            desktop.add(frmTablaPosiciones.getInstancia());
-            frmTablaPosiciones.getInstancia().setVisible(true);
-        }
+        frmTablaPosiciones frm = new frmTablaPosiciones();
+        desktop.add(frm);
+        frm.setVisible(true);
     }//GEN-LAST:event_mItemTablaPosicionesActionPerformed
 
     private void mItemLlavesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemLlavesActionPerformed

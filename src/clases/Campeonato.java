@@ -149,5 +149,135 @@ public class Campeonato{
             if(e.getNomEquipoCorto().equals(nomEquipoCorto)) return e;
         }
         return new Equipo();
-    }   
+    }
+    public int getGolesDelGoleador(){
+        //Concatenar todos los goles de todas las jornadas en una sola lista
+        ArrayList<Gol> listaGolesTotales=new ArrayList<Gol>();
+        for(Jornada j: objFixture.getListaJornadas()){
+            for(Encuentro e:j.getListaEncuentro()){
+                listaGolesTotales.addAll(e.getListaGoles());
+            }
+        }
+        if (listaGolesTotales.size()>0) {
+            //Listar los nombres de los jugadores por cada gol marcado
+            ArrayList<String> listaNombreJugadores=new ArrayList<String>();
+            for (Gol g:listaGolesTotales) {
+                listaNombreJugadores.add(g.getNomJugador());
+            }
+            //busco el goleador, asumo que es el primero para iniciar busqueda
+            int contador1=0;
+            int contador2=0;
+            int max=0;
+            for (int i = 0; i < listaNombreJugadores.size()-1; i++) {
+                contador1=contador2=0;
+                for (int j = 0; j < listaNombreJugadores.size(); j++) {
+                    if (listaNombreJugadores.get(i).equals(listaNombreJugadores.get(j))){
+                        contador1++;
+                    }
+                }
+                for (int j = 0; j < listaNombreJugadores.size(); j++) {
+                    if (listaNombreJugadores.get(i+1).equals(listaNombreJugadores.get(j))){
+                        contador2++;
+                    }
+                }
+                if (i==0) {
+                    max=contador1;
+                }else{
+                    if (contador1>contador2) {
+                        if (contador1>max) {
+                            max=contador1;
+                        }
+                    }    
+                    else{
+                        if (contador2>contador1) {
+                            max=contador2;
+                        }
+                    }
+                } 
+            }
+            return max;
+        }
+        return 0;
+    }
+    public String getEquipoDelGoleador(){
+        String goleador=getGoleadorDelCampeonato();
+        for (Equipo equi: listaEquipos) {
+            for (Jugador jug: equi.getListaJugadores()) {
+                if((jug.getNombre()+" "+jug.getApellidos()).equals(goleador))
+                    return equi.getNomEquipoCorto();
+            }
+        }
+        return null;
+    }
+    /**
+     * Metodo que permite saber el nombre del goleador del campeonato
+     * @return String con el nombre del goleador
+     */
+    public String getGoleadorDelCampeonato(){
+        //Concatenar todos los goles de todas las jornadas en una sola lista
+        ArrayList<Gol> listaGolesTotales=new ArrayList<Gol>();
+        for(Jornada j: objFixture.getListaJornadas()){
+            for(Encuentro e:j.getListaEncuentro()){
+                listaGolesTotales.addAll(e.getListaGoles());
+            }
+        }
+        if (listaGolesTotales.size()>0) {
+            //Listar los nombres de los jugadores por cada gol marcado
+            ArrayList<String> listaNombreJugadores=new ArrayList<String>();
+            for (Gol g:listaGolesTotales) {
+                listaNombreJugadores.add(g.getNomJugador());
+            }
+            //busco el goleador, asumo que es el primero para iniciar busqueda
+            String nomGoleador=listaGolesTotales.get(0).getNomJugador();
+            int contador1=0;
+            int contador2=0;
+            int max=0;
+            for (int i = 0; i < listaNombreJugadores.size()-1; i++) {
+                contador1=contador2=0;
+                for (int j = 0; j < listaNombreJugadores.size(); j++) {
+                    if (listaNombreJugadores.get(i).equals(listaNombreJugadores.get(j))){
+                        contador1++;
+                    }
+                }
+                for (int j = 0; j < listaNombreJugadores.size(); j++) {
+                    if (listaNombreJugadores.get(i+1).equals(listaNombreJugadores.get(j))){
+                        contador2++;
+                    }
+                }
+                if (i==0) {
+                    max=contador1;
+                    nomGoleador=listaNombreJugadores.get(i);
+                }else{
+                    if (contador1>contador2) {
+                        if (contador1>max) {
+                            max=contador1;
+                            nomGoleador=listaNombreJugadores.get(i);
+                        }
+                    }    
+                    else{
+                        if (contador2>contador1) {
+                            max=contador2;
+                            nomGoleador=listaNombreJugadores.get(i+1);
+                        }
+                    }
+                } 
+            }
+            return nomGoleador;
+        }
+        return null;
+    }
+    
+    public ArrayList<Tarjeta> getListaTarjetasRojas(){
+        ArrayList<Tarjeta> lista=new ArrayList<Tarjeta>();
+        for (Jornada j: objFixture.getListaJornadas()) {
+            for (Encuentro e: j.getListaEncuentro()) {
+                for (Tarjeta t: e.getListatarjeta()) {
+                    if (t.getColorTarjeta().equals("Roja")) {
+                        lista.add(t);
+                    }
+                }
+            }
+        }
+        return lista;
+    }
 }

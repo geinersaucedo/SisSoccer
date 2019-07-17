@@ -629,8 +629,8 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
             equipo.setNomEquipoCorto(txtNomEquipoCorto.getText());
             equipo.setNomEquipoLargo(txtNomEquipoLargo.getText());
             equipo.setDelegado(delegado);
+            equipo.setListaJugadores(listaJugadores);
             frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).agregarEquipo(equipo);
-            //equipo.setListaJugadores(listaJugadores);
             JOptionPane.showMessageDialog(null, "Se agregó equipo correctamente");
             cambiarVista(0);
             //borramos tabla de jugadores
@@ -803,9 +803,10 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
             pNomCampeonatoFixture = cbCampeonatos.getSelectedItem().toString();
             gestor.buscarCampeonatoById(ObjCampeonato.getIdCampeonato()).setObjFixture(ObjFixtureA);
             JOptionPane.showMessageDialog(null, "Fixture Generado Exitosamente","Generar Fixture",JOptionPane.INFORMATION_MESSAGE);
-            desktop.add(frmFixtures.getInstancia());
+            frmFixtures frm=new frmFixtures();
+            desktop.add(frm);
             frmNuevoEquipo.getInstancia().setVisible(false);
-            frmFixtures.getInstancia().setVisible(true);
+            frm.setVisible(true);
         }else{
             JOptionPane.showMessageDialog(null, "La cantidad de equipos debe ser " + String.valueOf(ObjCampeonato.getCantidadEquipos()) ,"Registro de Equipos",JOptionPane.WARNING_MESSAGE);
         }
