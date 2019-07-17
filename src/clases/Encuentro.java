@@ -148,11 +148,13 @@ public class Encuentro {
    public int getGoles_x_Equipo(int pIdEquipo){
        int TotalGoles=0;
        for (Gol g: listaGoles) {
-           if(g.getIdEquipo()==pIdEquipo) TotalGoles++;
+           if((g.getIdEquipo()==pIdEquipo && !g.getTipoGol().equals("Auto Gol") )|| (g.getIdEquipo()!=pIdEquipo && g.getTipoGol().equals("Auto Gol") )) TotalGoles++;
+           
        }       
        return TotalGoles;
    }
    public int getGolesEnContra_x_Equipo(int pIdEquipo){
        return listaGoles.size()-getGoles_x_Equipo(pIdEquipo);
    }
+   
 }

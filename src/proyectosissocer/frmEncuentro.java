@@ -80,6 +80,36 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
             editor.getTextField().setEditable( false );
         }
     }
+    
+    public boolean AgregarTarjeta(String ColorTarjeta){
+        Tarjeta ObjTarjeta= new Tarjeta();
+        ObjTarjeta.setIdEvento(ObjListaTarjetaEncuentro.size()+1);
+        ObjTarjeta.setIdEquipo(gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoTarjetas.getSelectedItem().toString()).getIdEquipo());
+        ObjTarjeta.setNomEquipo(cbEquipoTarjetas.getSelectedItem().toString());
+        ObjTarjeta.setIdJugador(gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoTarjetas.getSelectedItem().toString()).getIdJugador_ByNombresCompletos(cbJugadoresTarjeta.getSelectedItem().toString()).getIdJugador());
+        ObjTarjeta.setNomJugador(cbJugadoresTarjeta.getSelectedItem().toString());
+        ObjTarjeta.setColorTarjeta(ColorTarjeta);
+        ObjTarjeta.setNumFecha(pNumFecha);
+        if(ObjTarjeta.validaTarjeta()){
+            ObjListaTarjetaEncuentro.add(ObjTarjeta);            
+            
+            if(lblEquipoLocal.getText().equals(ObjTarjeta.getNomEquipo())){
+                if(cbColorTarjeta.getSelectedItem().toString().equals("Amarilla"))
+                   spinerTALocal.setValue((int)spinerTALocal.getValue()+1);
+                else if (cbColorTarjeta.getSelectedItem().toString().equals("Roja"))
+                   spinerTRLocal.setValue((int)spinerTRLocal.getValue()+1);
+            }else if(lblEquipoVisita.getText().equals(ObjTarjeta.getNomEquipo())){            
+                if(cbColorTarjeta.getSelectedItem().toString().equals("Amarilla"))
+                   spinerTAVisita.setValue((int)spinerTAVisita.getValue()+1);
+                else if (cbColorTarjeta.getSelectedItem().toString().equals("Roja"))
+                   spinerTRVisita.setValue((int)spinerTRVisita.getValue()+1);            
+            }
+            return true;
+        }else{
+            return false;
+        }   
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -266,7 +296,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
 
         cbJugadoresGol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar" }));
 
-        cbTipoGol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Disparo", "Tiro Libre", "Olimpico", "Cabeza", "Penal", "Chalaca", "Rabona", "Palomita", "Tijera", "Tiro del Tigre", "A lo Checho", " " }));
+        cbTipoGol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Disparo", "Tiro Libre", "Olimpico", "Cabeza", "Penal", "Chalaca", "Rabona", "Palomita", "Tijera", "Tiro del Tigre", "A lo Checho", "Auto Gol", " " }));
 
         jLabel14.setText("Tipo:");
 
@@ -718,9 +748,15 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
             objVistaGol.setListaGoles(ObjListaGolEncuentro);
 
             if(lblEquipoLocal.getText().equals(ObjGol.getNomEquipo())){
-                spinerGolLocal.setValue((int)spinerGolLocal.getValue()+1);
+                if(cbTipoGol.getSelectedItem().toString().equals("Auto Gol"))
+                    spinerGolVisita.setValue((int)spinerGolVisita.getValue()+1);
+                else
+                    spinerGolLocal.setValue((int)spinerGolLocal.getValue()+1);
             }else if(lblEquipoVisita.getText().equals(ObjGol.getNomEquipo())){
-                spinerGolVisita.setValue((int)spinerGolVisita.getValue()+1);
+                if(cbTipoGol.getSelectedItem().toString().equals("Auto Gol"))
+                    spinerGolLocal.setValue((int)spinerGolLocal.getValue()+1);                
+                else
+                    spinerGolVisita.setValue((int)spinerGolVisita.getValue()+1);                
             }            
             chkWalkover.setEnabled(false);
             tblGoles.setModel(objVistaGol);
@@ -730,36 +766,42 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnAgregarGolActionPerformed
 
+      
+   public boolean validarCantidadTarjetaRoja(int pIdEquipo, int pIdJugador){
+       for (Tarjeta t: ObjListaTarjetaEncuentro) {         
+           if(t.getIdJugador()==pIdJugador && t.getColorTarjeta().equals("Roja") && t.getIdEquipo()==pIdEquipo ){
+               return true;
+           }
+       }
+       return false;
+   } 
+   
+   public boolean validarCantidadTarjetaAmarilla(int pIdEquipo,int pIdJugador){
+       int TotalAmarillas=0;
+       for (Tarjeta t: ObjListaTarjetaEncuentro) {
+           if(t.getIdJugador()==pIdJugador && t.getColorTarjeta().equals("Amarilla") && t.getIdEquipo()==pIdEquipo){
+               TotalAmarillas++;
+           }
+       }
+       if(TotalAmarillas>1) return true;
+       return false;
+   }    
+    
     private void btnAgregartarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregartarjetaActionPerformed
-        //ObjEncuentro = gestor.buscarCampeonato(pNomCampeonato).getObjFixture().getJornadas_ByNumFecha(pNumFecha).getEncuentro_ById(pIdEncuentro);
-        Tarjeta ObjTarjeta= new Tarjeta();
-        ObjTarjeta.setIdEvento(ObjListaTarjetaEncuentro.size()+1);
-        ObjTarjeta.setIdEquipo(gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoTarjetas.getSelectedItem().toString()).getIdEquipo());
-        ObjTarjeta.setNomEquipo(cbEquipoTarjetas.getSelectedItem().toString());
-        ObjTarjeta.setIdJugador(gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoTarjetas.getSelectedItem().toString()).getIdJugador_ByNombresCompletos(cbJugadoresTarjeta.getSelectedItem().toString()).getIdJugador());
-        ObjTarjeta.setNomJugador(cbJugadoresTarjeta.getSelectedItem().toString());
-        ObjTarjeta.setColorTarjeta(cbColorTarjeta.getSelectedItem().toString());
-        ObjTarjeta.setNumFecha(pNumFecha);
-        if(ObjTarjeta.validaTarjeta()){
-            ObjListaTarjetaEncuentro.add(ObjTarjeta);
-            //ObjEncuentro.setAgregartarjeta(ObjTarjeta);        
+        
+        if(validarCantidadTarjetaRoja(gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoTarjetas.getSelectedItem().toString()).getIdEquipo(), gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoTarjetas.getSelectedItem().toString()).getIdJugador_ByNombresCompletos(cbJugadoresTarjeta.getSelectedItem().toString()).getIdJugador())){
+            JOptionPane.showMessageDialog(null, "El Jugdor ya tiene una Tarjeta Roja");
+            return;
+        }     
+        if(AgregarTarjeta(cbColorTarjeta.getSelectedItem().toString())){
+            if(validarCantidadTarjetaAmarilla(gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoTarjetas.getSelectedItem().toString()).getIdEquipo(), gestor.buscarCampeonato(pNomCampeonato).getEquipo_ByNomEquipoCorto(cbEquipoTarjetas.getSelectedItem().toString()).getIdJugador_ByNombresCompletos(cbJugadoresTarjeta.getSelectedItem().toString()).getIdJugador())){
+                AgregarTarjeta("Roja");
+            }
             vistaTarjetas objVistaTarjeta = new vistaTarjetas();
             objVistaTarjeta.setListaTarjetas(ObjListaTarjetaEncuentro);
-
-            if(lblEquipoLocal.getText().equals(ObjTarjeta.getNomEquipo())){
-                if(cbColorTarjeta.getSelectedItem().toString().equals("Amarilla"))
-                   spinerTALocal.setValue((int)spinerTALocal.getValue()+1);
-                else if (cbColorTarjeta.getSelectedItem().toString().equals("Roja"))
-                   spinerTRLocal.setValue((int)spinerTRLocal.getValue()+1);
-            }else if(lblEquipoVisita.getText().equals(ObjTarjeta.getNomEquipo())){            
-                if(cbColorTarjeta.getSelectedItem().toString().equals("Amarilla"))
-                   spinerTAVisita.setValue((int)spinerTAVisita.getValue()+1);
-                else if (cbColorTarjeta.getSelectedItem().toString().equals("Roja"))
-                   spinerTRVisita.setValue((int)spinerTRVisita.getValue()+1);            
-            }
             chkWalkover.setEnabled(false);
             tblTarjetas.setModel(objVistaTarjeta);
-            tblTarjetas.updateUI();   
+            tblTarjetas.updateUI();
         }else{
             JOptionPane.showMessageDialog(null, "Datos incorrectos al agregar una tarjeta");
         }

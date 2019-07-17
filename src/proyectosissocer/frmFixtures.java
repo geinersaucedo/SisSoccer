@@ -211,7 +211,10 @@ public class frmFixtures extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Seleccione un encuentro");
             return;
         }
-
+        if(tblEcuentros.getModel().getValueAt(row, 7).toString().equals("R")){
+            JOptionPane.showMessageDialog(null, "El encuentro ya fue registrado");
+            return;        
+        }
         pIdEncuentro = Integer.parseInt(tblEcuentros.getModel().getValueAt(row, column).toString());        
         pNumFecha = Integer.parseInt(cbNumFecha.getSelectedItem().toString());
         pNomCampeonato = cbCampeonato.getSelectedItem().toString();
