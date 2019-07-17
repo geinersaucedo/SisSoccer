@@ -17,6 +17,7 @@ import static proyectosissocer.frmPrincipal.gestor;
 import clases.Jugador;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import vistas.vistaEquipos;
 import vistas.vistaJugadores;
 
@@ -605,7 +606,8 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
         Campeonato Objcamp =frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString());
-        
+        listaJugadores=new ArrayList<Jugador>();
+        listadoJugadores.removeAll();
         if(Objcamp.getListaEquipos().size() >= Objcamp.getCantidadEquipos()){
             JOptionPane.showMessageDialog(null, "Ya se Registraron todos los equipos");
         }else{
@@ -633,9 +635,8 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
             frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).agregarEquipo(equipo);
             JOptionPane.showMessageDialog(null, "Se agregó equipo correctamente");
             cambiarVista(0);
-            //borramos tabla de jugadores
-            for (int i = 0; i < listaJugadores.size(); i++) listaJugadores.remove(i);
             MostrarEquipos();
+            
         }else JOptionPane.showMessageDialog(null, "No existen jugadores registrados");
         
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -644,7 +645,8 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         cambiarVista(0);
         //borramos tabla de jugadores
-        for (int i = 0; i < listaJugadores.size(); i++)listaJugadores.remove(i);
+        listadoJugadores.removeAll();
+        //for (int i = 0; i < listaJugadores.size(); i++)listaJugadores.remove(i);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -661,6 +663,8 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
         ObjVistaCamp.setListaEquipos(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).getListaEquipos());
         listadoEquipos.setModel(ObjVistaCamp);
         listadoEquipos.updateUI();     
+        
+        listadoJugadores.setModel(new vistaJugadores());
     }
     
     private void btnAgregarJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarJugadorActionPerformed
