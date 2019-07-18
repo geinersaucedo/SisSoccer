@@ -169,8 +169,8 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         chkWalkover = new javax.swing.JCheckBox();
         rbNinguno = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnCerrar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
         lblTituloEncuentro = new javax.swing.JLabel();
 
         setClosable(true);
@@ -611,12 +611,17 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
 
         admDatos.addTab("Walkover", jPanel3);
 
-        jButton4.setText("Cerrar");
-
-        jButton5.setText("Grabar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnCerrar.setText("Cerrar");
+        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnCerrarActionPerformed(evt);
+            }
+        });
+
+        btnGuardar.setText("Grabar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
             }
         });
 
@@ -645,9 +650,9 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
                         .addComponent(admDatos)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30))))
             .addComponent(lblTituloEncuentro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
@@ -678,8 +683,8 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
                 .addComponent(admDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCerrar, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(6, 6, 6))
         );
 
@@ -807,7 +812,7 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnAgregartarjetaActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         ObjEncuentro = gestor.buscarCampeonato(pNomCampeonato).getObjFixture().getJornadas_ByNumFecha(pNumFecha).getEncuentro_ById(pIdEncuentro);
         ObjEncuentro.setListaGoles(ObjListaGolEncuentro);
@@ -818,17 +823,17 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
                 return;
             }
             ObjEncuentro.setWalkover(1);
-            if(rbLocal.getSelectedObjects()!=null) ObjEncuentro.setEquipoWalkover(lblEquipoLocal.getText());
-            if(rbVisita.getSelectedObjects()!=null) ObjEncuentro.setEquipoWalkover(lblEquipoVisita.getText());
+            if(rbLocal.getSelectedObjects()!=null) ObjEncuentro.setEquipoWalkover("L");
+            if(rbVisita.getSelectedObjects()!=null) ObjEncuentro.setEquipoWalkover("V");
         }
         ObjEncuentro.setObservaciones(txtObservaciones.getText());
-        ObjEncuentro.setEstado("R");
+        if(ObjEncuentro.getWalkover()==1)ObjEncuentro.setEstado("W"); else ObjEncuentro.setEstado("J");
         gestor.buscarCampeonato(pNomCampeonato).getObjFixture().getJornadas_ByNumFecha(pNumFecha).getEncuentro_ById(pIdEncuentro).RegistrarResultado(ObjEncuentro);
         ObjEncuentro = gestor.buscarCampeonato(pNomCampeonato).getObjFixture().getJornadas_ByNumFecha(pNumFecha).getEncuentro_ById(pIdEncuentro);
         
         JOptionPane.showMessageDialog(null, "Resultados registrados exitosamente");
         this.setVisible(false);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void rbLocalItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbLocalItemStateChanged
         // TODO add your handling code here:
@@ -854,12 +859,18 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rbNingunoItemStateChanged
 
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnCerrarActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane admDatos;
     private javax.swing.JButton btnAgregarGol;
     private javax.swing.JButton btnAgregartarjeta;
+    private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> cbColorTarjeta;
     private javax.swing.JComboBox<String> cbEquipoGoles;
     private javax.swing.JComboBox<String> cbEquipoTarjetas;
@@ -870,8 +881,6 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
     private javax.swing.ButtonGroup grupoWalkover;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel10;

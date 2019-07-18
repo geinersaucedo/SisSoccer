@@ -211,7 +211,7 @@ public class frmFixtures extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Seleccione un encuentro");
             return;
         }
-        if(tblEcuentros.getModel().getValueAt(row, 7).toString().equals("R")){
+        if(!tblEcuentros.getModel().getValueAt(row, 7).toString().equals("Pendiente")){
             JOptionPane.showMessageDialog(null, "El encuentro ya fue registrado");
             return;        
         }

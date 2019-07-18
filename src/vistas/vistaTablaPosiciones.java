@@ -88,7 +88,7 @@ public class vistaTablaPosiciones implements TableModel{
                     gf+=e.getGoles_x_Equipo(objEquipo.getIdEquipo());
                     gc+=e.getGolesEnContra_x_Equipo(objEquipo.getIdEquipo());
 
-                    if (e.getEstado().equals("R")) {
+                    if (e.getEstado().equals("J") || e.getEstado().equals("W")) {
                         pj++;
                         if (e.getGoles_x_Equipo(objEquipo.getIdEquipo())>e.getGolesEnContra_x_Equipo(objEquipo.getIdEquipo())){
                             puntos+=3;

@@ -2,7 +2,9 @@
 package proyectosissocer;
 
 import clases.Campeonato;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import static proyectosissocer.frmPrincipal.gestor;
 import vistas.vistaCampeonatos;
 
 /**
@@ -15,6 +17,8 @@ public class frmNuevoCampeonato extends javax.swing.JInternalFrame {
      * Creates new form frmNuevoCampeonato
      */
     private static frmNuevoCampeonato frm;
+    public String vAccion="";
+    public Campeonato vCampeonato;
     
     public static frmNuevoCampeonato getInstancia(){
         if (frm==null) {
@@ -24,11 +28,14 @@ public class frmNuevoCampeonato extends javax.swing.JInternalFrame {
     }
     public frmNuevoCampeonato() {
         initComponents();
+        vCampeonato =new Campeonato();
         tabPanel.setEnabledAt(1, false);
         vistaCampeonatos objVistaGestor = new vistaCampeonatos();
         objVistaGestor.setListaCampeonatos(frmPrincipal.gestor.getListaCampeonatos());
         listadoCampeonatos.setModel(objVistaGestor);
     }
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -64,6 +71,8 @@ public class frmNuevoCampeonato extends javax.swing.JInternalFrame {
         txtNumGolesWalkover = new javax.swing.JSpinner();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setClosable(true);
         setMaximizable(true);
@@ -107,7 +116,7 @@ public class frmNuevoCampeonato extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -174,7 +183,7 @@ public class frmNuevoCampeonato extends javax.swing.JInternalFrame {
                                         .addComponent(dateInicio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(cbTipoCampeonato, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             .addComponent(txtNumGolesWalkover, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 403, Short.MAX_VALUE)))
+                        .addGap(0, 409, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -233,6 +242,20 @@ public class frmNuevoCampeonato extends javax.swing.JInternalFrame {
             }
         });
 
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -241,16 +264,24 @@ public class frmNuevoCampeonato extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3)
+                    .addComponent(tabPanel)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnNuevo)
                         .addGap(18, 18, 18)
                         .addComponent(btnGuardar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator1)
-                    .addComponent(tabPanel))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(164, 164, 164)
+                                .addComponent(jSeparator1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -260,14 +291,16 @@ public class frmNuevoCampeonato extends javax.swing.JInternalFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tabPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -283,21 +316,9 @@ public class frmNuevoCampeonato extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         if (cbTipoCampeonato.getSelectedIndex()==1) {
             cbCantidadEquipos.removeAllItems();
-            cbCantidadEquipos.addItem("4");
-            cbCantidadEquipos.addItem("6");
-            cbCantidadEquipos.addItem("8");
-            cbCantidadEquipos.addItem("10");
-            cbCantidadEquipos.addItem("12");
-            cbCantidadEquipos.addItem("14");
-            cbCantidadEquipos.addItem("16");
-            cbCantidadEquipos.addItem("18");
-            cbCantidadEquipos.addItem("20");
-            cbCantidadEquipos.addItem("22");
-            cbCantidadEquipos.addItem("24");
-            cbCantidadEquipos.addItem("26");
-            cbCantidadEquipos.addItem("28");
-            cbCantidadEquipos.addItem("30");
-            cbCantidadEquipos.addItem("32");
+            for (int i = 4; i <= 32; i++) {
+                cbCantidadEquipos.addItem(String.valueOf(i));
+            }
         }
         else{
             cbCantidadEquipos.removeAllItems();
@@ -316,6 +337,8 @@ public class frmNuevoCampeonato extends javax.swing.JInternalFrame {
             btnNuevo.setEnabled(true);
             btnGuardar.setEnabled(false);
             btnCancelar.setEnabled(false);
+            btnModificar.setEnabled(true);
+            btnEliminar.setEnabled(true);
         }else{
             tabPanel.setEnabledAt(0, false);
             tabPanel.setEnabledAt(1, true);
@@ -323,9 +346,12 @@ public class frmNuevoCampeonato extends javax.swing.JInternalFrame {
             btnNuevo.setEnabled(false);
             btnGuardar.setEnabled(true);
             btnCancelar.setEnabled(true);
+            btnModificar.setEnabled(false);
+            btnEliminar.setEnabled(false);            
         }
     }
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        vAccion="NUEVO";
         cambiarVista(1);
         //Limpia campos para ingreso de campeonato
         txtNombreCampeonato.setText("");
@@ -333,35 +359,38 @@ public class frmNuevoCampeonato extends javax.swing.JInternalFrame {
         txtMontoPremio.setText("");
         cbCantidadEquipos.setSelectedIndex(1);
         dateInicio.setDate(null);
+        vCampeonato= new Campeonato();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
-        
+        this.setVisible(false);
     }//GEN-LAST:event_btnSalirActionPerformed
     
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        Campeonato c =new Campeonato();
+        
         //Date fechita=dateInicio.getDate();
         
-        c.setIdCampeonato(frmPrincipal.gestor.getListaCampeonatos().size()+1);
-        c.setNombreCampeonato(txtNombreCampeonato.getText());
-        c.setOrganizador(txtOrganizador.getText());
-        c.setMontoPremio(txtMontoPremio.getText());
-        c.setTipoCampeonato(cbTipoCampeonato.getSelectedIndex());
-        c.setCantidadEquipos(Integer.parseInt(cbCantidadEquipos.getSelectedItem().toString()));
-        c.setFechaInicio(dateInicio.getDate());
-        c.setGolesWalkover((int)txtNumGolesWalkover.getValue());
+        vCampeonato.setIdCampeonato(frmPrincipal.gestor.getListaCampeonatos().size()+1);
+        vCampeonato.setNombreCampeonato(txtNombreCampeonato.getText());
+        vCampeonato.setOrganizador(txtOrganizador.getText());
+        vCampeonato.setMontoPremio(txtMontoPremio.getText());
+        vCampeonato.setTipoCampeonato(cbTipoCampeonato.getSelectedIndex());
+        vCampeonato.setCantidadEquipos(Integer.parseInt(cbCantidadEquipos.getSelectedItem().toString()));
+        vCampeonato.setFechaInicio(dateInicio.getDate());
+        vCampeonato.setGolesWalkover((int)txtNumGolesWalkover.getValue());
         
-        if(c.validaCampeonato()){
-            frmPrincipal.gestor.agregarCampeonato(c);
+        if(vCampeonato.validaCampeonato()){
+            if(vAccion.equals("NUEVO"))
+                frmPrincipal.gestor.agregarCampeonato(vCampeonato);
+            else if(vAccion.equals("MODIFICAR"))
+                frmPrincipal.gestor.ActualizarCampeonato(vCampeonato);
+            
             cambiarVista(0);
             vistaCampeonatos objVistaGestor = new vistaCampeonatos();
             objVistaGestor.setListaCampeonatos(frmPrincipal.gestor.getListaCampeonatos());
             listadoCampeonatos.setModel(objVistaGestor);            
             listadoCampeonatos.updateUI();
-            frmNuevoEquipo.getInstancia().actualizarDATA();
             JOptionPane.showMessageDialog(null, "Se guardó el campeonato "+txtNombreCampeonato.getText()+" correctamente!");
         }else{
             JOptionPane.showMessageDialog(null, "Datos incorrectos");
@@ -369,10 +398,49 @@ public class frmNuevoCampeonato extends javax.swing.JInternalFrame {
        
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        vAccion="MODIFICAR";
+        int column = 0;
+        int row = listadoCampeonatos.getSelectedRow();
+        int vIdCampeonato= Integer.parseInt(listadoCampeonatos.getModel().getValueAt(row, column).toString());
+        
+        vCampeonato = gestor.buscarCampeonatoById(vIdCampeonato);
+        
+        txtNombreCampeonato.setText(vCampeonato.getNombreCampeonato());
+        txtOrganizador.setText(vCampeonato.getOrganizador());
+        txtMontoPremio.setText(vCampeonato.getMontoPremio());
+        txtNumGolesWalkover.setValue(vCampeonato.getGolesWalkover());
+        cbTipoCampeonato.setSelectedIndex(vCampeonato.getTipoCampeonato());
+        cbCantidadEquipos.setSelectedItem(String.valueOf(vCampeonato.getCantidadEquipos()));
+        dateInicio.setDate(vCampeonato.getFechaInicio());
+        cambiarVista(1);
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        vAccion="ELIMINAR";
+        int column = 0;
+        int row = listadoCampeonatos.getSelectedRow();        
+        if(row>=0){
+            if(JOptionPane.showConfirmDialog(this, "¿Esta Seguro de eliminar?")==0){
+                int vIdCampeonato= Integer.parseInt(listadoCampeonatos.getModel().getValueAt(row, column).toString());
+                gestor.EliminarCampeonato(vIdCampeonato);
+                gestor.ReordenarLista();
+                vistaCampeonatos objVistaGestor = new vistaCampeonatos();
+                objVistaGestor.setListaCampeonatos(frmPrincipal.gestor.getListaCampeonatos());
+                listadoCampeonatos.setModel(objVistaGestor);            
+                listadoCampeonatos.updateUI();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione un campeonato");
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cbCantidadEquipos;

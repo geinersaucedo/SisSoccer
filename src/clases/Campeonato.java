@@ -280,4 +280,24 @@ public class Campeonato{
         }
         return lista;
     }
+    
+    public void EliminarEquipo(int pIdEquipo){
+        for (Equipo e: listaEquipos) {
+            if(e.getIdEquipo()==pIdEquipo){
+                listaEquipos.remove(e);
+                return;
+            }
+        }
+    }
+
+    public void ReordenarLista(){
+        ArrayList<Equipo> OrderListaEquipos = new ArrayList<Equipo>();
+        int row=1;
+        for (Equipo e:listaEquipos) {
+            e.setIdEquipo(row);
+            OrderListaEquipos.add(e);           
+            row++;
+        }
+        setListaEquipos(OrderListaEquipos);
+    }      
 }

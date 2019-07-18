@@ -145,12 +145,15 @@ public class Encuentro {
        setEstado(ObjEncuentro.getEstado());
    }
    
-   public int getGoles_x_Equipo(int pIdEquipo){
+   public int getGoles_x_Equipo(int pIdEquipo){       
        int TotalGoles=0;
        for (Gol g: listaGoles) {
-           if((g.getIdEquipo()==pIdEquipo && !g.getTipoGol().equals("Auto Gol") )|| (g.getIdEquipo()!=pIdEquipo && g.getTipoGol().equals("Auto Gol") )) TotalGoles++;
-           
-       }       
+           if((g.getIdEquipo()==pIdEquipo && !g.getTipoGol().equals("Auto Gol") )|| (g.getIdEquipo()!=pIdEquipo && g.getTipoGol().equals("Auto Gol") )) TotalGoles++;                      
+       }   
+       if(getWalkover()==1){
+           if(getEquipoWalkover().equals("L") && getIdEquipoVisita()== pIdEquipo) TotalGoles=10;
+           if(getEquipoWalkover().equals("V") && getIdEquipoLocal()== pIdEquipo) TotalGoles=10;
+       }
        return TotalGoles;
    }
    public int getGolesEnContra_x_Equipo(int pIdEquipo){

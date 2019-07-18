@@ -28,24 +28,19 @@ import vistas.vistaJugadores;
  */
 public class frmNuevoEquipo extends javax.swing.JInternalFrame {
 
-    private static frmNuevoEquipo frm;
     public static String pNomCampeonatoFixture;
-
-    public static frmNuevoEquipo getInstancia(){
-        if (frm==null) {
-            frm= new frmNuevoEquipo();
-        }
-        return frm;
-    }
+    private String vAccion;
+    private Equipo vEquipos;
     private ArrayList<Jugador> listaJugadores;
-    private Equipo equipo;
+    private Equipo equipo;      
+
     public frmNuevoEquipo() {
         initComponents();
         cambiarVista(0);
         actualizarDATA();
         listaJugadores= new ArrayList<Jugador>();
         equipo=new Equipo(listaJugadores);
-        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -100,6 +95,8 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
         txtNumCamiseta = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         cbPosicion = new javax.swing.JComboBox<>();
+        btnModificarJugador = new javax.swing.JButton();
+        btnEliminarJugador = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         cbCampeonatos = new javax.swing.JComboBox<>();
@@ -108,6 +105,8 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
         btnGuardar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         jScrollPane3.setViewportView(jEditorPane1);
 
@@ -141,7 +140,6 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
         }
 
         btnGenerarFixture.setText("Generar Fixture");
-
         btnGenerarFixture.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGenerarFixtureActionPerformed(evt);
@@ -162,7 +160,7 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGenerarFixture, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -305,7 +303,7 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
                     .addComponent(txtTelefonoDelegado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
 
         tabPane.addTab("Equipo", jPanel3);
@@ -386,13 +384,27 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
 
         cbPosicion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Arquero", "Defensa", "Volante", "Delantero" }));
 
+        btnModificarJugador.setText("Modificar Jugador");
+        btnModificarJugador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarJugadorActionPerformed(evt);
+            }
+        });
+
+        btnEliminarJugador.setText("Eliminar Jugador");
+        btnEliminarJugador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarJugadorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 794, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 1, Short.MAX_VALUE))
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
@@ -435,6 +447,10 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnAgregarJugador)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnModificarJugador)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEliminarJugador)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel13Layout.setVerticalGroup(
@@ -461,9 +477,12 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
                     .addComponent(txtNumCamiseta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel18)
                     .addComponent(cbPosicion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAgregarJugador, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregarJugador, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnModificarJugador, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminarJugador, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -513,7 +532,7 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 570, 90, 40));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 570, 90, 40));
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -521,7 +540,7 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 570, 120, 40));
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 570, 100, 40));
 
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -538,6 +557,22 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 570, 90, 40));
+
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 570, 100, 40));
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 570, 100, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -625,7 +660,7 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
         delegado.setDireccion(txtDireccionDelegado.getText());
         delegado.setTelefono(txtTelefonoDelegado.getText());
         //Debería ser como mínimo 7 jugadores, para fines de prueba lo validaremos en 1
-        if (listaJugadores.size()>0|| delegado.validarDelegado()) {
+        if (listaJugadores.size()>0 && delegado.validarDelegado()) {
             equipo=new Equipo();
             equipo.setIdEquipo(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).getListaEquipos().size()+1);
             equipo.setNomEquipoCorto(txtNomEquipoCorto.getText());
@@ -635,8 +670,7 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
             frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).agregarEquipo(equipo);
             JOptionPane.showMessageDialog(null, "Se agregó equipo correctamente");
             cambiarVista(0);
-            MostrarEquipos();
-            
+            MostrarEquipos();            
         }else JOptionPane.showMessageDialog(null, "No existen jugadores registrados");
         
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -650,8 +684,7 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
-        //dispose();
+        this.setVisible(false);
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnSeleccionCampeonatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionCampeonatoActionPerformed
@@ -793,6 +826,11 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtTelefonoDelegadoKeyTyped
 
     private void btnGenerarFixtureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarFixtureActionPerformed
+        Campeonato c = gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString());
+        if(c.getObjFixture()!=null){
+            JOptionPane.showMessageDialog(null, "El Fixture ya fue generado","Generar Fixture",JOptionPane.INFORMATION_MESSAGE);
+            return ;            
+        }
         if(cbCampeonatos.getSelectedItem().toString().equals("Seleccionar")){
             JOptionPane.showMessageDialog(null, "Seleccione un Campeonato","Generar Fixture",JOptionPane.INFORMATION_MESSAGE);
             return ;
@@ -809,13 +847,52 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Fixture Generado Exitosamente","Generar Fixture",JOptionPane.INFORMATION_MESSAGE);
             frmFixtures frm=new frmFixtures();
             desktop.add(frm);
-            frmNuevoEquipo.getInstancia().setVisible(false);
+            this.setVisible(false);
             frm.setVisible(true);
         }else{
             JOptionPane.showMessageDialog(null, "La cantidad de equipos debe ser " + String.valueOf(ObjCampeonato.getCantidadEquipos()) ,"Registro de Equipos",JOptionPane.WARNING_MESSAGE);
         }
    
     }//GEN-LAST:event_btnGenerarFixtureActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        Campeonato c = gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString());
+        if(c.getObjFixture()!=null){
+            JOptionPane.showMessageDialog(null, "El Fixture ya fue generado, No puede Modificar","Generar Fixture",JOptionPane.INFORMATION_MESSAGE);
+            return ;            
+        }      }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        Campeonato c = gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString());
+        if(c.getObjFixture()!=null){
+            JOptionPane.showMessageDialog(null, "El Fixture ya fue generado, No puede Eliminar","Generar Fixture",JOptionPane.INFORMATION_MESSAGE);
+            return ;            
+        }        
+        vAccion="ELIMINAR";
+        int column = 0;
+        int row = listadoEquipos.getSelectedRow();        
+        if(row>=0){
+            if(JOptionPane.showConfirmDialog(this, "¿Esta Seguro de eliminar?")==0){
+                int vIdEquipo= Integer.parseInt(listadoEquipos.getModel().getValueAt(row, column).toString());
+                gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).EliminarEquipo(vIdEquipo);
+                gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).ReordenarLista();
+                vistaEquipos objVistaGestor = new vistaEquipos();
+                objVistaGestor.setListaEquipos(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).getListaEquipos());
+                listadoEquipos.setModel(objVistaGestor);            
+                listadoEquipos.updateUI();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione un campeonato");
+        }        
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnModificarJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarJugadorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModificarJugadorActionPerformed
+
+    private void btnEliminarJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarJugadorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarJugadorActionPerformed
 
     /**
      * Fin de restricciones
@@ -824,8 +901,12 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarJugador;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnEliminarJugador;
     private javax.swing.JButton btnGenerarFixture;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnModificarJugador;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnSeleccionCampeonato;

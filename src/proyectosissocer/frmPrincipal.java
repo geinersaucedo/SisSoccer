@@ -312,15 +312,9 @@ public class frmPrincipal extends javax.swing.JFrame {
     private void mItemNewEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mItemNewEquipoActionPerformed
         // TODO add your handling code here:
         if (lista.size()>0) {
-            if (frmNuevoEquipo.getInstancia().isVisible()) {
-                frmNuevoEquipo.getInstancia().toFront();
-                frmNuevoEquipo.getInstancia().requestFocus();
-                frmNuevoEquipo.getInstancia().actualizarDATA();
-            }else{
-                desktop.add(frmNuevoEquipo.getInstancia());
-                frmNuevoEquipo.getInstancia().setVisible(true);
-                frmNuevoEquipo.getInstancia().actualizarDATA();
-            }
+            frmNuevoEquipo frm = new frmNuevoEquipo();
+            desktop.add(frm);
+            frm.setVisible(true);
         }
         else{
             JOptionPane.showMessageDialog(null, "Favor agregar campeonatos.");

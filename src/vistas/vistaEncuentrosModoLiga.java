@@ -112,7 +112,9 @@ public class vistaEncuentrosModoLiga implements TableModel{
             case 6:
                 return j.getGoles_x_Equipo(j.getIdEquipoVisita()) ;
             case 7:
-                return j.getEstado() ;                
+                if(j.getEstado().equals("P"))return "Pendiente";
+                else if(j.getEstado().equals("J"))return "Jugado";
+                else if(j.getEstado().equals("W"))return "Walk Over";
             default:
                 return null;
         }

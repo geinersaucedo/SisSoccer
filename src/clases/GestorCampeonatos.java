@@ -33,6 +33,24 @@ public class GestorCampeonatos{
     public void agregarCampeonato(Campeonato camp){
         listaCampeonatos.add(camp);
     }
+    
+    public void ActualizarCampeonato(Campeonato pCamp){
+        for (Campeonato c: listaCampeonatos) {
+            if(c.getIdCampeonato()==pCamp.getIdCampeonato()){
+                listaCampeonatos.remove(c);
+                listaCampeonatos.add(pCamp);
+            }
+        }
+    }
+    
+    public void EliminarCampeonato(int pIdCampeonato){
+        for (Campeonato c: listaCampeonatos) {
+            if(c.getIdCampeonato()==pIdCampeonato){
+                listaCampeonatos.remove(c);
+                return;
+            }
+        }
+    }    
     public Campeonato buscarCampeonato(String nomCampeonato){
         for(Campeonato c:listaCampeonatos){
             if (c.getNombreCampeonato().equals(nomCampeonato)) {
@@ -51,4 +69,15 @@ public class GestorCampeonatos{
         return null;
     }
 
+    
+    public void ReordenarLista(){
+        ArrayList<Campeonato> OrderListaCampeonato = new ArrayList<Campeonato>();
+        int row=1;
+        for (Campeonato c:listaCampeonatos) {
+            c.setIdCampeonato(row);
+            OrderListaCampeonato.add(c);           
+            row++;
+        }
+        setListaCampeonatos(OrderListaCampeonato);
+    }      
 }
