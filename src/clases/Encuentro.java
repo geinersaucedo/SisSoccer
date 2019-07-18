@@ -153,10 +153,15 @@ public class Encuentro {
        if(getWalkover()==1){
            if(getEquipoWalkover().equals("L") && getIdEquipoVisita()== pIdEquipo) TotalGoles=10;
            if(getEquipoWalkover().equals("V") && getIdEquipoLocal()== pIdEquipo) TotalGoles=10;
+
        }
        return TotalGoles;
    }
    public int getGolesEnContra_x_Equipo(int pIdEquipo){
+       if(getWalkover()==1){
+           if(getGoles_x_Equipo(pIdEquipo)>0)return 0;
+           else return 10;
+       }
        return listaGoles.size()-getGoles_x_Equipo(pIdEquipo);
    }
    
