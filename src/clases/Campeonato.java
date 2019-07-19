@@ -1,15 +1,13 @@
-
 package clases;
 
 
 import java.util.ArrayList;
 import java.util.Date;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
-
 /**
- *
- * @author Geiner Saucedo
+ * Clase que contiene los atributos y metodos necesario para un campeonato de
+ * fulbito.Además, contiene una lista de los equipos participantes.
+ * @author Giraldo Emilio, Mamani Omar, Saucedo Geiner, Villagaray Rodolfo
+ * @version 1.0
  */
 public class Campeonato{
     private int idCampeonato;
@@ -24,8 +22,12 @@ public class Campeonato{
     private int golesWalkover;
     private Fixture objFixture;
 
-    public Fixture getObjFixture() {
-        return objFixture;
+
+    public Campeonato(ArrayList<Equipo> listaEquipos) {
+        this.listaEquipos = listaEquipos;
+    }
+    public Campeonato() {
+        listaEquipos=new ArrayList<>();
     }
 
     public void setObjFixture(Fixture objFixture) {
@@ -39,24 +41,6 @@ public class Campeonato{
     public void setGolesWalkover(int golesWalkover) {
         this.golesWalkover = golesWalkover;
     }
-
-    
-    public Equipo buscarEquipo(int idEquipo){
-        for (Equipo objEquipo : listaEquipos) {
-            if(objEquipo.getIdEquipo()== idEquipo){
-                return objEquipo;
-            }
-        }
-        return null;
-    }
-
-    public Campeonato(ArrayList<Equipo> listaEquipos) {
-        this.listaEquipos = listaEquipos;
-    }
-    public Campeonato() {
-        listaEquipos=new ArrayList<>();
-    }
-
     
     public int getIdCampeonato() {
         return idCampeonato;
@@ -122,6 +106,28 @@ public class Campeonato{
         this.fechaInicio = fechaInicio;
     }
     /**
+     * Metodo que permite Buscar un equipo por su ID
+     * @param idEquipo
+     * @return Objeto Equipo
+     */
+    public Equipo buscarEquipo(int idEquipo){
+        for (Equipo objEquipo : listaEquipos) {
+            if(objEquipo.getIdEquipo()== idEquipo){
+                return objEquipo;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Metodo que devuelve el Fixture del campeonato
+     * @return Objeto Fixture
+     */
+    public Fixture getObjFixture() {
+        return objFixture;
+    }
+    
+    /**
      * Método que permite validar que los datos del campeonato sean correctos
      * @return verdadero si pasa la validación
      */
@@ -132,24 +138,54 @@ public class Campeonato{
         }else return false;
     }
     
+    /**
+     * Metodo que permite agrega un equipo a la Lista de equipos relacinado al campeonato
+     * @param equipo 
+     */
     public void agregarEquipo(Equipo equipo){
         //Agregar validación, para agregar equipo el size de lista jugadores debe ser max de 12, min de 8
         listaEquipos.add(equipo);
     }
     
+    /**
+     * Metodo que permite actualiza los atributos de un equipo espesifico según si ID
+     * @param pEquipo 
+     */
+    public void ActualizarEquipo(Equipo pEquipo){
+        buscarEquipo(pEquipo.getIdEquipo()).setNomEquipoCorto(pEquipo.getNomEquipoCorto());
+        buscarEquipo(pEquipo.getIdEquipo()).setNomEquipoLargo(pEquipo.getNomEquipoLargo());           
+        buscarEquipo(pEquipo.getIdEquipo()).setDelegado(pEquipo.getDelegado());
+        buscarEquipo(pEquipo.getIdEquipo()).setListaJugadores(pEquipo.getListaJugadores());  
+    }    
+    
+    /**
+     * Metodo que busca un equipo y deveulve el nombre corto del equipo según su ID
+     * @param pIdEquipo
+     * @return  String getNomEquipoCorto
+     */
     public String getNomEquipoCorto_ById(int pIdEquipo) {
         for (Equipo e:listaEquipos) {
             if(e.getIdEquipo()==pIdEquipo) return e.getNomEquipoCorto();
         }
         return "-";
     }
-        
+     
+    /**
+     * Metodo que buscar un equipo según su nombre corto
+     * @param nomEquipoCorto
+     * @return Objeto Equipo
+     */
     public Equipo getEquipo_ByNomEquipoCorto(String nomEquipoCorto) {
         for (Equipo e:listaEquipos) {
             if(e.getNomEquipoCorto().equals(nomEquipoCorto)) return e;
         }
         return new Equipo();
     }
+    
+    /**
+     * Metodo que devuelve la cantidad de goles anotados por el goleador
+     * @return int max
+     */
     public int getGolesDelGoleador(){
         //Concatenar todos los goles de todas las jornadas en una sola lista
         ArrayList<Gol> listaGolesTotales=new ArrayList<Gol>();
@@ -199,6 +235,11 @@ public class Campeonato{
         }
         return 0;
     }
+    
+    /**
+     * Metodoco que devuelve el nombre del equipo del goleador
+     * @return String getNomEquipoCorto
+     */
     public String getEquipoDelGoleador(){
         String goleador=getGoleadorDelCampeonato();
         for (Equipo equi: listaEquipos) {
@@ -209,6 +250,7 @@ public class Campeonato{
         }
         return null;
     }
+    
     /**
      * Metodo que permite saber el nombre del goleador del campeonato
      * @return String con el nombre del goleador
@@ -267,6 +309,10 @@ public class Campeonato{
         return null;
     }
     
+    /**
+     *Metodo que permite obtener la lista de tarjetas Rojas de todo el campeonato
+     * @return ArrayList<Tarjeta> ListaTarjetasRojas
+     */
     public ArrayList<Tarjeta> getListaTarjetasRojas(){
         ArrayList<Tarjeta> lista=new ArrayList<Tarjeta>();
         for (Jornada j: objFixture.getListaJornadas()) {
@@ -281,6 +327,10 @@ public class Campeonato{
         return lista;
     }
     
+    /**
+     * Metodo que permite eliminar un equipo del campeonato
+     * @param pIdEquipo 
+     */
     public void EliminarEquipo(int pIdEquipo){
         for (Equipo e: listaEquipos) {
             if(e.getIdEquipo()==pIdEquipo){
@@ -290,6 +340,9 @@ public class Campeonato{
         }
     }
 
+    /**
+     * Metodo que Reorndena la lista de Equipos y asigna un codigo correlativo
+     */
     public void ReordenarLista(){
         ArrayList<Equipo> OrderListaEquipos = new ArrayList<Equipo>();
         int row=1;

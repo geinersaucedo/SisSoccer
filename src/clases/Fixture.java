@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package clases;
 
 import java.util.ArrayList;
 
 /**
- *
- * @author lsandoval
+ * Clase que contiene los atributos y metodos necesario para un ..............
+ * @author Giraldo Emilio, Mamani Omar, Saucedo Geiner, Villagaray Rodolfo
+ * @version 1.0
  */
 public abstract class Fixture {
     private int idFixture;
@@ -54,14 +50,21 @@ public abstract class Fixture {
         this.listaJornadas = listaJornadas;
     }
     
-    public void generarFixture(){
+    public void generarFixture(){}
     
-    }
-    
+    /**
+     * Metodo que permite agregar una jornada a la lista de Jornadas del fixture
+     * @param objJornada 
+     */
     public void agregarJornada(Jornada objJornada){
         listaJornadas.add(objJornada);
     }
     
+    /**
+     * Metodo que permite obtener una Jornada según el numero de fecha
+     * @param pNumFecha
+     * @return Jornada e
+     */
     public Jornada getJornadas_ByNumFecha(int pNumFecha) {
         for (Jornada e: listaJornadas) {
             if(e.getNumFecha()==pNumFecha){

@@ -1,11 +1,12 @@
-
 package clases;
 
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Geiner Saucedo
+ * Clase que contiene los atributos y metodos necesario para un delegado de un
+ * equipo que hereda atributos de la clase Persona.
+ * @author Giraldo Emilio, Mamani Omar, Saucedo Geiner, Villagaray Rodolfo
+ * @version 1.0
  */
 public class Delegado extends Persona{
     private int idDelegado;
@@ -17,6 +18,11 @@ public class Delegado extends Persona{
     public void setIdDelegado(int idDelegado) {
         this.idDelegado = idDelegado;
     }
+    
+    /**
+     * Metodo que Valida los datos del delegado
+     * @return 
+     */
     public boolean validarDelegado(){
         if (this.getDni().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingresar DNI","Datos incompletos",JOptionPane.WARNING_MESSAGE);

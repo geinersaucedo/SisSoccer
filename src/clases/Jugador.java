@@ -4,8 +4,9 @@ package clases;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author Geiner Saucedo
+ * Clase que contiene los atributos y metodos necesario para un ..............
+ * @author Giraldo Emilio, Mamani Omar, Saucedo Geiner, Villagaray Rodolfo
+ * @version 1.0
  */
 public class Jugador extends Persona{
     private int idJugador;
@@ -35,6 +36,11 @@ public class Jugador extends Persona{
     public void setPosicion(String posicion) {
         this.posicion = posicion;
     }
+    
+    /**
+     * Metodo que permite Validar un juegador
+     * @return 
+     */
     public boolean validarJugador(){
         if (this.getNombre().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingresar nombre","Datos incompletos",JOptionPane.WARNING_MESSAGE);

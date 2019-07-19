@@ -5,6 +5,8 @@
  */
 package clases;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author lsandoval
@@ -12,7 +14,10 @@ package clases;
 public class ModoEliminacion extends Fixture{
     
         @Override
+        /**
+         * Mettodo que permite generar el Fixture del modo Eliminación
+         */
         public void generarFixture(){
-            System.out.println("clases.ModoEliminacion.generarFixture()");
+            JOptionPane.showMessageDialog(null, "Pendiente de desarrollo");
         }
 }

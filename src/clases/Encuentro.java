@@ -1,16 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package clases;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
- *
- * @author lsandoval
+ * Clase que contiene los atributos y metodos necesario para un encuentro
+ * @author Giraldo Emilio, Mamani Omar, Saucedo Geiner, Villagaray Rodolfo
+ * @version 1.0
  */
 public class Encuentro {
    private int idEncuentro;
@@ -30,8 +26,7 @@ public class Encuentro {
         this.listaGoles = new ArrayList<Gol>();
         this.listatarjeta = new ArrayList<Tarjeta>();
     }
-
-   
+ 
     public String getNombreEquipoLocal() {
         return NombreEquipoLocal;
     }
@@ -136,6 +131,10 @@ public class Encuentro {
        listatarjeta.add(objtarjeta);
    }
    
+   /**
+    * Metodo que permite registrar un encuentro
+    * @param ObjEncuentro 
+    */
    public void RegistrarResultado( Encuentro ObjEncuentro ){
        setWalkover(ObjEncuentro.getWalkover());
        setEquipoWalkover(ObjEncuentro.getEquipoWalkover());
@@ -145,6 +144,11 @@ public class Encuentro {
        setEstado(ObjEncuentro.getEstado());
    }
    
+   /**
+    * Metodo que obtiene los goles de un equipo de un encuentro
+    * @param pIdEquipo
+    * @return 
+    */
    public int getGoles_x_Equipo(int pIdEquipo){       
        int TotalGoles=0;
        for (Gol g: listaGoles) {
@@ -157,6 +161,12 @@ public class Encuentro {
        }
        return TotalGoles;
    }
+   
+   /**
+    * Metodo que permite obtener la cantidad de goles en contra de un equipo
+    * @param pIdEquipo
+    * @return int TotalGoles
+    */
    public int getGolesEnContra_x_Equipo(int pIdEquipo){
        if(getWalkover()==1){
            if(getGoles_x_Equipo(pIdEquipo)>0)return 0;

@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package clases;
 
 /**
- *
- * @author lsandoval
+ * Clase que contiene los atributos y metodos necesario para un ..............
+ * @author Giraldo Emilio, Mamani Omar, Saucedo Geiner, Villagaray Rodolfo
+ * @version 1.0
  */
 public class Gol extends Evento{
     private String tipoGol;
@@ -20,6 +16,10 @@ public class Gol extends Evento{
         this.tipoGol = tipoGol;
     }
    
+    /**
+     * Metodo que permite validar el registro del gol
+     * @return 
+     */
     public boolean validaGol(){
         if(getNomEquipo().equals("Seleccionar") || getNomJugador().equals("Seleccionar") || getTipoGol().equals("Seleccionar") )
             return false;

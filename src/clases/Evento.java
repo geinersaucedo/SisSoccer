@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package clases;
 
 /**
- *
- * @author lsandoval
+ * Clase que contiene los atributos y metodos necesario para un Evento,
+ * estos atrivutos seran heredados por las clases Gol y Tarjeta
+ * @author Giraldo Emilio, Mamani Omar, Saucedo Geiner, Villagaray Rodolfo
+ * @version 1.0
  */
 public abstract class Evento {
     private int idEvento;

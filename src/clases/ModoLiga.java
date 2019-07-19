@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package clases;
 
 import java.util.ArrayList;
@@ -10,8 +5,9 @@ import java.util.Calendar;
 import static proyectosissocer.frmPrincipal.gestor;
 
 /**
- *
- * @author lsandoval
+ * Clase que contiene los atributos y metodos necesario para un ..............
+ * @author Giraldo Emilio, Mamani Omar, Saucedo Geiner, Villagaray Rodolfo
+ * @version 1.0
  */
 public class ModoLiga extends Fixture {
     
@@ -20,6 +16,9 @@ public class ModoLiga extends Fixture {
     }
     
     @Override
+    /**
+     * Metodo que permite generar el Fixture del Modo Liga
+     */
     public void generarFixture(){
         try{
             ArrayList<Equipo> objListaEquipos = gestor.buscarCampeonatoById(getIdCampeonato()).getListaEquipos();
@@ -56,6 +55,11 @@ public class ModoLiga extends Fixture {
         
     }    
 
+    /**
+     * Metodo que calcula el fixture cuando la cantidad de equipos es Par
+     * @param numEquipos
+     * @return Partido[][]
+     */
     private static Partido[][] calcularLigaNumEquiposPar(int numEquipos)
     {
         int numRondas = numEquipos - 1;
@@ -110,6 +114,11 @@ public class ModoLiga extends Fixture {
         return rondas;
     }
     
+    /**
+      * Metodo que calcula el fixture cuando la cantidad de equipos es Inpar
+     * @param numEquipos
+     * @return Partido[][]
+     */
     private static Partido[][] calcularLigaNumEquiposImpar(int numEquipos)
     {
         int numRondas = numEquipos;
@@ -153,6 +162,11 @@ public class ModoLiga extends Fixture {
         return rondas;
     }
     
+    /**
+     * Metodo que calcula el fixture
+     * @param numEquipos
+     * @return 
+     */
     static public Partido[][] calcularLiga(int numEquipos)
     {
         if (numEquipos % 2 == 0)

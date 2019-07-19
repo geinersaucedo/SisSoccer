@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package clases;
 
 import java.util.ArrayList;
 
 /**
- *
- * @author lsandoval
+ * Clase que contiene los atributos y metodos necesario para un ..............
+ * @author Giraldo Emilio, Mamani Omar, Saucedo Geiner, Villagaray Rodolfo
+ * @version 1.0
  */
 public class Jornada {
    private int idJornada;
@@ -62,12 +58,19 @@ public class Jornada {
         this.listaEncuentro = listaEncuentro;
     }
 
-   
+    /**
+     *Metodo que permite agregar un encuentro 
+     * @param ObjEncuentro 
+     */   
     public void agregarEncuentro(Encuentro ObjEncuentro){
         listaEncuentro.add(ObjEncuentro);
     }
     
-
+    /**
+     * Metodo que permite obtener un encuentro según el ID
+     * @param pIdEncuentro
+     * @return Encuentro e
+     */
     public Encuentro getEncuentro_ById(int pIdEncuentro) {
         for (Encuentro e:listaEncuentro) {
             if(e.getIdEncuentro()==pIdEncuentro){

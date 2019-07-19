@@ -1,10 +1,11 @@
-
 package clases;
 
 import java.util.ArrayList;
 /**
- *
- * @author Geiner Saucedo
+ * Clase que contiene los atributos y metodos necesario para un equipo. Además,
+ * tiene una lista de los jugadores del equipo
+ * @author Giraldo Emilio, Mamani Omar, Saucedo Geiner, Villagaray Rodolfo
+ * @version 1.0
  */
 public class Equipo{
     
@@ -61,10 +62,19 @@ public class Equipo{
         this.listaJugadores = listaJugadores;
     }
 
+    /**
+     * Metodo que permite agregar un jugador a la lista de Jugadores
+     * @param jugador 
+     */
     public void agregarJugador(Jugador jugador){
         listaJugadores.add(jugador);
     }
     
+    /**
+     * Metodo que permite obtener el Id del Jugador segun sus nombres completos
+     * @param pNombresCompletos
+     * @return 
+     */
     public Jugador getIdJugador_ByNombresCompletos(String pNombresCompletos){
         for (Jugador j: listaJugadores) {
             if((j.getNombre()+" " + j.getApellidos()).equals(pNombresCompletos)) return j;

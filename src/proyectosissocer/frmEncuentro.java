@@ -94,14 +94,14 @@ public class frmEncuentro extends javax.swing.JInternalFrame {
             ObjListaTarjetaEncuentro.add(ObjTarjeta);            
             
             if(lblEquipoLocal.getText().equals(ObjTarjeta.getNomEquipo())){
-                if(cbColorTarjeta.getSelectedItem().toString().equals("Amarilla"))
+                if(ColorTarjeta.equals("Amarilla"))
                    spinerTALocal.setValue((int)spinerTALocal.getValue()+1);
-                else if (cbColorTarjeta.getSelectedItem().toString().equals("Roja"))
+                else if (ColorTarjeta.equals("Roja"))
                    spinerTRLocal.setValue((int)spinerTRLocal.getValue()+1);
             }else if(lblEquipoVisita.getText().equals(ObjTarjeta.getNomEquipo())){            
-                if(cbColorTarjeta.getSelectedItem().toString().equals("Amarilla"))
+                if(ColorTarjeta.equals("Amarilla"))
                    spinerTAVisita.setValue((int)spinerTAVisita.getValue()+1);
-                else if (cbColorTarjeta.getSelectedItem().toString().equals("Roja"))
+                else if (ColorTarjeta.equals("Roja"))
                    spinerTRVisita.setValue((int)spinerTRVisita.getValue()+1);            
             }
             return true;

@@ -15,9 +15,9 @@ import static proyectosissocer.frmPrincipal.desktop;
 import static proyectosissocer.frmPrincipal.gestor;
 
 import clases.Jugador;
+import clases.ModoEliminacion;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import vistas.vistaEquipos;
 import vistas.vistaJugadores;
 
@@ -30,16 +30,17 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
 
     public static String pNomCampeonatoFixture;
     private String vAccion;
+    private String vAccionJugadores;
+    
     private Equipo vEquipos;
     private ArrayList<Jugador> listaJugadores;
-    private Equipo equipo;      
 
     public frmNuevoEquipo() {
         initComponents();
         cambiarVista(0);
         actualizarDATA();
         listaJugadores= new ArrayList<Jugador>();
-        equipo=new Equipo(listaJugadores);
+        vEquipos=new Equipo(listaJugadores);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -639,7 +640,7 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
         }
     }
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        // TODO add your handling code here:
+        vAccion="NUEVO";
         Campeonato Objcamp =frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString());
         listaJugadores=new ArrayList<Jugador>();
         listadoJugadores.removeAll();
@@ -652,7 +653,6 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
         Delegado delegado=new Delegado();
         delegado.setDni(txtDniDelegado.getText());
         delegado.setNombre(txtNomDelegado.getText());
@@ -661,14 +661,17 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
         delegado.setTelefono(txtTelefonoDelegado.getText());
         //Debería ser como mínimo 7 jugadores, para fines de prueba lo validaremos en 1
         if (listaJugadores.size()>0 && delegado.validarDelegado()) {
-            equipo=new Equipo();
-            equipo.setIdEquipo(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).getListaEquipos().size()+1);
-            equipo.setNomEquipoCorto(txtNomEquipoCorto.getText());
-            equipo.setNomEquipoLargo(txtNomEquipoLargo.getText());
-            equipo.setDelegado(delegado);
-            equipo.setListaJugadores(listaJugadores);
-            frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).agregarEquipo(equipo);
-            JOptionPane.showMessageDialog(null, "Se agregó equipo correctamente");
+            if(vAccion=="NUEVO") vEquipos.setIdEquipo(frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).getListaEquipos().size()+1);
+            vEquipos.setNomEquipoCorto(txtNomEquipoCorto.getText());
+            vEquipos.setNomEquipoLargo(txtNomEquipoLargo.getText());
+            vEquipos.setDelegado(delegado);
+            vEquipos.setListaJugadores(listaJugadores);
+            if(vAccion=="NUEVO")
+                frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).agregarEquipo(vEquipos);
+            if(vAccion=="MODIFICAR")
+                frmPrincipal.gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).ActualizarEquipo(vEquipos);
+            
+            JOptionPane.showMessageDialog(null, "Se registro correctamente el equipo");
             cambiarVista(0);
             MostrarEquipos();            
         }else JOptionPane.showMessageDialog(null, "No existen jugadores registrados");
@@ -714,7 +717,7 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
         
         if (jugador.validarJugador()) {
             listaJugadores.add(jugador);
-            equipo.setListaJugadores(listaJugadores);
+            vEquipos.setListaJugadores(listaJugadores);
             vistaJugadores ObjVista = new vistaJugadores();
             ObjVista.setListaJugadores(listaJugadores);
             listadoJugadores.setModel(ObjVista);
@@ -836,19 +839,25 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
             return ;
         }
         
-        Fixture ObjFixtureA = new ModoLiga();
+        
         Campeonato ObjCampeonato = gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString());
         
         if(ObjCampeonato.getCantidadEquipos()==ObjCampeonato.getListaEquipos().size()){
-            ObjFixtureA.setIdCampeonato(ObjCampeonato.getIdCampeonato());        
-            ObjFixtureA.generarFixture();
-            pNomCampeonatoFixture = cbCampeonatos.getSelectedItem().toString();
-            gestor.buscarCampeonatoById(ObjCampeonato.getIdCampeonato()).setObjFixture(ObjFixtureA);
-            JOptionPane.showMessageDialog(null, "Fixture Generado Exitosamente","Generar Fixture",JOptionPane.INFORMATION_MESSAGE);
-            frmFixtures frm=new frmFixtures();
-            desktop.add(frm);
-            this.setVisible(false);
-            frm.setVisible(true);
+            if(ObjCampeonato.getTipoCampeonato()==1){
+                Fixture ObjFixtureA = new ModoLiga();
+                ObjFixtureA.setIdCampeonato(ObjCampeonato.getIdCampeonato());        
+                ObjFixtureA.generarFixture();
+                pNomCampeonatoFixture = cbCampeonatos.getSelectedItem().toString();
+                gestor.buscarCampeonatoById(ObjCampeonato.getIdCampeonato()).setObjFixture(ObjFixtureA);
+                JOptionPane.showMessageDialog(null, "Fixture Generado Exitosamente","Generar Fixture",JOptionPane.INFORMATION_MESSAGE);
+                frmFixtures frm=new frmFixtures();
+                desktop.add(frm);
+                this.setVisible(false);
+                frm.setVisible(true);
+            }else{
+                Fixture ObjFixtureB = new ModoEliminacion();
+                ObjFixtureB.generarFixture();
+            }
         }else{
             JOptionPane.showMessageDialog(null, "La cantidad de equipos debe ser " + String.valueOf(ObjCampeonato.getCantidadEquipos()) ,"Registro de Equipos",JOptionPane.WARNING_MESSAGE);
         }
@@ -860,7 +869,28 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
         if(c.getObjFixture()!=null){
             JOptionPane.showMessageDialog(null, "El Fixture ya fue generado, No puede Modificar","Generar Fixture",JOptionPane.INFORMATION_MESSAGE);
             return ;            
-        }      }//GEN-LAST:event_btnModificarActionPerformed
+        }
+        vEquipos = new Equipo();
+        vAccion="MODIFICAR";
+        cambiarVista(1);
+        int column = 0;
+        int row = listadoEquipos.getSelectedRow();     
+        int vIdEquipo= Integer.parseInt(listadoEquipos.getModel().getValueAt(row, column).toString());
+        vEquipos = gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString()).buscarEquipo(vIdEquipo);
+        txtNomEquipoLargo.setText(vEquipos.getNomEquipoLargo());
+        txtNomEquipoCorto.setText(vEquipos.getNomEquipoCorto());
+        Delegado ObjDelegado = vEquipos.getDelegado();
+        txtDniDelegado.setText(ObjDelegado.getDni());
+        txtNomDelegado.setText(ObjDelegado.getNombre());
+        txtApellidoDelegado.setText(ObjDelegado.getApellidos());
+        txtDireccionDelegado.setText(ObjDelegado.getDireccion());
+        txtTelefonoDelegado.setText(ObjDelegado.getTelefono());
+        listaJugadores = vEquipos.getListaJugadores();
+        vistaJugadores objVista = new vistaJugadores();
+        objVista.setListaJugadores(vEquipos.getListaJugadores());
+        listadoJugadores.setModel(objVista);
+        listadoJugadores.updateUI();
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         Campeonato c = gestor.buscarCampeonato(cbCampeonatos.getSelectedItem().toString());
@@ -887,11 +917,52 @@ public class frmNuevoEquipo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarJugadorActionPerformed
-        // TODO add your handling code here:
+        vAccionJugadores="MODIFICAR";
+        int column = 0;
+        int row = listadoJugadores.getSelectedRow();        
+        if(row>=0){
+            for(Jugador j: listaJugadores) {
+                if(j.getDni().equals(listadoJugadores.getModel().getValueAt(row, column).toString())){
+                    txtDNI.setText(j.getDni());
+                    txtNombres.setText(j.getNombre());
+                    txtApellidos.setText(j.getApellidos());
+                    txtDireccion.setText(j.getDireccion());
+                    txtTelefono.setText(j.getTelefono());
+                    txtNumCamiseta.setText(String.valueOf(j.getNumCamiseta()));
+                    cbPosicion.setSelectedItem(j.getPosicion());
+                    break;
+                }
+            }                
+            vistaJugadores objVistaJugadores = new vistaJugadores();
+            objVistaJugadores.setListaJugadores(listaJugadores);
+            listadoJugadores.setModel(objVistaJugadores);            
+            listadoJugadores.updateUI();
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione un Jugador");
+        }  
     }//GEN-LAST:event_btnModificarJugadorActionPerformed
 
     private void btnEliminarJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarJugadorActionPerformed
-        // TODO add your handling code here:
+        vAccionJugadores="ELIMINAR";
+        int column = 0;
+        int row = listadoJugadores.getSelectedRow();        
+        if(row>=0){
+            if(JOptionPane.showConfirmDialog(this, "¿Esta Seguro de eliminar?")==0){
+                
+                for(Jugador j: listaJugadores) {
+                    if(j.getDni().equals(listadoJugadores.getModel().getValueAt(row, column).toString())){
+                        listaJugadores.remove(j);
+                        break;
+                    }
+                }                
+                vistaJugadores objVistaJugadores = new vistaJugadores();
+                objVistaJugadores.setListaJugadores(listaJugadores);
+                listadoJugadores.setModel(objVistaJugadores);            
+                listadoJugadores.updateUI();
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione un Jugador");
+        }         
     }//GEN-LAST:event_btnEliminarJugadorActionPerformed
 
     /**
