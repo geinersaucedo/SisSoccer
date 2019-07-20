@@ -108,6 +108,7 @@ public class frmNuevoCampeonato extends javax.swing.JInternalFrame {
                 "Id", "Campeonato", "Premio", "Fecha Inicio"
             }
         ));
+        listadoCampeonatos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(listadoCampeonatos);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

@@ -64,16 +64,15 @@ public class Equipo{
 
     /**
      * Metodo que permite agregar un jugador a la lista de Jugadores
-     * @param jugador 
+     * @param pJugador  Objeto Jugador
      */
-    public void agregarJugador(Jugador jugador){
-        listaJugadores.add(jugador);
-    }
-    
+    public void agregarJugador(Jugador pJugador){
+        listaJugadores.add(pJugador);
+    }   
     /**
      * Metodo que permite obtener el Id del Jugador segun sus nombres completos
-     * @param pNombresCompletos
-     * @return 
+     * @param pNombresCompletos Nombre completo del equipo
+     * @return Objeto Jugador
      */
     public Jugador getIdJugador_ByNombresCompletos(String pNombresCompletos){
         for (Jugador j: listaJugadores) {

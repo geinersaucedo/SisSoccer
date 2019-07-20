@@ -8,8 +8,9 @@ package clases;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author lsandoval
+ * Clase que contiene los atributos y métodos necesarios generar un fixture modo Eliminación
+ * @author Giraldo Emilio, Mamani Omar, Saucedo Geiner, Villagaray Rodolfo
+ * @version 1.0
  */
 public class ModoEliminacion extends Fixture{
     

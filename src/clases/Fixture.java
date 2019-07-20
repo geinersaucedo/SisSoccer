@@ -1,9 +1,8 @@
 package clases;
 
 import java.util.ArrayList;
-
 /**
- * Clase que contiene los atributos y metodos necesario para un ..............
+ * Clase que contiene los atributos y metodos necesario para un fixture
  * @author Giraldo Emilio, Mamani Omar, Saucedo Geiner, Villagaray Rodolfo
  * @version 1.0
  */
@@ -50,11 +49,11 @@ public abstract class Fixture {
         this.listaJornadas = listaJornadas;
     }
     
-    public void generarFixture(){}
+    public abstract void generarFixture();
     
     /**
      * Metodo que permite agregar una jornada a la lista de Jornadas del fixture
-     * @param objJornada 
+     * @param objJornada Objeto Jornada
      */
     public void agregarJornada(Jornada objJornada){
         listaJornadas.add(objJornada);
@@ -62,7 +61,7 @@ public abstract class Fixture {
     
     /**
      * Metodo que permite obtener una Jornada según el numero de fecha
-     * @param pNumFecha
+     * @param pNumFecha Numero de la fecha o Jornada
      * @return Jornada e
      */
     public Jornada getJornadas_ByNumFecha(int pNumFecha) {

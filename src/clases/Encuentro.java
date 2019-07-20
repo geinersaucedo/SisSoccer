@@ -133,7 +133,7 @@ public class Encuentro {
    
    /**
     * Metodo que permite registrar un encuentro
-    * @param ObjEncuentro 
+    * @param ObjEncuentro Objeto Encuentro
     */
    public void RegistrarResultado( Encuentro ObjEncuentro ){
        setWalkover(ObjEncuentro.getWalkover());
@@ -146,8 +146,8 @@ public class Encuentro {
    
    /**
     * Metodo que obtiene los goles de un equipo de un encuentro
-    * @param pIdEquipo
-    * @return 
+    * @param pIdEquipo ID del Equipo
+    * @return int Cantida de Goles
     */
    public int getGoles_x_Equipo(int pIdEquipo){       
        int TotalGoles=0;
@@ -164,7 +164,7 @@ public class Encuentro {
    
    /**
     * Metodo que permite obtener la cantidad de goles en contra de un equipo
-    * @param pIdEquipo
+    * @param pIdEquipo Id del Equipo
     * @return int TotalGoles
     */
    public int getGolesEnContra_x_Equipo(int pIdEquipo){

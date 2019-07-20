@@ -107,7 +107,7 @@ public class Campeonato{
     }
     /**
      * Metodo que permite Buscar un equipo por su ID
-     * @param idEquipo
+     * @param idEquipo Id del Equipo
      * @return Objeto Equipo
      */
     public Equipo buscarEquipo(int idEquipo){
@@ -140,7 +140,7 @@ public class Campeonato{
     
     /**
      * Metodo que permite agrega un equipo a la Lista de equipos relacinado al campeonato
-     * @param equipo 
+     * @param equipo Objeto Equipo
      */
     public void agregarEquipo(Equipo equipo){
         //Agregar validación, para agregar equipo el size de lista jugadores debe ser max de 12, min de 8
@@ -149,7 +149,7 @@ public class Campeonato{
     
     /**
      * Metodo que permite actualiza los atributos de un equipo espesifico según si ID
-     * @param pEquipo 
+     * @param pEquipo Objeto Equipo
      */
     public void ActualizarEquipo(Equipo pEquipo){
         buscarEquipo(pEquipo.getIdEquipo()).setNomEquipoCorto(pEquipo.getNomEquipoCorto());
@@ -160,7 +160,7 @@ public class Campeonato{
     
     /**
      * Metodo que busca un equipo y deveulve el nombre corto del equipo según su ID
-     * @param pIdEquipo
+     * @param pIdEquipo Id del Equipo
      * @return  String getNomEquipoCorto
      */
     public String getNomEquipoCorto_ById(int pIdEquipo) {
@@ -172,7 +172,7 @@ public class Campeonato{
      
     /**
      * Metodo que buscar un equipo según su nombre corto
-     * @param nomEquipoCorto
+     * @param nomEquipoCorto Nombre del Equipo
      * @return Objeto Equipo
      */
     public Equipo getEquipo_ByNomEquipoCorto(String nomEquipoCorto) {
@@ -311,7 +311,7 @@ public class Campeonato{
     
     /**
      *Metodo que permite obtener la lista de tarjetas Rojas de todo el campeonato
-     * @return ArrayList<Tarjeta> ListaTarjetasRojas
+     * @return ArrayList de Tarjetas
      */
     public ArrayList<Tarjeta> getListaTarjetasRojas(){
         ArrayList<Tarjeta> lista=new ArrayList<Tarjeta>();
@@ -329,7 +329,7 @@ public class Campeonato{
     
     /**
      * Metodo que permite eliminar un equipo del campeonato
-     * @param pIdEquipo 
+     * @param pIdEquipo Id del Equipo
      */
     public void EliminarEquipo(int pIdEquipo){
         for (Equipo e: listaEquipos) {

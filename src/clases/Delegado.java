@@ -21,9 +21,10 @@ public class Delegado extends Persona{
     
     /**
      * Metodo que Valida los datos del delegado
-     * @return 
+     * @return boolean True o Falses
      */
-    public boolean validarDelegado(){
+    @Override
+    public boolean valida(){
         if (this.getDni().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingresar DNI","Datos incompletos",JOptionPane.WARNING_MESSAGE);
             return false;

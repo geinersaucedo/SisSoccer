@@ -3,7 +3,7 @@ package clases;
 import java.util.ArrayList;
 
 /**
- * Clase que contiene los atributos y metodos necesario para un ..............
+ * Clase que contiene los atributos y métodos necesario para una jornada
  * @author Giraldo Emilio, Mamani Omar, Saucedo Geiner, Villagaray Rodolfo
  * @version 1.0
  */
@@ -60,7 +60,7 @@ public class Jornada {
 
     /**
      *Metodo que permite agregar un encuentro 
-     * @param ObjEncuentro 
+     * @param ObjEncuentro Objeto Encuentro
      */   
     public void agregarEncuentro(Encuentro ObjEncuentro){
         listaEncuentro.add(ObjEncuentro);
@@ -68,7 +68,7 @@ public class Jornada {
     
     /**
      * Metodo que permite obtener un encuentro según el ID
-     * @param pIdEncuentro
+     * @param pIdEncuentro Id del Encuentro
      * @return Encuentro e
      */
     public Encuentro getEncuentro_ById(int pIdEncuentro) {

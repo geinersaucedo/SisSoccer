@@ -3,7 +3,7 @@ package clases;
 
 import java.util.ArrayList;
 /**
- * Clase que contiene los atributos y metodos necesario para un ..............
+ * Clase que contiene los atributos y metodos necesarios para una lista de campeonatos
  * @author Giraldo Emilio, Mamani Omar, Saucedo Geiner, Villagaray Rodolfo
  * @version 1.0
  */
@@ -33,7 +33,7 @@ public class GestorCampeonatos{
     
     /**
      * Metodo que permite agregar un campeonato
-     * @param camp 
+     * @param camp Objeto Campamento
      */
     public void agregarCampeonato(Campeonato camp){
         listaCampeonatos.add(camp);
@@ -41,7 +41,7 @@ public class GestorCampeonatos{
     
     /**
      * Metodo que permite actualizar un campeonato
-     * @param pCamp 
+     * @param pCamp Obejto Campeonato
      */
     public void ActualizarCampeonato(Campeonato pCamp){
         for (Campeonato c: listaCampeonatos) {
@@ -55,7 +55,7 @@ public class GestorCampeonatos{
     
     /**
      * Metodo que permite eliminar un campeonato segun el ID
-     * @param pIdCampeonato 
+     * @param pIdCampeonato Id Campeonato
      */
     public void EliminarCampeonato(int pIdCampeonato){
         for (Campeonato c: listaCampeonatos) {
@@ -68,8 +68,8 @@ public class GestorCampeonatos{
     
     /**
      * Metodo que permite buscar un campeonato según el nombre del campeonato
-     * @param nomCampeonato
-     * @return 
+     * @param nomCampeonato Nomnre del Campeonato
+     * @return Objeto Campeonato
      */
     public Campeonato buscarCampeonato(String nomCampeonato){
         for(Campeonato c:listaCampeonatos){
@@ -82,8 +82,8 @@ public class GestorCampeonatos{
     
     /**
      * Metodo que permite buscar un campeonato segun el ID
-     * @param idCampeonato
-     * @return Campeonato c
+     * @param idCampeonato Id del Campeonato
+     * @return Campeonato Objeto Campeonato
      */
     public Campeonato buscarCampeonatoById(int idCampeonato){
         for(Campeonato c:listaCampeonatos){

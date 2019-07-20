@@ -5,7 +5,7 @@ import java.util.Calendar;
 import static proyectosissocer.frmPrincipal.gestor;
 
 /**
- * Clase que contiene los atributos y metodos necesario para un ..............
+ * Clase que contiene los atributos y métodos necesarios generar un fixture modo liga
  * @author Giraldo Emilio, Mamani Omar, Saucedo Geiner, Villagaray Rodolfo
  * @version 1.0
  */
@@ -15,14 +15,38 @@ public class ModoLiga extends Fixture {
         public int local = -1, visitante = -1;
     }
     
+    private int getNumeroAleatorio(ArrayList<Equipo> objListaEquiposAleatorio){
+        int vNumeroSalida=0;
+        boolean vFlag = false;
+        if(objListaEquiposAleatorio.isEmpty()){
+            vFlag = true;
+            vNumeroSalida = (int)(Math.random()*gestor.buscarCampeonatoById(getIdCampeonato()).getListaEquipos().size()+1);
+        }
+        while(vFlag == false){
+            vFlag = true;
+            vNumeroSalida = (int)(Math.random()*gestor.buscarCampeonatoById(getIdCampeonato()).getListaEquipos().size()+1);
+            for (Equipo e: objListaEquiposAleatorio) {
+                if(e.getIdEquipo()== vNumeroSalida) vFlag = false;
+            }
+        }        
+        return vNumeroSalida;
+    }
+    
     @Override
     /**
      * Metodo que permite generar el Fixture del Modo Liga
      */
     public void generarFixture(){
         try{
+            ArrayList<Equipo> objListaEquiposAleatorio = new ArrayList<Equipo>();
             ArrayList<Equipo> objListaEquipos = gestor.buscarCampeonatoById(getIdCampeonato()).getListaEquipos();
-            Partido[][] FixtureAleatorio = calcularLiga(objListaEquipos.size());                
+            for(Equipo e:objListaEquipos){
+                e.setIdEquipo(getNumeroAleatorio(objListaEquiposAleatorio));
+                objListaEquiposAleatorio.add(e);
+            }
+            gestor.buscarCampeonatoById(getIdCampeonato()).setListaEquipos(objListaEquiposAleatorio);
+            
+            Partido[][] FixtureAleatorio = calcularLiga(objListaEquiposAleatorio.size());                
             setIdFixture(1);
             setCantidadJornadas(FixtureAleatorio.length);
             Calendar c = Calendar.getInstance();    
@@ -164,8 +188,8 @@ public class ModoLiga extends Fixture {
     
     /**
      * Metodo que calcula el fixture
-     * @param numEquipos
-     * @return 
+     * @param numEquipos Numero de Equipos por campeonato
+     * @return Array bidimensional de los Partidos
      */
     static public Partido[][] calcularLiga(int numEquipos)
     {

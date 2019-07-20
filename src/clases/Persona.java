@@ -2,8 +2,9 @@
 package clases;
 
 /**
- *
- * @author Geiner Saucedo
+ * Clase que contiene los atributos y métodos necesarios para una persona
+ * @author Giraldo Emilio, Mamani Omar, Saucedo Geiner, Villagaray Rodolfo
+ * @version 1.0
  */
 public abstract class Persona {
     private int idPersona;
@@ -61,4 +62,6 @@ public abstract class Persona {
         this.telefono = telefono;
     }
     
+    public abstract boolean valida();
+            
 }
